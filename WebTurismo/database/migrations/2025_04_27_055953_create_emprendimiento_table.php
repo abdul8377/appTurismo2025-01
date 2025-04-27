@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emprendimiento', function (Blueprint $table) {
-            $table->id();
+            $table->id('id_emprendimiento');
             $table->string('nombre', 255);
             $table->text('descripcion')->nullable();
             $table->unsignedBigInteger('id_tipo_negocio')->nullable();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telefono', 20)->nullable();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo');
             $table->timestamp('fecha_registro')->useCurrent();
+            $table->timestamps();
         });
     }
 

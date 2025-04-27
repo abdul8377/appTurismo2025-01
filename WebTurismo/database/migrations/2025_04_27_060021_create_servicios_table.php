@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('servicios', function (Blueprint $table) {
             $table->id('id_servicio');
-            $table->foreignId('id_emprendimiento')->constrained('emprendimiento');
+            $table->unsignedBigInteger('id_emprendimiento');
             $table->string('nombre_servicio', 150);
             $table->text('descripcion')->nullable();
             $table->decimal('precio', 10, 2);
@@ -22,6 +22,7 @@ return new class extends Migration
             $table->date('fecha_fin')->nullable();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo')->nullable();
             $table->timestamp('fecha_publicacion')->useCurrent();
+            $table->foreign('id_emprendimiento')->references('id_emprendimiento')->on('emprendimiento');
         });
     }
 

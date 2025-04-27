@@ -12,12 +12,15 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('emprendimiento_usuarios', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('id_emprendimiento')->constrained('emprendimiento');
+            $table->id('id_emprendimiento_usuarios');
+            $table->unsignedBigInteger('id_emprendimiento');
             $table->unsignedBigInteger('id_usuario');
             $table->foreign('id_usuario')->references('id')->on('users');
             $table->enum('rol_emprendimiento', ['propietario', 'colaborador'])->default('propietario')->nullable();
             $table->timestamp('fecha_asignacion')->useCurrent();
+
+            $table->foreign('id_emprendimiento')->references('id_emprendimiento')->on('emprendimiento');
+            $table->timestamps();
         });
     }
 

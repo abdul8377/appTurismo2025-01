@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->id('id_producto');
-            $table->unsignedBigInteger('id_emprendedor');
-            $table->foreign('id_emprendedor')->references('id')->on('users');
+            $table->unsignedBigInteger('id_emprendimiento');
+            $table->foreign('id_emprendimiento')->references('id_emprendimiento')->on('emprendimiento');
             $table->unsignedBigInteger('id_categoria');
             $table->foreign('id_categoria')->references('id_categoria')->on('categorias_productos');
             $table->string('nombre_producto', 150);
@@ -24,6 +24,7 @@ return new class extends Migration
             $table->string('imagen_url', 255)->nullable();
             $table->enum('estado', ['activo', 'inactivo'])->default('activo')->nullable();
             $table->timestamp('fecha_publicacion')->useCurrent();
+            $table->timestamps();
         });
     }
 
