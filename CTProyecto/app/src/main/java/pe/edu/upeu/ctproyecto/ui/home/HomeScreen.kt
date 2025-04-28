@@ -75,5 +75,48 @@ fun HomeScreen(navController: NavController) {
         ) {
             Text("Cerrar Sesión", fontSize = 18.sp)
         }
+
+
+
+        Button(
+            onClick = { navController.navigate("listUsers") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Listar Usuarios", fontSize = 18.sp)
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(
+            onClick = { navController.navigate("updateStatus") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Actualizar Estado de Usuario", fontSize = 18.sp)
+        }
+
+        Spacer(modifier = Modifier.height(10.dp))
+
+        Button(
+            onClick = { navController.navigate("createUser") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 8.dp)
+        ) {
+            Text("Crear Usuario")
+        }
+
+        Button(
+            onClick = { navController.navigate("listEmprendimientos") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Listar Emprendimientos")
+        }
+
+        Button(
+            onClick = { navController.navigate("createEmprendimiento") },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Crear Nuevo Emprendimiento")
+        }
     }
 }

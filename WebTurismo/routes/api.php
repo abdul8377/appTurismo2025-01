@@ -21,6 +21,10 @@ Route::middleware(['auth:sanctum', 'role:Administrador'])->group(function () {
     Route::put('/users/{id}/status', [AdminController::class, 'updateStatus']);
     Route::put('/users/{id}', [AdminController::class, 'updateUser']);
     Route::delete('/users/{id}', [AdminController::class, 'deleteUser']);
+
+
+    Route::get('/users/{id}', [AdminController::class, 'getUser']);
+    Route::get('/roles', [AdminController::class, 'listRoles']);
 });
 
 

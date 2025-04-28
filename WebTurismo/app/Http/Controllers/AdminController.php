@@ -148,4 +148,44 @@ class AdminController extends Controller
             return response()->json(['error' => 'Error al eliminar el usuario: ' . $e->getMessage()], 500);
         }
     }
+
+    /**
+ * Obtener los datos de un usuario específico.
+ */
+    public function getUser($id)
+    {
+        try {
+            $user = User::with('roles')->findOrFail($id);
+
+            $userFormatted = [
+                'id' => $user->id,
+                'name' => $user->name,
+                'email' => $user->email,
+                'roles' => $user->roles->pluck('name'), // enviamos roles también
+                'is_active' => $user->is_active,
+                'motivo_inactivo' => $user->motivo_inactivo,
+                'created_at' => $user->created_at,
+                'updated_at' => $user->updated_at,
+            ];
+
+            return response()->json($userFormatted, 200);
+
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al obtener el usuario: ' . $e->getMessage()], 500);
+        }
+    }
+
+    /**
+     * Listar todos los roles disponibles.
+     */
+    public function listRoles()
+    {
+        try {
+            $roles = Role::pluck('name'); // Devuelve solo los nombres de los roles
+            return response()->json($roles, 200);
+        } catch (\Exception $e) {
+            return response()->json(['error' => 'Error al listar roles: ' . $e->getMessage()], 500);
+        }
+    }
+
 }
