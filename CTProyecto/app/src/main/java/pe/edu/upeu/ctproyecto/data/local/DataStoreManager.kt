@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
 import java.io.IOException
 import androidx.datastore.preferences.core.emptyPreferences
+import kotlinx.coroutines.flow.first
 
 class DataStoreManager(private val context: Context) {
 
@@ -81,5 +82,11 @@ class DataStoreManager(private val context: Context) {
             preferences.remove(NAME_KEY)
             preferences.remove(ROLE_KEY)
         }
+    }
+
+    suspend fun getTokenSync(): String? {
+        return context.dataStore.data
+            .map { preferences -> preferences[TOKEN_KEY] }
+            .first()
     }
 }
