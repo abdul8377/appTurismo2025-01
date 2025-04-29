@@ -1,4 +1,4 @@
-package pe.edu.upeu.ctproyecto.ui.home
+package pe.edu.upeu.ctproyecto.ui.home.usuarios.screem
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import pe.edu.upeu.ctproyecto.ui.home.viewmodel.ListUsersViewModel
+import pe.edu.upeu.ctproyecto.ui.home.usuarios.viewmodel.ListUsersViewModel
 
 @Composable
 fun ListUsersScreen(navController: NavController, viewModel: ListUsersViewModel = androidx.lifecycle.viewmodel.compose.viewModel()) {

@@ -1,4 +1,4 @@
-package pe.edu.upeu.ctproyecto.ui.home.viewmodel
+package pe.edu.upeu.ctproyecto.ui.home.usuarios.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

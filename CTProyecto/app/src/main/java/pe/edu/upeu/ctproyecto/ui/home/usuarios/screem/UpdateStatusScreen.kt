@@ -1,4 +1,4 @@
-package pe.edu.upeu.ctproyecto.ui.home
+package pe.edu.upeu.ctproyecto.ui.home.usuarios.screem
 
 import android.widget.Toast
 import androidx.compose.foundation.layout.*
@@ -12,7 +12,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import pe.edu.upeu.ctproyecto.ui.home.viewmodel.UpdateStatusViewModel
+import pe.edu.upeu.ctproyecto.ui.home.usuarios.viewmodel.UpdateStatusViewModel
 
 @Composable
 fun UpdateStatusScreen(
