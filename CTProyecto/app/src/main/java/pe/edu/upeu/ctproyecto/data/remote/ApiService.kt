@@ -90,6 +90,11 @@ interface ApiService {
 
     //tipo-negocio
 
+
     @GET("tipos-negocio")
     suspend fun getTiposNegocio(): Response<List<TipoNegocio>>
+
+    @DELETE("tipos-negocio/{id}")
+    suspend fun deleteTipoNegocio(@Path("id") id: Int): Response<Unit>
+
 }

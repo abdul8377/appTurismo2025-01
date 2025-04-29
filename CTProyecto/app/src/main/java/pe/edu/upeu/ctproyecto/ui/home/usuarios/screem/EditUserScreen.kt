@@ -1,4 +1,4 @@
-package pe.edu.upeu.ctproyecto.ui.home
+package pe.edu.upeu.ctproyecto.ui.home.usuarios.screem
 
 
 import android.widget.Toast
@@ -13,46 +13,62 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import pe.edu.upeu.ctproyecto.ui.home.viewmodel.CreateUserViewModel
+import pe.edu.upeu.ctproyecto.ui.home.usuarios.viewmodel.EditUserViewModel
 
 @Composable
-fun CreateUserScreen(
+fun EditUserScreen(
     navController: NavController,
-    viewModel: CreateUserViewModel = viewModel()
+    userId: Int,
+    viewModel: EditUserViewModel = viewModel()
 ) {
     val context = LocalContext.current
+
+    // Estados
+    val user by viewModel.user.collectAsState()
+    val roles by viewModel.roles.collectAsState()
     val success by viewModel.success.collectAsState()
     val error by viewModel.error.collectAsState()
     val isLoading by viewModel.isLoading.collectAsState()
-    val roles by viewModel.roles.collectAsState()
 
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var passwordConfirmation by remember { mutableStateOf("") }
     var selectedRole by remember { mutableStateOf("") }
     var expanded by remember { mutableStateOf(false) }
 
+    // Al cargar pantalla
     LaunchedEffect(Unit) {
+        viewModel.fetchUser(userId)
         viewModel.fetchRoles()
     }
 
+    // Cuando se carga el usuario, llenar campos
+    LaunchedEffect(user) {
+        user?.let {
+            name = it.name
+            email = it.email
+            selectedRole = it.roles.firstOrNull() ?: ""
+        }
+    }
+
+    // Navegar si se actualiza correctamente
     if (success) {
-        Toast.makeText(context, "Usuario creado exitosamente", Toast.LENGTH_SHORT).show()
+        Toast.makeText(context, "Usuario actualizado exitosamente", Toast.LENGTH_SHORT).show()
         navController.popBackStack()
     }
 
+    // Mostrar errores
     error?.let {
         Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
     }
 
+    // Pantalla
     Column(
         modifier = Modifier
             .fillMaxSize()
             .padding(24.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Crear Usuario", style = MaterialTheme.typography.headlineMedium)
+        Text("Editar Usuario", style = MaterialTheme.typography.headlineMedium)
         Spacer(modifier = Modifier.height(20.dp))
 
         if (isLoading) {
@@ -76,31 +92,12 @@ fun CreateUserScreen(
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            OutlinedTextField(
-                value = password,
-                onValueChange = { password = it },
-                label = { Text("Contraseña") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            OutlinedTextField(
-                value = passwordConfirmation,
-                onValueChange = { passwordConfirmation = it },
-                label = { Text("Confirmar Contraseña") },
-                modifier = Modifier.fillMaxWidth()
-            )
-
-            Spacer(modifier = Modifier.height(10.dp))
-
-            // ComboBox para seleccionar Rol
             Box(modifier = Modifier.fillMaxWidth()) {
                 OutlinedTextField(
                     value = selectedRole,
                     onValueChange = {},
                     readOnly = true,
-                    label = { Text("Seleccionar Rol") },
+                    label = { Text("Rol") },
                     modifier = Modifier.fillMaxWidth(),
                     trailingIcon = {
                         IconButton(onClick = { expanded = !expanded }) {
@@ -129,15 +126,11 @@ fun CreateUserScreen(
 
             Button(
                 onClick = {
-                    if (selectedRole.isNotEmpty()) {
-                        viewModel.createUser(name, email, password, passwordConfirmation, selectedRole)
-                    } else {
-                        Toast.makeText(context, "Selecciona un rol", Toast.LENGTH_SHORT).show()
-                    }
+                    viewModel.updateUser(userId, name, email, selectedRole)
                 },
                 modifier = Modifier.fillMaxWidth()
             ) {
-                Text("Crear Usuario")
+                Text("Guardar Cambios")
             }
         }
     }

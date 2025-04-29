@@ -1,26 +1,22 @@
-package pe.edu.upeu.ctproyecto.ui.home.viewmodel
+package pe.edu.upeu.ctproyecto.ui.home.usuarios.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import pe.edu.upeu.ctproyecto.data.model.UpdateStatusRequest
 import pe.edu.upeu.ctproyecto.data.model.User
 import pe.edu.upeu.ctproyecto.data.remote.RetrofitClient
 import retrofit2.HttpException
 import java.io.IOException
 
-class UpdateStatusViewModel : ViewModel() {
+class ListUsersViewModel : ViewModel() {
 
     private val _users = MutableStateFlow<List<User>>(emptyList())
     val users: StateFlow<List<User>> = _users
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
-
-    private val _success = MutableStateFlow<String?>(null)
-    val success: StateFlow<String?> = _success
 
     fun fetchUsers() {
         viewModelScope.launch {
@@ -38,20 +34,14 @@ class UpdateStatusViewModel : ViewModel() {
             }
         }
     }
-
-    fun updateStatus(userId: Int, isActive: Boolean, motivo: String?) {
+    fun deleteUser(userId: Int) {
         viewModelScope.launch {
             try {
-                val body = UpdateStatusRequest(
-                    is_active = isActive,
-                    motivo_inactivo = motivo
-                )
-                val response = RetrofitClient.apiService.updateStatus(userId, body)
+                val response = RetrofitClient.apiService.deleteUser(userId)
                 if (response.isSuccessful) {
-                    _success.value = "Estado actualizado"
-                    fetchUsers() // Recargar lista
+                    fetchUsers() // Recargar usuarios después de eliminar
                 } else {
-                    _error.value = "Error al actualizar estado: ${response.code()}"
+                    _error.value = "Error al eliminar usuario: ${response.code()}"
                 }
             } catch (e: IOException) {
                 _error.value = "Error de conexión: ${e.message}"
