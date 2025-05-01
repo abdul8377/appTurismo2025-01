@@ -5,27 +5,27 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
-import pe.edu.upeu.ctproyecto.data.model.TipoNegocio
+import pe.edu.upeu.ctproyecto.data.model.Categoria
 import pe.edu.upeu.ctproyecto.data.remote.RetrofitClient
 import retrofit2.HttpException
 import java.io.IOException
 
-class TipoNegocioViewModel : ViewModel() {
+class ListCategoriasViewModel : ViewModel() {
 
-    private val _tiposNegocio = MutableStateFlow<List<TipoNegocio>>(emptyList())
-    val tiposNegocio: StateFlow<List<TipoNegocio>> = _tiposNegocio
+    private val _categorias = MutableStateFlow<List<Categoria>>(emptyList())
+    val categorias: StateFlow<List<Categoria>> = _categorias
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
-    fun fetchTiposNegocio() {
+    fun fetchCategorias() {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.getTiposNegocio()
+                val response = RetrofitClient.apiService.listCategorias()
                 if (response.isSuccessful && response.body() != null) {
-                    _tiposNegocio.value = response.body()!!
+                    _categorias.value = response.body()!!
                 } else {
-                    _error.value = "Error al cargar tipos de negocio: ${response.code()}"
+                    _error.value = "Error al cargar categorías: ${response.code()}"
                 }
             } catch (e: IOException) {
                 _error.value = "Error de conexión: ${e.message}"
@@ -34,15 +34,15 @@ class TipoNegocioViewModel : ViewModel() {
             }
         }
     }
-    fun deleteTipoNegocio(id: Int) {
+
+    fun deleteCategoria(id: Int) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.deleteTipoNegocio(id)
+                val response = RetrofitClient.apiService.deleteCategoria(id)
                 if (response.isSuccessful) {
-                    // Actualizar la lista de tipos de negocio después de la eliminación
-                    fetchTiposNegocio() // Refresca la lista
+                    fetchCategorias() // Refrescar la lista
                 } else {
-                    _error.value = "Error al eliminar tipo de negocio: ${response.code()}"
+                    _error.value = "Error al eliminar: ${response.code()}"
                 }
             } catch (e: IOException) {
                 _error.value = "Error de conexión: ${e.message}"

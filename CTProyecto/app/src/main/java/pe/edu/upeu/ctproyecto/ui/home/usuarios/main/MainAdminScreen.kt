@@ -6,46 +6,23 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.launch
-import pe.edu.upeu.ctproyecto.data.local.DataStoreManager
 import pe.edu.upeu.ctproyecto.ui.home.navbar.BottomNavigationBar
+import pe.edu.upeu.ctproyecto.ui.home.viewmodel.TipoNegocioViewModel
 
 @Composable
 @OptIn(ExperimentalMaterial3Api::class)
 fun MainAdminScreen(navController: NavController) {
     val context = LocalContext.current
-    val coroutineScope = rememberCoroutineScope()
-    val dataStoreManager = remember { DataStoreManager(context) }
-
-    // Variables para almacenar el nombre y el rol del usuario
-    var userName by remember { mutableStateOf<String?>(null) }
-    var userRole by remember { mutableStateOf<String?>(null) }
-
-    // Cargar datos de DataStore
-    LaunchedEffect(Unit) {
-        coroutineScope.launch {
-            dataStoreManager.getName().collectLatest { name -> userName = name }
-        }
-        coroutineScope.launch {
-            dataStoreManager.getRole().collectLatest { role -> userRole = role }
-        }
-    }
-
     var selectedTabIndex by remember { mutableStateOf(0) }
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Panel de Control") },
-                actions = {
-                    // Agregar íconos aquí si lo deseas
-                }
+                title = { Text("Panel de Control") }
             )
         },
         bottomBar = {
@@ -59,30 +36,26 @@ fun MainAdminScreen(navController: NavController) {
                 .padding(24.dp),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-
             // Barra de pestañas
             TabRow(
                 selectedTabIndex = selectedTabIndex,
                 modifier = Modifier.fillMaxWidth(),
                 divider = { Divider(thickness = 1.dp) }
             ) {
-                // Pestaña "Usuarios"
                 Tab(
                     selected = selectedTabIndex == 0,
                     onClick = { selectedTabIndex = 0 },
                     text = { Text("Usuarios") }
                 )
-                // Pestaña "Emprendimientos"
                 Tab(
                     selected = selectedTabIndex == 1,
                     onClick = { selectedTabIndex = 1 },
                     text = { Text("Emprendimientos") }
                 )
-                // Pestaña "Configuraciones" (vacía por ahora)
                 Tab(
                     selected = selectedTabIndex == 2,
                     onClick = { selectedTabIndex = 2 },
-                    text = { Text("Configuraciones") }
+                    text = { Text("Productos ") }
                 )
             }
 
@@ -120,22 +93,6 @@ fun MainAdminScreen(navController: NavController) {
                                 Text("Crear Usuario", fontSize = 18.sp)
                             }
                         }
-
-                        // Si el usuario es admin, mostrar el botón de editar usuario
-                        if (userRole == "admin") {
-                            item {
-                                Button(
-                                    onClick = {
-                                        // Aquí deberías pasar un userId dinámicamente desde una lista de usuarios
-                                        val userId = 1 // Este valor debe ser dinámico
-                                        navController.navigate("editUser/$userId") // RUTA PARA EDITAR USUARIO
-                                    },
-                                    modifier = Modifier.fillMaxWidth()
-                                ) {
-                                    Text("Editar Usuario", fontSize = 18.sp)
-                                }
-                            }
-                        }
                     }
                 }
                 1 -> {
@@ -170,7 +127,15 @@ fun MainAdminScreen(navController: NavController) {
                             }
                         }
 
-
+                        // Aquí agregamos el botón para crear un nuevo tipo de negocio
+                        item {
+                            Button(
+                                onClick = { navController.navigate("createTipoNegocio") }, // Navegar a la pantalla de creación de tipo de negocio
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("Crear Nuevo Tipo de Negocio", fontSize = 18.sp)
+                            }
+                        }
 
                         item {
                             Button(
@@ -183,13 +148,37 @@ fun MainAdminScreen(navController: NavController) {
                     }
                 }
                 2 -> {
-                    // Contenido de "Configuraciones" (vacío por ahora)
+                    // Contenido de "Productos" - Agregar botones para categorías
                     Text(
-                        text = "Configuraciones (vacío)",
-                        fontSize = 18.sp,
-                        modifier = Modifier.fillMaxWidth(),
-                        style = MaterialTheme.typography.bodyLarge
+                        text = "Productos y Categorías",
+                        fontSize = 24.sp,
+                        style = MaterialTheme.typography.titleMedium
                     )
+
+                    Spacer(modifier = Modifier.height(10.dp))
+
+                    LazyColumn(
+                        verticalArrangement = Arrangement.spacedBy(10.dp),
+                        modifier = Modifier.fillMaxWidth()
+                    ) {
+                        item {
+                            Button(
+                                onClick = { navController.navigate("listCategorias") }, // Navegar a la lista de categorías
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("Listar Categorías", fontSize = 18.sp)
+                            }
+                        }
+
+                        item {
+                            Button(
+                                onClick = { navController.navigate("createCategoria") }, // Navegar a la pantalla de creación de categorías
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("Crear Nueva Categoría", fontSize = 18.sp)
+                            }
+                        }
+                    }
                 }
             }
         }

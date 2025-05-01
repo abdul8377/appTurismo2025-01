@@ -59,3 +59,4 @@ Route::post('/tipos-negocio', [TipoNegocioController::class, 'store']);
 Route::get('/tipos-negocio/{id}', [TipoNegocioController::class, 'show']);
 Route::put('/tipos-negocio/{id}', [TipoNegocioController::class, 'update']);
 Route::delete('/tipos-negocio/{id}', [TipoNegocioController::class, 'destroy']);
+Route::get('/tipos-negocio/{id}', [TipoNegocioController::class, 'show']);

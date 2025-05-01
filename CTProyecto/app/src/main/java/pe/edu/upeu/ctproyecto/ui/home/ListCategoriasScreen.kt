@@ -12,19 +12,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import pe.edu.upeu.ctproyecto.ui.home.viewmodel.TipoNegocioViewModel
+import pe.edu.upeu.ctproyecto.ui.home.viewmodel.ListCategoriasViewModel
 
 @Composable
-fun TipoNegocioScreen(
+fun ListCategoriasScreen(
     navController: NavController,
-    viewModel: TipoNegocioViewModel = viewModel()
+    viewModel: ListCategoriasViewModel = viewModel()
 ) {
     val context = LocalContext.current
-    val tiposNegocio by viewModel.tiposNegocio.collectAsState()
+    val categorias by viewModel.categorias.collectAsState()
     val error by viewModel.error.collectAsState()
 
+    var showDialog by remember { mutableStateOf(false) }
+    var selectedCategoriaId by remember { mutableStateOf<Int?>(null) }
+    var selectedCategoriaName by remember { mutableStateOf<String?>(null) }
+
     LaunchedEffect(Unit) {
-        viewModel.fetchTiposNegocio()
+        viewModel.fetchCategorias()
     }
 
     Column(
@@ -32,7 +36,7 @@ fun TipoNegocioScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        Text("Lista de Tipos de Negocio", style = MaterialTheme.typography.headlineMedium)
+        Text("Lista de Categorías", style = MaterialTheme.typography.headlineMedium)
 
         Spacer(modifier = Modifier.height(16.dp))
 
@@ -43,7 +47,7 @@ fun TipoNegocioScreen(
         LazyColumn(
             modifier = Modifier.fillMaxSize()
         ) {
-            items(tiposNegocio) { tipoNegocio ->
+            items(categorias) { categoria ->
                 Card(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -55,27 +59,57 @@ fun TipoNegocioScreen(
                             .padding(16.dp)
                             .fillMaxWidth()
                     ) {
-                        Text("Nombre: ${tipoNegocio.nombre}")
+                        Text("Nombre: ${categoria.nombre_categoria}")
+                        Text("Estado: ${categoria.descripcion}")
                         Spacer(modifier = Modifier.height(8.dp))
                         Row(
                             horizontalArrangement = Arrangement.SpaceBetween,
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Button(onClick = {
-                                navController.navigate("editTipoNegocio/${tipoNegocio.id_tipo_negocio}")
+                                categoria.id?.let { id ->
+                                    navController.navigate("editCategoria/$id")
+                                } ?: run {
+                                    Toast.makeText(context, "Error: ID de categoría inválido", Toast.LENGTH_SHORT).show()
+                                }
                             }) {
                                 Text("Editar")
                             }
+
                             Button(onClick = {
-                                viewModel.deleteTipoNegocio(tipoNegocio.id_tipo_negocio)
+                                selectedCategoriaId = categoria.id
+                                selectedCategoriaName = categoria.nombre_categoria
+                                showDialog = true
                             }) {
                                 Text("Eliminar")
                             }
-
                         }
                     }
                 }
             }
         }
+    }
+
+    if (showDialog) {
+        AlertDialog(
+            onDismissRequest = { showDialog = false },
+            title = { Text("Confirmar eliminación") },
+            text = { Text("¿Estás seguro de eliminar la categoría '${selectedCategoriaName}'?") },
+            confirmButton = {
+                Button(onClick = {
+                    selectedCategoriaId?.let {
+                        viewModel.deleteCategoria(it)
+                    }
+                    showDialog = false
+                }) {
+                    Text("Eliminar")
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { showDialog = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }

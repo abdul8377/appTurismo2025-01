@@ -51,4 +51,18 @@ class TipoNegocioController extends Controller
              'message' => "Registro eliminado satisfactoriamente"
          ], Response::HTTP_OK);
      }
+
+     public function show($id)
+    {
+        // Buscar el tipo de negocio por su ID
+        $tipo_negocio = TipoNegocio::find($id);
+
+        // Si no se encuentra, devolver error
+        if (!$tipo_negocio) {
+            return response()->json(['message' => 'Tipo de negocio no encontrado'], Response::HTTP_NOT_FOUND);
+        }
+
+        // Si se encuentra, devolverlo
+        return response()->json($tipo_negocio, Response::HTTP_OK);
+    }
 }

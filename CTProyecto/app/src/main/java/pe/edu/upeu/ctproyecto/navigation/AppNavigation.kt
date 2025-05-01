@@ -13,13 +13,19 @@ import pe.edu.upeu.ctproyecto.ui.login.LoginScreen
 import pe.edu.upeu.ctproyecto.ui.register.RegisterScreen
 import pe.edu.upeu.ctproyecto.ui.home.HomeScreen
 import pe.edu.upeu.ctproyecto.ui.home.ListEmprendimientosScreen
-import pe.edu.upeu.ctproyecto.ui.home.negocios.TipoNegocioScreen
 import pe.edu.upeu.ctproyecto.ui.home.viewmodel.TipoNegocioViewModel
 import pe.edu.upeu.ctproyecto.ui.home.usuarios.main.MainAdminScreen
 import pe.edu.upeu.ctproyecto.ui.home.usuarios.screem.ListUsersScreen
 import pe.edu.upeu.ctproyecto.ui.home.usuarios.screem.UpdateStatusScreen
 import pe.edu.upeu.ctproyecto.ui.splash.SplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
+import pe.edu.upeu.ctproyecto.ui.home.CreateCategoriaScreen
+import pe.edu.upeu.ctproyecto.ui.home.CreateTipoNegocioScreen
+import pe.edu.upeu.ctproyecto.ui.home.EditCategoriaScreen
+import pe.edu.upeu.ctproyecto.ui.home.EditTipoNegocioScreen
+import pe.edu.upeu.ctproyecto.ui.home.ListCategoriasScreen
+import pe.edu.upeu.ctproyecto.ui.home.TipoNegocioScreen
+
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
@@ -78,22 +84,14 @@ fun AppNavigation(navController: NavHostController) {
             CreateEmprendimientoScreen(navController)
         }
 
-        // O para editar podría ser dinámico:
+        // Editar emprendimiento
         composable("editEmprendimiento/{id}") { backStackEntry ->
             val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+
             if (id != null) {
-                // EditEmprendimientoScreen(navController, id)
-            }
-        }
-
-        composable("editEmprendimiento/{id}") { backStackEntry ->
-            val idParam = backStackEntry.arguments?.getString("id")
-            val id = idParam?.toIntOrNull()
-
-            if (id != null && id > 0) {
                 EditEmprendimientoScreen(navController, id)
             } else {
-                // Puedes navegar a una pantalla de error o simplemente no hacer nada
+                // Manejar error si el ID es inválido o nulo
             }
         }
 
@@ -105,5 +103,42 @@ fun AppNavigation(navController: NavHostController) {
             val tipoNegocioViewModel: TipoNegocioViewModel = viewModel() // Obtiene el ViewModel
             TipoNegocioScreen(viewModel = tipoNegocioViewModel, navController = navController)
         }
+
+
+        composable("createTipoNegocio") {
+            // Pantalla para crear un nuevo tipo de negocio
+            CreateTipoNegocioScreen(navController = navController)
+        }
+
+
+        // Editar Tipo de Negocio
+
+        composable("editTipoNegocio/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+            if (id != null) {
+                EditTipoNegocioScreen(navController = navController, id = id)
+            } else {
+                // Manejar error si el ID es inválido o nulo
+            }
+        }
+
+        composable("listCategorias") {
+            ListCategoriasScreen(navController)
+        }
+
+        composable("createCategoria") {
+            CreateCategoriaScreen(navController)
+        }
+
+        composable("editCategoria/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+
+            if (id != null) {
+                EditCategoriaScreen(navController, id)
+            } else {
+                // Manejar error si el ID es inválido o nulo
+            }
+        }
+
     }
 }
