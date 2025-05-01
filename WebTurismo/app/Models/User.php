@@ -64,4 +64,14 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
+
+     /**
+     * Relación: Un usuario puede tener muchos emprendimientos asignados a través de EmprendimientoUsuario.
+     */
+    public function emprendimientoUsuarios()
+    {
+        return $this->hasMany(EmprendimientoUsuario::class, 'id_usuario');
+    }
+
+
 }

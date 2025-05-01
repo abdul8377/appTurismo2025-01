@@ -9,7 +9,8 @@ use App\Http\Controllers\Api\EmprendimientoController;
 use App\Http\Controllers\Api\EventoController;
 use App\Http\Controllers\Api\ServicioController;
 use App\Http\Controllers\Api\ZonaTuristicaController;
-use App\Http\Controllers\EmprendimientoController as ControllersEmprendimientoController;
+use App\Http\Controllers\EmprendimientoUsuarioController;
+use App\Http\Controllers\ProductorController;
 use Illuminate\Support\Facades\Route;
 
 // Rutas de autenticación
@@ -88,3 +89,14 @@ Route::post('/eventos', [EventoController::class, 'store']);
 Route::get('/eventos/{id}', [EventoController::class, 'show']);
 Route::put('/eventos/{id}', [EventoController::class, 'update']);
 Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);
+
+//USURARIO EMPRENDIMIENTO
+Route::get('/emprendimiento-usuario', [EmprendimientoUsuarioController::class, 'index']);  // Obtener lista de usuarios asignados a un emprendimiento
+Route::post('/emprendimiento-usuario', [EmprendimientoUsuarioController::class, 'store']);  // Crear un nuevo usuario para un emprendimiento
+Route::get('/emprendimiento-usuario/{id}', [EmprendimientoUsuarioController::class, 'show']);  // Obtener un usuario asignado a un emprendimiento
+Route::put('/emprendimiento-usuario/{id}', [EmprendimientoUsuarioController::class, 'update']);  // Actualizar un usuario asignado a un emprendimiento
+Route::delete('/emprendimiento-usuario/{id}', [EmprendimientoUsuarioController::class, 'destroy']);  // Eliminar un usuario asignado a un emprendimiento
+// Ruta para obtener los productores libres
+Route::get('/productores-libres', [ProductorController::class, 'getUsuariosProductoresLibres']);
+Route::get('/emprendimientos-libres', [ProductorController::class, 'getEmprendimientos']);
+
