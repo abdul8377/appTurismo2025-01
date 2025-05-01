@@ -6,6 +6,9 @@ use App\Http\Controllers\Api\CategoriaController;
 use App\Http\Controllers\Api\ProductoController;
 use App\Http\Controllers\Api\TipoNegocioController;
 use App\Http\Controllers\Api\EmprendimientoController;
+use App\Http\Controllers\Api\EventoController;
+use App\Http\Controllers\Api\ServicioController;
+use App\Http\Controllers\Api\ZonaTuristicaController;
 use App\Http\Controllers\EmprendimientoController as ControllersEmprendimientoController;
 use Illuminate\Support\Facades\Route;
 
@@ -60,3 +63,28 @@ Route::get('/tipos-negocio/{id}', [TipoNegocioController::class, 'show']);
 Route::put('/tipos-negocio/{id}', [TipoNegocioController::class, 'update']);
 Route::delete('/tipos-negocio/{id}', [TipoNegocioController::class, 'destroy']);
 Route::get('/tipos-negocio/{id}', [TipoNegocioController::class, 'show']);
+
+
+//rutas para zonas turisticas
+Route::get('/zonas-turisticas', [ZonaTuristicaController::class, 'index']);
+Route::post('/zonas-turisticas', [ZonaTuristicaController::class, 'store']);
+Route::get('/zonas-turisticas/{id}', [ZonaTuristicaController::class, 'show']);
+Route::put('/zonas-turisticas/{id}', [ZonaTuristicaController::class, 'update']);
+Route::delete('/zonas-turisticas/{id}', [ZonaTuristicaController::class, 'destroy']);
+
+
+//rutas para servicios
+
+Route::get('/servicios', [ServicioController::class, 'index']);
+Route::post('/servicios', [ServicioController::class, 'store']);
+Route::get('/servicios/{id}', [ServicioController::class, 'show']);
+Route::put('/servicios/{id}', [ServicioController::class, 'update']);
+Route::delete('/servicios/{id}', [ServicioController::class, 'destroy']);
+
+//rutas para evento
+
+Route::get('/eventos', [EventoController::class, 'index']);
+Route::post('/eventos', [EventoController::class, 'store']);
+Route::get('/eventos/{id}', [EventoController::class, 'show']);
+Route::put('/eventos/{id}', [EventoController::class, 'update']);
+Route::delete('/eventos/{id}', [EventoController::class, 'destroy']);

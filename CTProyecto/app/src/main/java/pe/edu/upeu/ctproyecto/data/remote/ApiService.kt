@@ -5,13 +5,19 @@ import pe.edu.upeu.ctproyecto.data.model.CreateCategoriaRequest
 import pe.edu.upeu.ctproyecto.data.model.CreateEmprendimientoRequest
 import pe.edu.upeu.ctproyecto.data.model.CreateTipoNegocioRequest
 import pe.edu.upeu.ctproyecto.data.model.Emprendimiento
+import pe.edu.upeu.ctproyecto.data.model.Evento
+import pe.edu.upeu.ctproyecto.data.model.EventoRequest
 import pe.edu.upeu.ctproyecto.data.model.LoginRequest
 import pe.edu.upeu.ctproyecto.data.model.LoginResponse
 import pe.edu.upeu.ctproyecto.data.model.RegisterRequest
 import pe.edu.upeu.ctproyecto.data.model.RegisterResponse
+import pe.edu.upeu.ctproyecto.data.model.Servicio
+import pe.edu.upeu.ctproyecto.data.model.ServicioRequest
 import pe.edu.upeu.ctproyecto.data.model.TipoNegocio
 import pe.edu.upeu.ctproyecto.data.model.UpdateStatusRequest
 import pe.edu.upeu.ctproyecto.data.model.User
+import pe.edu.upeu.ctproyecto.data.model.ZonaTuristica
+import pe.edu.upeu.ctproyecto.data.model.ZonaTuristicaRequest
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.DELETE
@@ -137,6 +143,60 @@ interface ApiService {
     suspend fun deleteCategoria(
         @Path("id") id: Int
     ): Response<Unit>
+
+
+
+    //zonas turisticas
+
+    @GET("zonas-turisticas")
+    suspend fun getZonasTuristicas(): Response<List<ZonaTuristica>>
+
+    @GET("zonas-turisticas/{id}")
+    suspend fun getZonaTuristicaById(@Path("id") id: Int): Response<ZonaTuristica>
+
+    @POST("zonas-turisticas")
+    suspend fun createZonaTuristica(@Body request: ZonaTuristicaRequest): Response<ZonaTuristica>
+
+    @PUT("zonas-turisticas/{id}")
+    suspend fun updateZonaTuristica(
+        @Path("id") id: Int,
+        @Body request: ZonaTuristicaRequest
+    ): Response<ZonaTuristica>
+
+    @DELETE("zonas-turisticas/{id}")
+    suspend fun deleteZonaTuristica(@Path("id") id: Int): Response<Unit>
+
+
+    @GET("servicios")
+    suspend fun getServicios(): Response<List<Servicio>>
+
+    @GET("servicios/{id}")
+    suspend fun getServicioById(@Path("id") id: Int): Response<Servicio>
+
+    @POST("servicios")
+    suspend fun createServicio(@Body request: ServicioRequest): Response<Servicio>
+
+    @PUT("servicios/{id}")
+    suspend fun updateServicio(@Path("id") id: Int, @Body request: ServicioRequest): Response<Servicio>
+
+    @DELETE("servicios/{id}")
+    suspend fun deleteServicio(@Path("id") id: Int): Response<Unit>
+
+
+    @GET("eventos")
+    suspend fun getEventos(): Response<List<Evento>>
+
+    @GET("eventos/{id}")
+    suspend fun getEventoById(@Path("id") id: Int): Response<Evento>
+
+    @POST("eventos")
+    suspend fun createEvento(@Body request: EventoRequest): Response<Evento>
+
+    @PUT("eventos/{id}")
+    suspend fun updateEvento(@Path("id") id: Int, @Body request: EventoRequest): Response<Evento>
+
+    @DELETE("eventos/{id}")
+    suspend fun deleteEvento(@Path("id") id: Int): Response<Unit>
 
 
 }

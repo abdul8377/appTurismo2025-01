@@ -1,0 +1,27 @@
+R_DEF: Internal format may change without notice
+local
+color black
+color purple_200
+color purple_500
+color purple_700
+color teal_200
+color teal_700
+color white
+dimen header_image_size
+dimen header_padding
+dimen horizontal_margin
+dimen spacer_padding
+dimen vertical_margin
+drawable bg
+drawable ic_error_imagen
+drawable ic_launcher_background
+drawable ic_launcher_foreground
+drawable ic_login_image
+drawable person
+drawable qr
+mipmap ic_launcher
+mipmap ic_launcher_round
+string app_name
+style Theme.AppTurismo202501
+xml backup_rules
+xml data_extraction_rules
