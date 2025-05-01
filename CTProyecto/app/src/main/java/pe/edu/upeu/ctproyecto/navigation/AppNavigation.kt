@@ -20,10 +20,19 @@ import pe.edu.upeu.ctproyecto.ui.home.usuarios.screem.UpdateStatusScreen
 import pe.edu.upeu.ctproyecto.ui.splash.SplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pe.edu.upeu.ctproyecto.ui.home.CreateCategoriaScreen
+import pe.edu.upeu.ctproyecto.ui.home.CreateEventoScreen
+import pe.edu.upeu.ctproyecto.ui.home.CreateServicioScreen
 import pe.edu.upeu.ctproyecto.ui.home.CreateTipoNegocioScreen
+import pe.edu.upeu.ctproyecto.ui.home.CreateZonaTuristicaScreen
 import pe.edu.upeu.ctproyecto.ui.home.EditCategoriaScreen
+import pe.edu.upeu.ctproyecto.ui.home.EditEventoScreen
+import pe.edu.upeu.ctproyecto.ui.home.EditServicioScreen
 import pe.edu.upeu.ctproyecto.ui.home.EditTipoNegocioScreen
+import pe.edu.upeu.ctproyecto.ui.home.EditZonaTuristicaScreen
 import pe.edu.upeu.ctproyecto.ui.home.ListCategoriasScreen
+import pe.edu.upeu.ctproyecto.ui.home.ListEventosScreen
+import pe.edu.upeu.ctproyecto.ui.home.ListServiciosScreen
+import pe.edu.upeu.ctproyecto.ui.home.ListZonaTuristicaScreen
 import pe.edu.upeu.ctproyecto.ui.home.TipoNegocioScreen
 
 
@@ -134,11 +143,53 @@ fun AppNavigation(navController: NavHostController) {
             val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
 
             if (id != null) {
-                EditCategoriaScreen(navController, id)
+                EditCategoriaScreen(navController = navController, id = id)
             } else {
                 // Manejar error si el ID es inválido o nulo
             }
         }
+        //zonas
+        composable("listZonas") {
+            ListZonaTuristicaScreen(navController)
+        }
+        composable("editZona/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+            id?.let {
+                EditZonaTuristicaScreen(navController, id = it)
+            }
+        }
+        composable("createZona") {
+            CreateZonaTuristicaScreen(navController)
+        }
 
+
+        //servicios
+
+        composable("listServicios") {
+            ListServiciosScreen(navController)
+        }
+
+        composable("createServicio") {
+            CreateServicioScreen(navController)
+        }
+
+        composable("editServicio/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+            if (id != null) {
+                EditServicioScreen(navController = navController, id = id)
+            }
+        }
+        composable("listEventos") {
+            ListEventosScreen(navController) }
+
+        composable("createEvento") {
+            CreateEventoScreen(navController) }
+
+        composable("editEvento/{id}") { backStackEntry ->
+            val id = backStackEntry.arguments?.getString("id")?.toIntOrNull()
+            if (id != null) {
+                EditEventoScreen(navController = navController, id = id)
+            }
+        }
     }
 }

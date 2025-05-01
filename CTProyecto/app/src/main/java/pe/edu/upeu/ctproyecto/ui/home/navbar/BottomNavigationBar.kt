@@ -1,9 +1,12 @@
 package pe.edu.upeu.ctproyecto.ui.home.navbar
 
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.List
+import androidx.compose.material.icons.filled.LocationOn
 import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -17,7 +20,9 @@ sealed class BottomNavItem(
 ) {
     object Home : BottomNavItem("home", Icons.Filled.Home, "Inicio")
     object Usuarios : BottomNavItem("mainusers", Icons.Filled.Person, "Usuarios")
-    object Emprendimientos : BottomNavItem("listEmprendimientos", Icons.Filled.List, "Emprendimientos")
+    object ZonasTuristicas : BottomNavItem("listZonas", Icons.Filled.LocationOn, "Zonas")
+    object Servicios : BottomNavItem("listServicios", Icons.Filled.Star, "Servicios")
+    object Eventos : BottomNavItem("listEventos", Icons.Filled.CheckCircle, "Eventos") // NUEVO
 }
 
 @Composable
@@ -26,7 +31,9 @@ fun BottomNavigationBar(navController: NavController) {
     val items = listOf(
         BottomNavItem.Home,
         BottomNavItem.Usuarios,
-        BottomNavItem.Emprendimientos
+        BottomNavItem.ZonasTuristicas,
+        BottomNavItem.Servicios,
+        BottomNavItem.Eventos
     )
 
     // Obtén la ruta actual del back stack
