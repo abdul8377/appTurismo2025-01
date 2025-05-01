@@ -96,7 +96,7 @@ Route::post('/emprendimiento-usuario', [EmprendimientoUsuarioController::class, 
 Route::get('/emprendimiento-usuario/{id}', [EmprendimientoUsuarioController::class, 'show']);  // Obtener un usuario asignado a un emprendimiento
 Route::put('/emprendimiento-usuario/{id}', [EmprendimientoUsuarioController::class, 'update']);  // Actualizar un usuario asignado a un emprendimiento
 Route::delete('/emprendimiento-usuario/{id}', [EmprendimientoUsuarioController::class, 'destroy']);  // Eliminar un usuario asignado a un emprendimiento
-// Ruta para obtener los productores libres
+// Ruta para obtener los productores libres y emprendimientos libres
 Route::get('/productores-libres', [ProductorController::class, 'getUsuariosProductoresLibres']);
 Route::get('/emprendimientos-libres', [ProductorController::class, 'getEmprendimientos']);
 
