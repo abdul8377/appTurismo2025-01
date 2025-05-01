@@ -5,27 +5,31 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
+import pe.edu.upeu.ctproyecto.data.model.CreateTipoNegocioRequest
 import pe.edu.upeu.ctproyecto.data.model.TipoNegocio
 import pe.edu.upeu.ctproyecto.data.remote.RetrofitClient
 import retrofit2.HttpException
 import java.io.IOException
 
-class TipoNegocioViewModel : ViewModel() {
+class EditTipoNegocioViewModel : ViewModel() {
 
-    private val _tiposNegocio = MutableStateFlow<List<TipoNegocio>>(emptyList())
-    val tiposNegocio: StateFlow<List<TipoNegocio>> = _tiposNegocio
+    private val _tipoNegocio = MutableStateFlow<TipoNegocio?>(null)
+    val tipoNegocio: StateFlow<TipoNegocio?> = _tipoNegocio
 
     private val _error = MutableStateFlow<String?>(null)
     val error: StateFlow<String?> = _error
 
-    fun fetchTiposNegocio() {
+    private val _success = MutableStateFlow(false)
+    val success: StateFlow<Boolean> = _success
+
+    fun fetchTipoNegocio(id: Int) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.getTiposNegocio()
+                val response = RetrofitClient.apiService.getTipoNegocioById(id)
                 if (response.isSuccessful && response.body() != null) {
-                    _tiposNegocio.value = response.body()!!
+                    _tipoNegocio.value = response.body()
                 } else {
-                    _error.value = "Error al cargar tipos de negocio: ${response.code()}"
+                    _error.value = "Tipo de negocio no encontrado (Error ${response.code()})"
                 }
             } catch (e: IOException) {
                 _error.value = "Error de conexión: ${e.message}"
@@ -34,15 +38,22 @@ class TipoNegocioViewModel : ViewModel() {
             }
         }
     }
-    fun deleteTipoNegocio(id: Int) {
+
+    // UpdateTipoNegocioViewModel
+    fun updateTipoNegocio(id: Int, nombre: String) {
         viewModelScope.launch {
             try {
-                val response = RetrofitClient.apiService.deleteTipoNegocio(id)
+                // Crear un objeto de tipo CreateTipoNegocioRequest
+                val request = CreateTipoNegocioRequest(nombre)
+
+                // Enviar el objeto request al endpoint para actualizar el tipo de negocio
+                val response = RetrofitClient.apiService.updateTipoNegocio(id, request)
                 if (response.isSuccessful) {
-                    // Actualizar la lista de tipos de negocio después de la eliminación
-                    fetchTiposNegocio() // Refresca la lista
+                    _success.value = true
                 } else {
-                    _error.value = "Error al eliminar tipo de negocio: ${response.code()}"
+                    // Log el error recibido
+                    _error.value = "Error al actualizar: ${response.code()}"
+                    // Aquí podrías ver más detalles del error de la respuesta
                 }
             } catch (e: IOException) {
                 _error.value = "Error de conexión: ${e.message}"
@@ -51,4 +62,5 @@ class TipoNegocioViewModel : ViewModel() {
             }
         }
     }
+
 }

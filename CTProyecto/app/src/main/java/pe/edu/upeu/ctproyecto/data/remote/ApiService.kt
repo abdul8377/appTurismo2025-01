@@ -1,6 +1,9 @@
 package pe.edu.upeu.ctproyecto.data.remote
 
+import pe.edu.upeu.ctproyecto.data.model.Categoria
+import pe.edu.upeu.ctproyecto.data.model.CreateCategoriaRequest
 import pe.edu.upeu.ctproyecto.data.model.CreateEmprendimientoRequest
+import pe.edu.upeu.ctproyecto.data.model.CreateTipoNegocioRequest
 import pe.edu.upeu.ctproyecto.data.model.Emprendimiento
 import pe.edu.upeu.ctproyecto.data.model.LoginRequest
 import pe.edu.upeu.ctproyecto.data.model.LoginResponse
@@ -91,10 +94,49 @@ interface ApiService {
     //tipo-negocio
 
 
-    @GET("tipos-negocio")
-    suspend fun getTiposNegocio(): Response<List<TipoNegocio>>
+    @POST("tipos-negocio")
+    suspend fun createTipoNegocio(@Body request: CreateTipoNegocioRequest): Response<TipoNegocio>
+
+    @GET("tipos-negocio/{id}")
+    suspend fun getTipoNegocioById(@Path("id") id: Int): Response<TipoNegocio>
+
+    @PUT("tipos-negocio/{id}")
+    suspend fun updateTipoNegocio(
+        @Path("id") id: Int,
+        @Body request: CreateTipoNegocioRequest  // Enviar el request con el nuevo nombre
+    ): Response<TipoNegocio>
 
     @DELETE("tipos-negocio/{id}")
     suspend fun deleteTipoNegocio(@Path("id") id: Int): Response<Unit>
+
+    @GET("tipos-negocio")
+    suspend fun getTiposNegocio(): Response<List<TipoNegocio>>
+
+    // Categorias
+    @GET("categorias")
+    suspend fun listCategorias(): Response<List<Categoria>>
+
+    @POST("categorias")
+    suspend fun createCategoria(
+        @Body categoria: CreateCategoriaRequest
+    ): Response<Categoria>
+
+    @GET("categorias/{id}")
+    suspend fun getCategoriaById(
+        @Path("id") id: Int
+    ): Response<Categoria>
+
+    @PUT("categorias/{id}")
+    suspend fun updateCategoria(
+        @Path("id") id: Int,
+        @Body body: Map<String, @JvmSuppressWildcards Any>
+    ): Response<Any>
+
+
+    @DELETE("categorias/{id}")
+    suspend fun deleteCategoria(
+        @Path("id") id: Int
+    ): Response<Unit>
+
 
 }

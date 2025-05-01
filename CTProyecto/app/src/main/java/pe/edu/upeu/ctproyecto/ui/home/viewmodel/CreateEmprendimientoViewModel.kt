@@ -6,6 +6,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import pe.edu.upeu.ctproyecto.data.model.CreateEmprendimientoRequest
+import pe.edu.upeu.ctproyecto.data.model.Emprendimiento
 import pe.edu.upeu.ctproyecto.data.remote.RetrofitClient
 import retrofit2.HttpException
 import java.io.IOException
@@ -35,7 +36,10 @@ class CreateEmprendimientoViewModel : ViewModel() {
         viewModelScope.launch {
             try {
                 _isLoading.value = true
-                val body = CreateEmprendimientoRequest(
+
+                // Crear un objeto Emprendimiento
+                val emprendimiento = Emprendimiento(
+                    id = 0, // Aquí asumes que el id se genera en el servidor
                     nombre = nombre,
                     descripcion = descripcion,
                     id_tipo_negocio = idTipoNegocio,
@@ -43,7 +47,20 @@ class CreateEmprendimientoViewModel : ViewModel() {
                     telefono = telefono,
                     estado = estado
                 )
-                val response = RetrofitClient.apiService.createEmprendimiento(body)
+
+                // Crear un CreateEmprendimientoRequest a partir del objeto Emprendimiento
+                val request = CreateEmprendimientoRequest(
+                    nombre = emprendimiento.nombre,
+                    descripcion = emprendimiento.descripcion,
+                    id_tipo_negocio = emprendimiento.id_tipo_negocio,
+                    direccion = emprendimiento.direccion,
+                    telefono = emprendimiento.telefono,
+                    estado = emprendimiento.estado
+                )
+
+                // Enviar la solicitud a la API
+                val response = RetrofitClient.apiService.createEmprendimiento(request)
+
                 if (response.isSuccessful) {
                     _success.value = true
                 } else {
