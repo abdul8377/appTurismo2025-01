@@ -9,7 +9,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import pe.edu.upeu.ctproyecto.data.local.DataStoreManager
 
 object RetrofitClient {
-    private const val BASE_URL = "http://192.168.1.2:8000/api/"
+    private const val BASE_URL = "http://192.168.0.198:8000/api/"
 
     private lateinit var getToken: suspend () -> String?
 
