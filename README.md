@@ -1,4 +1,4 @@
-# SistemaTurismo
+# Sistema de Turismo
 
 ## PASO 1: Clonar el Repositorio
 Abre la terminal y clona el repositorio en tu máquina local:
