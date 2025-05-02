@@ -124,7 +124,7 @@ Esto generará los datos de usuario, con el siguiente acceso de administrador:
 - **Usuario**: Franck Coaquira
 - **Contraseña**: 12345678
 
-## PASO 8: Iniciar el Backend de Laravel
+## PASO 8: Iniciar el Backend de Laravel(OPCIONAL NO ES NESESARIO)
 Inicia el servidor de Laravel para que el backend esté disponible:
 
 ```bash
