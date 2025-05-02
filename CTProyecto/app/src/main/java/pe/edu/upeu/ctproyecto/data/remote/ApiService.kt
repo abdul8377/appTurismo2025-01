@@ -206,8 +206,9 @@ interface ApiService {
 
     @POST("emprendimiento-usuario")
     suspend fun createEmprendimientoUsuario(
-        @Body request: CreateEmprendimientoUsuarioRequest // Asegúrate de usar el modelo correcto aquí
-    ): Response<Unit> // Cambia el tipo de respuesta según lo que espera tu API
+        @Body request: CreateEmprendimientoUsuarioRequest // Este es el modelo que estás enviando
+    ): Response<Unit>
+
 
     @GET("emprendimiento-usuario/{id}")
     suspend fun getEmprendimientoUsuarioById(
@@ -228,8 +229,11 @@ interface ApiService {
     @GET("productores-libres")
     suspend fun getUsuariosProductoresLibres(): Response<List<User>>
 
+
+    ///////////
     @GET("emprendimientos-libres")
-    suspend fun getEmprendimientosLibres(): Response<List<Emprendimiento>>
+    suspend fun getEmprendimientos(): Response<List<Emprendimiento>>
+
 
 
 }
