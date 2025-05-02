@@ -19,43 +19,5 @@ fun ListProductosScreen(
     navController: NavController,
     viewModel: ListProductosViewModel = viewModel()
 ) {
-    val context = LocalContext.current
-    val productos by viewModel.productos.collectAsState()
-    val error by viewModel.error.collectAsState()
 
-    LaunchedEffect(Unit) {
-        viewModel.fetchProductos()
-    }
-
-    Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Lista de Productos", style = MaterialTheme.typography.headlineMedium)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        if (error != null) {
-            Text(text = error ?: "", color = MaterialTheme.colorScheme.error)
-        }
-
-        LazyColumn(modifier = Modifier.fillMaxSize()) {
-            items(productos) { producto ->
-                Card(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), elevation = CardDefaults.cardElevation()) {
-                    Column(modifier = Modifier.padding(16.dp).fillMaxWidth()) {
-                        Text("Nombre: ${producto.nombre_producto}")
-                        Text("Estado: ${producto.estado}")
-                        Text("Precio: ${producto.precio}")
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Row(horizontalArrangement = Arrangement.SpaceBetween, modifier = Modifier.fillMaxWidth()) {
-                            Button(onClick = { navController.navigate("editProducto/${producto.id}") }) {
-                                Text("Editar")
-                            }
-
-                            Button(onClick = { navController.navigate("deleteProducto/${producto.id}") }) {
-                                Text("Eliminar")
-                            }
-                        }
-                    }
-                }
-            }
-        }
-    }
 }

@@ -145,6 +145,24 @@ fun MainAdminScreen(navController: NavController) {
                                 Text("Listar Tipo de Negocio", fontSize = 18.sp)
                             }
                         }
+
+                        item {
+                            Button(
+                                onClick = { navController.navigate("listUsuariosEmprendimiento") },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("Listar User EMopre", fontSize = 18.sp)
+                            }
+                        }
+
+                        item {
+                            Button(
+                                onClick = { navController.navigate("AsignarUsuarioaEmprendimiento") },
+                                modifier = Modifier.fillMaxWidth()
+                            ) {
+                                Text("crear User EMopre", fontSize = 18.sp)
+                            }
+                        }
                     }
                 }
                 2 -> {

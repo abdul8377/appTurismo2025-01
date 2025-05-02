@@ -22,36 +22,50 @@ class EmprendimientoUsuarioController extends Controller
      * Crear un nuevo usuario para un emprendimiento.
      */
     public function store(Request $request)
-    {
-        // Validación de los datos recibidos
-        $request->validate([
-            'id_emprendimiento' => 'required|exists:emprendimiento,id_emprendimiento',
-            'id_usuario' => 'required|exists:users,id',
-            'rol_emprendimiento' => 'required|in:propietario,colaborador',
-        ]);
+{
+    // Validación de los datos recibidos
+    $request->validate([
+        'id_emprendimiento' => 'required|exists:emprendimiento,id_emprendimiento',
+        'id_usuario' => 'required|exists:users,id',
+        'rol_emprendimiento' => 'required|in:propietario,colaborador',
+    ]);
 
-        // Verificar si el usuario ya está vinculado a otro emprendimiento
-        $userAlreadyLinked = EmprendimientoUsuario::where('id_usuario', $request->id_usuario)->exists();
-        if ($userAlreadyLinked) {
-            return response()->json(['message' => 'El usuario ya está vinculado a otro emprendimiento.'], 400);
-        }
+    // Obtener los usuarios con rol "Productor" que no están vinculados a ningún emprendimiento
+    $productoresLibres = User::role('Productor')
+        ->whereDoesntHave('emprendimientoUsuarios')  // Asegura que no estén vinculados a ningún emprendimiento
+        ->get();
 
-        // Verificar si el usuario tiene el rol "Productor"
-        $user = User::find($request->id_usuario);
-        if (!$user->roles->contains('Productor')) {
-            return response()->json(['message' => 'Solo los usuarios con rol de "Productor" pueden ser vinculados a un emprendimiento.'], 400);
-        }
+    // Obtener los emprendimientos que no están vinculados a ningún usuario
+    $emprendimientosLibres = Emprendimiento::doesntHave('usuarios')  // Asegura que no estén vinculados a ningún usuario
+        ->get();
 
-        // Crear la relación entre el usuario y el emprendimiento
-        $emprendimientoUsuario = EmprendimientoUsuario::create([
-            'id_emprendimiento' => $request->id_emprendimiento,
-            'id_usuario' => $request->id_usuario,
-            'rol_emprendimiento' => $request->rol_emprendimiento,
-            'fecha_asignacion' => now(),
-        ]);
-
-        return response()->json($emprendimientoUsuario, 201);
+    // Verificar si el usuario ya está vinculado a otro emprendimiento
+    $userAlreadyLinked = EmprendimientoUsuario::where('id_usuario', $request->id_usuario)->exists();
+    if ($userAlreadyLinked) {
+        return response()->json(['message' => 'El usuario ya está vinculado a otro emprendimiento.'], 400);
     }
+
+    // Verificar si el usuario tiene el rol "Productor"
+    $user = User::find($request->id_usuario);
+    if (!$user->roles->contains('Productor')) {
+        return response()->json(['message' => 'Solo los usuarios con rol de "Productor" pueden ser vinculados a un emprendimiento.'], 400);
+    }
+
+    // Crear la relación entre el usuario y el emprendimiento
+    $emprendimientoUsuario = EmprendimientoUsuario::create([
+        'id_emprendimiento' => $request->id_emprendimiento,
+        'id_usuario' => $request->id_usuario,
+        'rol_emprendimiento' => $request->rol_emprendimiento,
+        'fecha_asignacion' => now(),
+    ]);
+
+    return response()->json([
+        'emprendimientoUsuario' => $emprendimientoUsuario,
+        'productoresLibres' => $productoresLibres,
+        'emprendimientosLibres' => $emprendimientosLibres,
+    ], 201);
+}
+
 
     /**
      * Mostrar un usuario asignado a un emprendimiento.

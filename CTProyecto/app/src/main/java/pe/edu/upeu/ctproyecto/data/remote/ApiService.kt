@@ -3,8 +3,10 @@ package pe.edu.upeu.ctproyecto.data.remote
 import pe.edu.upeu.ctproyecto.data.model.Categoria
 import pe.edu.upeu.ctproyecto.data.model.CreateCategoriaRequest
 import pe.edu.upeu.ctproyecto.data.model.CreateEmprendimientoRequest
+import pe.edu.upeu.ctproyecto.data.model.CreateEmprendimientoUsuarioRequest
 import pe.edu.upeu.ctproyecto.data.model.CreateTipoNegocioRequest
 import pe.edu.upeu.ctproyecto.data.model.Emprendimiento
+import pe.edu.upeu.ctproyecto.data.model.EmprendimientoUsuario
 import pe.edu.upeu.ctproyecto.data.model.Evento
 import pe.edu.upeu.ctproyecto.data.model.EventoRequest
 import pe.edu.upeu.ctproyecto.data.model.LoginRequest
@@ -197,6 +199,37 @@ interface ApiService {
 
     @DELETE("eventos/{id}")
     suspend fun deleteEvento(@Path("id") id: Int): Response<Unit>
+
+
+    @GET("emprendimiento-usuario")
+    suspend fun listEmprendimientoUsuarios(): Response<List<EmprendimientoUsuario>>
+
+    @POST("emprendimiento-usuario")
+    suspend fun createEmprendimientoUsuario(
+        @Body request: CreateEmprendimientoUsuarioRequest // Asegúrate de usar el modelo correcto aquí
+    ): Response<Unit> // Cambia el tipo de respuesta según lo que espera tu API
+
+    @GET("emprendimiento-usuario/{id}")
+    suspend fun getEmprendimientoUsuarioById(
+        @Path("id") id: Int
+    ): Response<EmprendimientoUsuario>
+
+    @PUT("emprendimiento-usuario/{id}")
+    suspend fun updateEmprendimientoUsuario(
+        @Path("id") id: Int,
+        @Body emprendimientoUsuario: EmprendimientoUsuario
+    ): Response<EmprendimientoUsuario>
+
+    @DELETE("emprendimiento-usuario/{id}")
+    suspend fun deleteEmprendimientoUsuario(
+        @Path("id") id: Int
+    ): Response<Unit>
+
+    @GET("productores-libres")
+    suspend fun getUsuariosProductoresLibres(): Response<List<User>>
+
+    @GET("emprendimientos-libres")
+    suspend fun getEmprendimientosLibres(): Response<List<Emprendimiento>>
 
 
 }

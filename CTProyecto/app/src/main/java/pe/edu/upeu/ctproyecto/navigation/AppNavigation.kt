@@ -20,6 +20,7 @@ import pe.edu.upeu.ctproyecto.ui.home.usuarios.screem.UpdateStatusScreen
 import pe.edu.upeu.ctproyecto.ui.splash.SplashScreen
 import androidx.lifecycle.viewmodel.compose.viewModel
 import pe.edu.upeu.ctproyecto.ui.home.CreateCategoriaScreen
+import pe.edu.upeu.ctproyecto.ui.home.CreateEmprendimientoUsuarioScreen
 import pe.edu.upeu.ctproyecto.ui.home.CreateEventoScreen
 import pe.edu.upeu.ctproyecto.ui.home.CreateServicioScreen
 import pe.edu.upeu.ctproyecto.ui.home.CreateTipoNegocioScreen
@@ -30,6 +31,7 @@ import pe.edu.upeu.ctproyecto.ui.home.EditServicioScreen
 import pe.edu.upeu.ctproyecto.ui.home.EditTipoNegocioScreen
 import pe.edu.upeu.ctproyecto.ui.home.EditZonaTuristicaScreen
 import pe.edu.upeu.ctproyecto.ui.home.ListCategoriasScreen
+import pe.edu.upeu.ctproyecto.ui.home.ListEmprendimientoUsuariosScreen
 import pe.edu.upeu.ctproyecto.ui.home.ListEventosScreen
 import pe.edu.upeu.ctproyecto.ui.home.ListServiciosScreen
 import pe.edu.upeu.ctproyecto.ui.home.ListZonaTuristicaScreen
@@ -190,6 +192,14 @@ fun AppNavigation(navController: NavHostController) {
             if (id != null) {
                 EditEventoScreen(navController = navController, id = id)
             }
+        }
+
+        composable("listUsuariosEmprendimiento") {
+            ListEmprendimientoUsuariosScreen(navController)
+        }
+
+        composable("AsignarUsuarioaEmprendimiento") {
+            CreateEmprendimientoUsuarioScreen(navController)
         }
     }
 }
