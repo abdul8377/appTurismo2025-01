@@ -197,6 +197,6 @@ Es recomendable ingresar como **Administrador** ya que algunas funciones están 
 - **Julmer Quispe Apaza** (G2)
 - **Abdul Quispe Condori** (G1)
 - **Franck A. Coaquira Justo** (G2)
-- **Pretil Ramos Arisapana** (G2)
+- **Pretel Ramos Arisapana** (G2)
 - **Glenen W. Choquechambi Luque** (G2)
 - **Yamil Zúñiga** (G1)
