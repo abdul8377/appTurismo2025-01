@@ -11,7 +11,7 @@ git clone https://github.com/abdul8377/appTurismo2025-01.git
 Navega a la carpeta del proyecto clonado:
 
 ```bash
-cd D:\appTurismo2025-01\WebTurismo
+D:\appTurismo2025-01\WebTurismo
 ```
 
 ## PASO 3: Verificar el Archivo `.env`
@@ -90,16 +90,12 @@ FACEBOOK_CLIENT_SECRET=3a5eecccf21c97f09fac2af5c6894a12
 FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
 ```
 
-## PASO 4: Verificar los Recursos Necesarios
+## PASO 4: Instalar las dependencias:
 
-1. **Composer**: Verifica que tengas Composer instalado. Si no lo tienes, instálalo.
-   - Ejecuta el siguiente comando para instalar las dependencias del proyecto:
-   ```bash
+1. **Composer**: 
    composer install
-   ```
 
-2. **Laravel**: Si aún no tienes Laravel instalado globalmente, instálalo con:
-   ```bash
+3. **Laravel**: Si aún no tienes Laravel instalado globalmente, instálalo con:
    composer global require laravel/installer
    ```
 
