@@ -93,11 +93,11 @@ FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
 ## PASO 4: Instalar las dependencias:
 
 1. **Composer**: 
-   composer install
+    ```composer install
 
 3. **Laravel**: Si aún no tienes Laravel instalado globalmente, instálalo con:
    composer global require laravel/installer
-   ```
+   ```composer global require laravel/installer
 
 ## PASO 5: Iniciar el Servidor de Base de Datos
 Asegúrate de que el servidor de base de datos esté funcionando. Puedes usar **Laragon**, **XAMPP**, o cualquier otro servidor de bases de datos que prefieras.
