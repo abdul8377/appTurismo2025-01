@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowDropDown
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material3.Button
@@ -57,7 +58,7 @@ import java.util.Calendar
 import java.util.Date
 
 enum class MyFormKeys {
-    EMAIL, PASSWORD, SALUTATION, SALUTATION2,SALUTATION3,NAME, URL, CUSTOM_FOCUS,
+    EMAIL, PASSWORD,PASSWORDCONFIRMATION, SALUTATION, SALUTATION2,SALUTATION3,NAME, URL, CUSTOM_FOCUS,
     PHONE, CARD, CHECKBOX, LIST_CHECKBOX, TRI_CHECKBOX, RADIO_BUTTON,
     SWITCH, SLIDER, RANGE_SLIDER,DNI, APE_PAT, APE_MAT, FECHA, TIME, TIME_TOLER, MATERIALES, VALIDINSCRIP, ASISSUBACT, ENTSAL, OFFLINE,
     CUI,TIPOCUI,MATERENTRE,HORAREG,MODFH,ACTIVIDADID, PU,PU_OLD, UTILIDAD, STOCK, STOCK_OLD
@@ -506,7 +507,7 @@ fun NameTextField(easyForms: EasyForms, text: String, label:String, key:MyFormKe
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun EmailTextField(easyForms: EasyForms, text: String, label:String, tipo:String) {
+fun EmailTextField(easyForms: EasyForms, text: String, label:String, ) {
     val textFieldState = easyForms.getTextFieldState(
         key = MyFormKeys.EMAIL,
         easyFormsValidationType = NoValidation, // <--- Acepta cualquier entrada
@@ -516,8 +517,9 @@ fun EmailTextField(easyForms: EasyForms, text: String, label:String, tipo:String
     OutlinedTextField(
         value = state.value,
         onValueChange = textFieldState.onValueChangedCallback,
+        leadingIcon = { Icon(Icons.Default.Email, contentDescription = null) },
         label = { Text(text = label) },
-        modifier = if(tipo=="U") Modifier.wrapContentWidth() else Modifier.fillMaxWidth(),
+        modifier = Modifier.fillMaxWidth(),
         isError = textFieldState.errorState.value == EasyFormsErrorState.INVALID,
     )
 }
@@ -536,9 +538,12 @@ fun PasswordTextField(easyForms: EasyForms,text: String, label:String,
     OutlinedTextField(
         value = state.value,
         label = { Text(text = label) },
+
         onValueChange = textFieldState.onValueChangedCallback,
+        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
         isError = textFieldState.errorState.value == EasyFormsErrorState.INVALID,
         visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
+        modifier = Modifier.fillMaxWidth(),
         trailingIcon = {
             val image = if (passwordVisibility.value)
                 Icons.Filled.Face
@@ -550,8 +555,46 @@ fun PasswordTextField(easyForms: EasyForms,text: String, label:String,
                 Icon(imageVector = image, description)
             }
         }
+
     )
 }
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun PasswordConfirmation(easyForms: EasyForms,text: String, label:String,
+                      passwordVisibility: MutableState<Boolean> = remember { mutableStateOf(false) }
+) {
+    val textFieldState = easyForms.getTextFieldState(
+        key = MyFormKeys.PASSWORDCONFIRMATION,
+        easyFormsValidationType = BasicPasswordValidation, // ← Cambiado aquí
+        defaultValue = text,
+    )
+    val state = textFieldState.state
+    OutlinedTextField(
+        value = state.value,
+        label = { Text(text = label) },
+
+        onValueChange = textFieldState.onValueChangedCallback,
+        leadingIcon = { Icon(Icons.Default.Lock, contentDescription = null) },
+        isError = textFieldState.errorState.value == EasyFormsErrorState.INVALID,
+        visualTransformation = if (passwordVisibility.value) VisualTransformation.None else PasswordVisualTransformation(),
+        modifier = Modifier.fillMaxWidth(),
+        trailingIcon = {
+            val image = if (passwordVisibility.value)
+                Icons.Filled.Face
+            else Icons.Filled.Lock
+            val description = if (passwordVisibility.value) "Hide password" else "Show password"
+
+            IconButton(
+                onClick = { passwordVisibility.value = !passwordVisibility.value }) {
+                Icon(imageVector = image, description)
+            }
+        }
+
+    )
+}
+
+
+
 object MyCustomLengthValidationType : EasyFormsValidationType(
     minLength = 8,
     maxLength = 8,
@@ -640,18 +683,34 @@ fun LoginButton(
     label:String
 ) {
     val errorStates = easyForms.observeFormStates()
-    androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(5.dp))
+
     Button(
         onClick = onClick,
-        modifier = Modifier.size(width = 200.dp, height = 70.dp),
+        modifier = Modifier.fillMaxWidth(),
         enabled = errorStates.value.all {it.value == EasyFormsErrorState.VALID}
     ) {
-        Text(label, fontSize = 40.sp)
+        Text("Iniciar sesion")
     }
 }
 object NoValidation : EasyFormsValidationType()
-
 object BasicPasswordValidation : EasyFormsValidationType(
     minLength = 4,
     maxLength = 50
 )
+
+@Composable
+fun RegisterButton(
+    easyForms: EasyForms,
+    onClick: () -> Unit,
+    label:String
+) {
+    val errorStates = easyForms.observeFormStates()
+
+    Button(
+        onClick = onClick,
+        modifier = Modifier.fillMaxWidth(),
+        enabled = errorStates.value.all {it.value == EasyFormsErrorState.VALID}
+    ) {
+        Text("Registrarse")
+    }
+}
