@@ -6,6 +6,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import pe.edu.upeu.appturismo202501.repository.LoginUserRepository
 import pe.edu.upeu.appturismo202501.repository.LoginUserRespositoryImp
+import pe.edu.upeu.appturismo202501.repository.RegisterRepository
+import pe.edu.upeu.appturismo202501.repository.RegisterRepositoryImpl
 
 import javax.inject.Singleton
 
@@ -17,4 +19,8 @@ abstract class RepositoryModule {
     @Singleton
     abstract fun
             loginUserRepository(loginRepos:LoginUserRespositoryImp):LoginUserRepository
+    @Binds
+    @Singleton
+    abstract fun
+            registerRepository(registerRepos:RegisterRepositoryImpl):RegisterRepository
 }

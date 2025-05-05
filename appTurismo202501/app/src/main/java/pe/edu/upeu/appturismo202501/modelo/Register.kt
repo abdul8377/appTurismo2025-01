@@ -1,16 +1,18 @@
 package pe.edu.upeu.appturismo202501.modelo
 
-data class RegisterDto (
+import com.google.gson.annotations.SerializedName
+
+data class RegisterDto(
     val name: String,
     val email: String,
-    val password:String,
+    val password: String,
+    @SerializedName("password_confirmation")
     val password_confirmation: String
 )
 
-
-data class RegisterResp (
+data class RegisterResp(
+    val message: String,
+    val token: String,
     val name: String,
-    val email: String,
-    val password:String,
-    val password_confirmation: String
+    val role: String
 )

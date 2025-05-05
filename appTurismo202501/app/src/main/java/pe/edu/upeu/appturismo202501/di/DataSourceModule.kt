@@ -9,6 +9,7 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import pe.edu.upeu.appturismo202501.data.remote.RestLoginUsuario
+import pe.edu.upeu.appturismo202501.data.remote.RestRegister
 import pe.edu.upeu.sysventasjpc.utils.TokenUtils
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -52,6 +53,11 @@ class DataSourceModule {
     @Provides
     fun restLoginUser(retrofit: Retrofit): RestLoginUsuario {
         return retrofit.create(RestLoginUsuario::class.java)
+    }
+    @Singleton
+    @Provides
+    fun restRegister(retrofit: Retrofit): RestRegister {
+        return retrofit.create(RestRegister::class.java)
     }
 
 
