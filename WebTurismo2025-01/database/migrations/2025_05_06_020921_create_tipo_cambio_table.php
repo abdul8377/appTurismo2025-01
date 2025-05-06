@@ -9,24 +9,24 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
-            $table->bigIncrements('categorias_id');
-            $table->string('nombre');
-            $table->enum('tipo', ['Producto', 'Servicio']);
-            $table->text('descripcion'); // Campo de descripción
+        Schema::create('tipo_cambio', function (Blueprint $table) {
+            $table->bigIncrements('tipo_cambio_id');
+            $table->unsignedBigInteger('monedas_id')->nullable();
+            $table->decimal('tasa_cambio', 10, 4);
+            $table->timestamp('fecha')->useCurrent();
+            $table->foreign('monedas_id')->references('monedas_id')->on('monedas');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('tipo_cambio');
     }
 };
