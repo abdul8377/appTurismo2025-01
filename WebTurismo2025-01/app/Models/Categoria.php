@@ -7,15 +7,23 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categoria extends Model
 {
-    use HasFactory;
+    protected $table = 'categorias';
+    protected $primaryKey = 'id';
+    public $timestamps = true;
 
-    // Indicar qué campos pueden ser asignados masivamente
-    protected $fillable = ['nombre', 'tipo', 'descripcion'];
+    protected $fillable = [
+        'nombre',
+        'tipo',
+        'descripcion',
+    ];
 
-    // Definir las relaciones, si las hay, entre tablas
-    // Ejemplo: Si tienes una relación con otro modelo llamado Producto
-    // public function productos()
-    // {
-    //     return $this->hasMany(Producto::class);
-    // }
+    public function scopeProductos($query)
+    {
+        return $query->where('tipo', 'Producto');
+    }
+
+    public function scopeServicios($query)
+    {
+        return $query->where('tipo', 'Servicio');
+    }
 }
