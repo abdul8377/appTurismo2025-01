@@ -9,24 +9,23 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
-            $table->bigIncrements('categorias_id');
-            $table->string('nombre');
-            $table->enum('tipo', ['Producto', 'Servicio']);
-            $table->text('descripcion'); // Campo de descripción
+        Schema::create('images', function (Blueprint $table) {
+            $table->bigIncrements('images_id');
+            $table->string('file_name', 255);
+            $table->string('file_path', 255);
+            $table->string('mime_type', 255);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('images');
     }
 };

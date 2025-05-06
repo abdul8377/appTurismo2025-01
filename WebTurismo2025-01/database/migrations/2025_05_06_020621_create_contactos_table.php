@@ -9,24 +9,25 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('categorias', function (Blueprint $table) {
-            $table->bigIncrements('categorias_id');
-            $table->string('nombre');
-            $table->enum('tipo', ['Producto', 'Servicio']);
-            $table->text('descripcion'); // Campo de descripción
+        Schema::create('contactos', function (Blueprint $table) {
+            $table->bigIncrements('contactos_id');
+            $table->string('nombre', 100);
+            $table->string('correo', 100);
+            $table->string('telefono', 20)->nullable();
+            $table->string('asunto', 150)->nullable();
+            $table->text('mensaje');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('categorias');
+        Schema::dropIfExists('contactos');
     }
 };
