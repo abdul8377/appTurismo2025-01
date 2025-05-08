@@ -15,14 +15,15 @@ return new class extends Migration
             $table->bigIncrements('emprendimientos_id');
             $table->string('nombre', 255);
             $table->text('descripcion')->nullable();
-            $table->unsignedBigInteger('categorias_servicios_id')->nullable();
+            $table->unsignedBigInteger('tipo_negocio_id')->nullable(); // CAMBIO AQUÍ
             $table->string('direccion', 255)->nullable();
             $table->string('telefono', 20)->nullable();
             $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');
             $table->timestamp('fecha_registro')->useCurrent();
             $table->string('imagen_destacada', 255)->nullable();
-            $table->foreign('categorias_servicios_id')->references('categorias_servicios_id')->on('categorias_servicios');
 
+            // Nueva relación
+            $table->foreign('tipo_negocio_id')->references('id')->on('tipos_de_negocio'); // CAMBIO AQUÍ
         });
     }
 

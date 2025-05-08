@@ -9,18 +9,9 @@
 
             ],
 
-],
+        ],
 
-        'Categorias' => [
-            [
-                'name' => 'Categorias',
-                'icon' => 'tag',
-                'url' => route('categorias-p'),
-                'current' => request()->routeIs('categorias-p')
 
-            ],
-
-        ]
     ]
 
 
