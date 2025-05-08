@@ -64,4 +64,21 @@ class User extends Authenticatable
             ->map(fn (string $name) => Str::of($name)->substr(0, 1))
             ->implode('');
     }
+
+      /**
+     * Relación con el modelo PerfilEmprendedor
+     */
+    public function perfilEmprendedor()
+    {
+        return $this->hasOne(PerfilEmprendedor::class, 'users_id', 'id');
+    }
+
+      /**
+     * Relación con el modelo PerfilEmprendedor
+     */
+    public function perfilTurista()
+    {
+        return $this->hasOne(PerfilTurista::class, 'users_id', 'id');
+    }
+
 }

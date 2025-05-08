@@ -9,6 +9,46 @@
 
             ],
 
+            [
+            'name' => 'Tipos de Negocio',
+            'icon' => 'briefcase', // icono según tu sistema de íconos
+            'url' => route('tipos-de-negocio.index'),
+            'current' => request()->routeIs('tipos-de-negocio.*'),
+            ],
+            [
+                'name' => 'Emprendedores',
+                'icon' => 'user-group', // Usando un icono apropiado para un emprendedor
+                'url' => route('emprendedores.index'),
+                'current' => request()->routeIs('emprendedores.*'),
+            ],
+            [
+                'name' => 'Turistas',
+                'icon' => 'users', // Usando el icono de Heroicons adecuado para turistas
+                'url' => route('turistas.index'),
+                'current' => request()->routeIs('turistas.*'),
+            ],
+
+
+        ],
+
+        'Categorias' => [
+            [
+                'name' => 'Dashboard',
+                'icon' => 'home',
+                'url' => route('dashboard'),
+                'current' => request()->routeIs('dashboard')
+
+            ],
+
+            [
+            'name' => 'Tipos de Negocio',
+            'icon' => 'briefcase', // icono según tu sistema de íconos
+            'url' => route('tipos-de-negocio.index'),
+            'current' => request()->routeIs('tipos-de-negocio.*'),
+            ],
+
+
+
         ],
 
 

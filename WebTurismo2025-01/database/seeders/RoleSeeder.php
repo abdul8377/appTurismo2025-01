@@ -18,7 +18,7 @@ class RoleSeeder extends Seeder
         $role=Role::create(['name'=>"Usuario"]);
         $role->permissions()->attach([6]);
 
-        $role=Role::create(['name'=>"Productor"]);
+        $role=Role::create(['name'=>"Emprendedor"]);
         $role->permissions()->attach([7]);
     }
 
