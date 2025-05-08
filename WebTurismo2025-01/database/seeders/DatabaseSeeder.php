@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
        $this->call(RoleSeeder::class);
        //Usuario administrador
        $this->call(UserSeeder::class);
-       Categoria::factory(50)->create();
+
     }
 
 }
