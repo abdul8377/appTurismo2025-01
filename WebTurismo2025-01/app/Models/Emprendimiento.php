@@ -22,10 +22,10 @@ class Emprendimiento extends Model
     ];
 
     // Relaciones
-    public function categoria()
-    {
-        return $this->belongsTo(Categoria::class, 'categorias_id', 'categorias_id');
-    }
+    public function emprendimientos()
+{
+    return $this->hasMany(Emprendimiento::class, 'tipo_negocio_id');
+}
 
     public function blogs()
     {
