@@ -38,8 +38,5 @@ class Descuento extends Model
         return $this->belongsTo(Emprendimiento::class, 'emprendimientos_id', 'emprendimientos_id');
     }
 
-    public function categoriaProducto()
-    {
-        return $this->belongsTo(Categoria::class, 'categorias_id', 'categorias_id');
-    }
+
 }

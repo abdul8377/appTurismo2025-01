@@ -31,4 +31,17 @@ class Emprendimiento extends Model
     {
         return $this->hasMany(Blog::class, 'emprendimientos_id', 'emprendimientos_id');
     }
+
+    public function usuarios()
+    {
+        return $this->belongsToMany(User::class, 'emprendimiento_usuarios', 'emprendimientos_id', 'users_id')
+                    ->withPivot('rol_emprendimiento', 'fecha_asignacion')
+                    ->withTimestamps();
+    }
+
+    // Relación inversa con los usuarios
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'emprendimiento_usuarios', 'emprendimientos_id', 'users_id');
+    }
 }

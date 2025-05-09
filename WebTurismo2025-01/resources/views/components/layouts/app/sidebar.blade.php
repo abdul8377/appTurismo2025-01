@@ -33,12 +33,12 @@
 
         'Categorias' => [
             [
-                'name' => 'Dashboard',
-                'icon' => 'home',
-                'url' => route('dashboard'),
-                'current' => request()->routeIs('dashboard')
-
+                'name' => 'Categorías de Servicio',
+                'icon' => 'tag', // Usando el icono 'collection' de Heroicons (para representar categorías)
+                'url' => route('categorias-servicios.index'),
+                'current' => request()->routeIs('categorias-servicios.*'),
             ],
+
 
             [
             'name' => 'Tipos de Negocio',

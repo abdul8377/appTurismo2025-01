@@ -3,6 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\Categoria;
+use App\Models\CategoriaServicio;
+use App\Models\PerfilEmprendedor;
+use App\Models\TipoDeNegocio;
 use App\Models\User;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -20,6 +23,12 @@ class DatabaseSeeder extends Seeder
        $this->call(RoleSeeder::class);
        //Usuario administrador
        $this->call(UserSeeder::class);
+
+       CategoriaServicio::factory()->count(10)->create();
+       TipoDeNegocio::factory()->count(10)->create();
+       $this->call(PerfilEmprendedorSeeder::class); // Llamar al seeder de PerfilEmprendedor
+
+
 
     }
 

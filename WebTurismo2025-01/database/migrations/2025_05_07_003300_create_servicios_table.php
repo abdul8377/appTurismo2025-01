@@ -20,11 +20,13 @@ return new class extends Migration
             $table->integer('capacidad_maxima');
             $table->integer('duracion_servicio')->nullable();
             $table->string('imagen_destacada', 255)->nullable();
+            $table->unsignedBigInteger('categorias_servicios_id');  // Agregar la columna de clave foránea para categorías de servicio
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
+            // Definir las claves foráneas
             $table->foreign('emprendimientos_id')->references('emprendimientos_id')->on('emprendimientos');
-
+            $table->foreign('categorias_servicios_id')->references('categorias_servicios_id')->on('categorias_servicios'); // Relación con categorías de servicio
         });
     }
 
