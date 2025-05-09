@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class PerfilEmprendedor extends Model
 {
+
+    use HasFactory;
     protected $table = 'perfil_emprendedor';
     protected $primaryKey = 'perfil_emprendedor_id';
     public $timestamps = false;
