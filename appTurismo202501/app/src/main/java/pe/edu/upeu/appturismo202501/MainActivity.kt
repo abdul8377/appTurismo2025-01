@@ -1,11 +1,14 @@
 package pe.edu.upeu.appturismo202501
 
 import android.graphics.PorterDuff
+import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresExtension
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
@@ -50,6 +53,7 @@ import pe.edu.upeu.sysventasjpc.utils.isNight
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
@@ -71,9 +75,14 @@ class MainActivity : ComponentActivity() {
             TokenUtils.CONTEXTO_APPX=this@MainActivity
 
             AppTurismo202501Theme(colorScheme = colorScheme) {
-
-                val navController= rememberNavController()
-                MainScreen(navController, darkMode = darkTheme, themeType=themeType)
+                val navController = rememberNavController()
+                val darkTheme = remember { mutableStateOf(isNight()) }
+                val paddingValues = PaddingValues() // Puedes ajustar esto si necesitas un padding específico
+                NavigationHost(
+                    navController = navController,
+                    darkMode = darkTheme,
+                    modif = paddingValues
+                )
             }
         }
     }
@@ -95,84 +104,3 @@ fun GreetingPreview() {
     }
 }
 
-@Composable
-fun MainScreen(
-    navController: NavHostController,
-    darkMode: MutableState<Boolean>,
-    themeType: MutableState<ThemeType>
-) {
-    val drawerState = rememberDrawerState(initialValue = DrawerValue.Closed)
-    val scope = rememberCoroutineScope()
-    val openDialog = remember { mutableStateOf(false) }
-    val navigationItems = listOf(
-        Destinations.Pantalla1,
-        Destinations.Pantalla2,
-
-    )
-    val navigationItems2 = listOf(
-        Destinations.Pantalla1,
-        Destinations.Pantalla2,
-
-    )
-    val currentNavBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = currentNavBackStackEntry?.destination?.route ?: Destinations.Pantalla1.route
-    val list = currentRoute.split("/", "?")
-    ModalNavigationDrawer(
-        drawerContent = {
-            AppDrawer(route = list[0], scope = scope,
-                scaffoldState =
-                    drawerState,
-                navController = navController, items =
-                    navigationItems)
-        },
-        drawerState = drawerState) {
-        val snackbarHostState = remember { SnackbarHostState() }
-        val snackbarMessage = "Succeed!"
-        val showSnackbar = remember { mutableStateOf(false) }
-        val context = LocalContext.current
-        val fabItems = listOf(
-            FabItem(
-                Icons.Filled.ShoppingCart,
-                "Shopping Cart"
-            ) {
-                val toast = Toast.makeText(context, "Hola Mundo", Toast.LENGTH_LONG) // in Activity
-                toast.view!!.getBackground().setColorFilter( android.graphics.Color.CYAN, PorterDuff.Mode.SRC_IN)
-                toast.show()
-            },
-            FabItem(
-                Icons.Filled.Favorite,
-                "Favorite") { /*TODO*/ }
-        )
-        Scaffold(
-            topBar = { CustomTopAppBar(
-                list[0],
-                darkMode = darkMode,
-                themeType = themeType,
-                navController = navController,
-                scope = scope,
-                scaffoldState = drawerState,
-                openDialog={openDialog.value=true}
-            ) }
-            , modifier = Modifier,
-            /*floatingActionButton = {
-            MultiFloatingActionButton(
-            navController=navController,
-            fabIcon = Icons.Filled.Add,
-            items = fabItems,
-            showLabels = true
-            )
-            },
-            floatingActionButtonPosition = FabPosition.End,
-            bottomBar = { BottomAppBar {
-            BottomNavigationBar(navigationItems2,
-            navController =
-            navController)
-            }}*/
-        ) {
-            NavigationHost(navController, darkMode, modif= it
-            )
-        }
-    }
-    Dialog(showDialog = openDialog.value, dismissDialog = {
-        openDialog.value = false })
-}
