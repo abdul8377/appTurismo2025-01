@@ -16,9 +16,6 @@ sealed class Destinations(
     object Login : Destinations("login", "Login", Icons.Filled.Settings)
     object Register : Destinations("register", "register", Icons.Filled.Check)
     object Pantalla1 : Destinations("pantalla1", "Pantalla1", Icons.Filled.Home)
-    object Pantalla2 :
-        Destinations("pantalla2/?newText={newText}", "Pantalla 2", Icons.Filled.Settings) {
-        fun createRoute(newText: String) = "pantalla2/?newText=$newText"
-    }
+
 }
 

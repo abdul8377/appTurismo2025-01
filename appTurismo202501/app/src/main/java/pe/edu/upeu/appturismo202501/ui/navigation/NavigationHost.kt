@@ -31,12 +31,16 @@ fun NavigationHost(
         composable (Destinations.Login.route){
             LoginScreen(
                 navigateToHome = {
-                navController.navigate(Destinations.Pantalla1.route)},
+                    navController.navigate(Destinations.Pantalla1.route){
+                        popUpTo(Destinations.Login.route){inclusive=true}
+                    }},
                 onGoogleLoginClick = {
 
                 },
                 onRegisterClick = {
-                    navController.navigate(Destinations.Register.route)
+                    navController.navigate(Destinations.Register.route){
+
+                    }
                 },
             )
 
@@ -44,7 +48,9 @@ fun NavigationHost(
         }
 
         composable(Destinations.Pantalla1.route) {
-            Pantalla1  (navegarPantalla2 = { newText ->navController.navigate(Destinations.Pantalla2.createRoute(newText)) }
+            Pantalla1  (navegarPantalla2 = {
+
+            }
             )
         }
 
@@ -58,5 +64,8 @@ fun NavigationHost(
 
     }
 }
+
+
+
 
 
