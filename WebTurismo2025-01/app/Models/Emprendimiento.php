@@ -7,10 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 class Emprendimiento extends Model
 {
     protected $table = 'emprendimientos';
-    protected $primaryKey = 'emprendimientos_id';
+    protected $primaryKey = 'emprendimientos_id';  // Establecer la clave primaria
     public $timestamps = false;
 
-    protected $fillable = [
+     protected $fillable = [
         'nombre',
         'descripcion',
         'categorias_id',
@@ -18,14 +18,15 @@ class Emprendimiento extends Model
         'telefono',
         'estado',
         'fecha_registro',
-        'imagen_destacada'
+        'imagen_destacada',
+        'tipo_negocio_id' // ✅ Agregado
     ];
 
     // Relaciones
     public function emprendimientos()
-{
-    return $this->hasMany(Emprendimiento::class, 'tipo_negocio_id');
-}
+    {
+        return $this->hasMany(Emprendimiento::class, 'tipo_negocio_id');
+    }
 
     public function blogs()
     {
@@ -44,4 +45,16 @@ class Emprendimiento extends Model
     {
         return $this->belongsToMany(User::class, 'emprendimiento_usuarios', 'emprendimientos_id', 'users_id');
     }
+
+    public function image()
+    {
+        return $this->morphOne(Image::class, 'imageable');
+    }
+
+    public function tipoDeNegocio()
+    {
+        return $this->belongsTo(TipoDeNegocio::class, 'tipo_negocio_id');
+    }
+
+
 }

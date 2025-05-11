@@ -1,43 +1,42 @@
 <x-layouts.app :title="__('Detalles del Emprendedor')">
-    <div class="max-w-4xl mx-auto mt-8 bg-white dark:bg-neutral-900 p-6 rounded-lg shadow">
+    <div class="max-w-4xl mx-auto mt-8 bg-white dark:bg-neutral-900 p-6 rounded-lg shadow-lg">
 
         <!-- Título -->
-        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6">Detalles de: {{ $emprendedor->name }}</h2>
+        <h2 class="text-2xl font-semibold text-gray-800 dark:text-white mb-6 flex items-center space-x-2">
+            <i class="fas fa-user-circle text-blue-600"></i>
+            <span>Detalles de: {{ $emprendedor->name }}</span>
+        </h2>
 
-        <!-- Detalles del Usuario -->
+        <!-- Información del Usuario -->
         <div class="mb-6">
             <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Información del Usuario</h3>
             <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Email:</strong> {{ $emprendedor->email }}</p>
             <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Rol:</strong> {{ $emprendedor->getRoleNames()->first() }}</p>
         </div>
 
-        <!-- Detalles del Perfil de Emprendedor -->
-        <div>
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Perfil del Emprendedor</h3>
-            <p class="text-sm text-gray-600 dark:text-gray-300"><strong>DNI:</strong> {{ $emprendedor->perfilEmprendedor->dni }}</p>
-            <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Teléfono de Contacto:</strong> {{ $emprendedor->perfilEmprendedor->telefono_contacto ?? 'No disponible' }}</p>
-            <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Correo Gmail:</strong> {{ $emprendedor->perfilEmprendedor->gmail_contacto ?? 'No disponible' }}</p>
-            <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Experiencia:</strong> {{ $emprendedor->perfilEmprendedor->experiencia ?? 'No disponible' }}</p>
-        </div>
-
-        <!-- Estado de Validación -->
+        <!-- Emprendimientos Vinculados -->
         <div class="mb-6">
-            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Estado de Validación</h3>
-            <form action="{{ route('emprendedores.updateStatus', $emprendedor) }}" method="POST" class="space-y-4">
-                @csrf
-                @method('PUT')
-                <div class="flex items-center space-x-4">
-                    <select name="estado_validacion" id="estado_validacion" class="mt-1 block w-full max-w-xs rounded-md border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500 dark:bg-neutral-800 dark:border-neutral-700 dark:text-white">
-                        <option value="pendiente" {{ $emprendedor->perfilEmprendedor->estado_validacion == 'pendiente' ? 'selected' : '' }}>Pendiente</option>
-                        <option value="aprobado" {{ $emprendedor->perfilEmprendedor->estado_validacion == 'aprobado' ? 'selected' : '' }}>Aprobado</option>
-                        <option value="rechazado" {{ $emprendedor->perfilEmprendedor->estado_validacion == 'rechazado' ? 'selected' : '' }}>Rechazado</option>
-                    </select>
-                </div>
+            <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-2">Emprendimientos Vinculados</h3>
+            @foreach($emprendedor->emprendimientos as $emprendimiento)
+                <div class="mb-4">
+                    <h4 class="text-md font-semibold text-gray-800 dark:text-white">{{ $emprendimiento->nombre }}</h4>
 
-                <button type="submit" class="mt-4 inline-flex items-center px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700">
-                    Actualizar Estado
-                </button>
-            </form>
+                    <!-- Imagen del Emprendimiento -->
+                    <div class="w-1/3 p-4 border-2 border-gray-300 rounded-md shadow-sm">
+                        <h5 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">Imagen del Emprendimiento</h5>
+                        <!-- Mostrar la URL completa de la imagen si está disponible -->
+                        <img src="{{ $emprendimiento->image ? asset('storage/' . $emprendimiento->image->url) : 'https://via.placeholder.com/150' }}"
+                            alt="Imagen de Emprendimiento" class="w-full h-auto object-cover rounded-md">
+                    </div>
+
+
+
+                    <p class="text-sm text-gray-600 dark:text-gray-300"><strong>URL:</strong> {{ $emprendimiento->image ? $emprendimiento->image->url : 'No image available' }}</p>
+
+                    <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Descripción:</strong> {{ $emprendimiento->descripcion }}</p>
+                    <p class="text-sm text-gray-600 dark:text-gray-300"><strong>Estado:</strong> {{ $emprendimiento->estado }}</p>
+                </div>
+            @endforeach
         </div>
 
         <!-- Botón de Volver -->

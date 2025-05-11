@@ -3,77 +3,80 @@
 use App\Http\Controllers\CategoriaServicioController;
 use App\Http\Controllers\EmprendedorController;
 use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
+use App\Http\Controllers\Municipalidad\MunicipalidadDescripcionController;
 use App\Http\Controllers\TipoDeNegocioController;
 use App\Http\Controllers\TuristaController;
 use App\Livewire\Categoria\CategoriaList;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
+// Ruta pública (landing)
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
 
+// Ruta al dashboard (requiere autenticación y verificación)
 Route::view('dashboard', 'dashboard')
     ->middleware(['auth', 'verified'])
     ->name('dashboard');
 
-Route::middleware(['auth'])->group(function () {
-    Route::redirect('settings', 'settings/profile');
+ // Redirección por defecto a perfil de configuración
+Route::redirect('settings', 'settings/profile');
 
+// Rutas de configuración de usuario (Livewire Volt)
     Volt::route('settings/profile', 'settings.profile')->name('settings.profile');
     Volt::route('settings/password', 'settings.password')->name('settings.password');
     Volt::route('settings/appearance', 'settings.appearance')->name('settings.appearance');
 
+
+
+
+// Grupo de rutas protegidas por autenticación + rol Administrador
+Route::middleware(['auth', 'role:Administrador'])->group(function () {
+
+    // Ruta Livewire de categorías
     Route::get('/categorias-p-s', CategoriaList::class)->name('categorias-p');
 
+    // CRUD de tipos de negocio
     Route::resource('tipos-de-negocio', TipoDeNegocioController::class)->parameters([
         'tipos-de-negocio' => 'tipoDeNegocio'
     ]);
 
+    // CRUD de emprendedores
     Route::prefix('emprendedores')->name('emprendedores.')->group(function() {
-        // Mostrar lista de emprendedores
         Route::get('/', [EmprendedorController::class, 'index'])->name('index');
-
-        // Mostrar el formulario para crear un nuevo emprendedor
         Route::get('/create', [EmprendedorController::class, 'create'])->name('create');
-
-        // Guardar un nuevo emprendedor
         Route::post('/', [EmprendedorController::class, 'store'])->name('store');
-
-        // Mostrar los detalles de un emprendedor
         Route::get('/{emprendedor}', [EmprendedorController::class, 'show'])->name('show');
-
-        // Mostrar el formulario para editar un emprendedor
         Route::get('/{emprendedor}/edit', [EmprendedorController::class, 'edit'])->name('edit');
-
-        // Actualizar un emprendedor
         Route::put('/{emprendedor}', [EmprendedorController::class, 'update'])->name('update');
-
-        // Actualizar el estado de validación de un emprendedor
         Route::put('/{emprendedor}/status', [EmprendedorController::class, 'updateStatus'])->name('updateStatus');
     });
 
-    // Ruta para mostrar el formulario de creación del emprendimiento y asignación de usuario
+    // Crear emprendimiento y asignar usuario/rol
     Route::get('/emprendimiento-usuario/create/{emprendedor_id}', [EmprendimientoUsuarioController::class, 'create'])->name('emprendimiento-usuarios.create');
-
-    // Ruta para almacenar el emprendimiento y asignar un usuario y rol
     Route::post('/emprendimiento-usuario', [EmprendimientoUsuarioController::class, 'store'])->name('emprendimiento-usuarios.store');
 
-
-
-    // Listar turistas
+    // Listar turistas y gestionar su información
     Route::get('turistas', [TuristaController::class, 'index'])->name('turistas.index');
-
-    // Mostrar los detalles de un turista
     Route::get('turistas/{turista}', [TuristaController::class, 'show'])->name('turistas.show');
-
-    // Editar contraseña de un turista
     Route::get('turistas/{turista}/edit', [TuristaController::class, 'edit'])->name('turistas.edit');
     Route::put('turistas/{turista}', [TuristaController::class, 'update'])->name('turistas.update');
 
+    // CRUD de categorías de servicios
     Route::resource('categorias-servicios', CategoriaServicioController::class)->parameters([
         'categorias-servicios' => 'categoriaDeServicio'
     ]);
+
+    Route::get('/municipalidad', [MunicipalidadDescripcionController::class, 'index'])->name('municipalidad.index');
+    Route::post('/municipalidad', [MunicipalidadDescripcionController::class, 'store'])->name('municipalidad.store');
+    Route::put('/municipalidad/{id}', [MunicipalidadDescripcionController::class, 'update'])->name('municipalidad.update');
+    Route::post('/municipalidad/{id}/imagen', [MunicipalidadDescripcionController::class, 'uploadImage'])->name('municipalidad.imagen');
+    Route::get('/municipalidad/galeria', [MunicipalidadDescripcionController::class, 'galeria'])->name('municipalidad.galeria');
+    Route::delete('/municipalidad/imagen/{id}', [MunicipalidadDescripcionController::class, 'destroyImagen'])->name('municipalidad.imagen.destroy');
+    Route::put('/municipalidad/{id}/toggle-mantenimiento', [MunicipalidadDescripcionController::class, 'toggleMantenimiento'])->name('municipalidad.toggleMantenimiento');
+
 });
 
+// Rutas de autenticación (login, register, forgot password, etc.)
 require __DIR__.'/auth.php';

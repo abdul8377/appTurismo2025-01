@@ -8,8 +8,22 @@
             @csrf
             <input type="hidden" name="usuario_id" value="{{ $emprendedor->id }}">
 
-
             <div class="grid grid-cols-1 gap-6 mb-4">
+
+                <!-- Tipo de Negocio -->
+                <div>
+                    <label for="tipo_negocio_id" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Tipo de Negocio</label>
+                                    <select name="tipo_negocio_id" id="tipo_negocio_id" required class="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md">
+                    <option value="">Selecciona un tipo de negocio</option>
+                    @foreach($tiposDeNegocio as $tipo)
+                        <option value="{{ $tipo->id }}">{{ $tipo->nombre }}</option>
+                    @endforeach
+                </select>
+                    @error('tipo_negocio_id')
+                        <div class="text-red-500 text-sm mt-2">{{ $message }}</div>
+                    @enderror
+                </div>
+
                 <!-- Nombre del Emprendimiento -->
                 <div>
                     <label for="nombre" class="block text-sm font-medium text-gray-700 dark:text-gray-300">Nombre del Emprendimiento</label>

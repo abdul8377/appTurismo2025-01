@@ -10,22 +10,23 @@ return new class extends Migration
      * Run the migrations.
      */
     public function up(): void
-    {
-        Schema::create('emprendimientos', function (Blueprint $table) {
-            $table->bigIncrements('emprendimientos_id');
-            $table->string('nombre', 255);
-            $table->text('descripcion')->nullable();
-            $table->unsignedBigInteger('tipo_negocio_id')->nullable(); // CAMBIO AQUÍ
-            $table->string('direccion', 255)->nullable();
-            $table->string('telefono', 20)->nullable();
-            $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');
-            $table->timestamp('fecha_registro')->useCurrent();
-            $table->string('imagen_destacada', 255)->nullable();
+        {
+            Schema::create('emprendimientos', function (Blueprint $table) {
+                $table->bigIncrements('emprendimientos_id');  // Usamos emprendedores_id como clave primaria
+                $table->string('nombre', 255);
+                $table->text('descripcion')->nullable();
+                $table->unsignedBigInteger('tipo_negocio_id');
+                $table->string('direccion', 255)->nullable();
+                $table->string('telefono', 20)->nullable();
+                $table->enum('estado', ['activo', 'inactivo', 'pendiente'])->default('pendiente');
+                $table->timestamp('fecha_registro')->useCurrent();
 
-            // Nueva relación
-            $table->foreign('tipo_negocio_id')->references('id')->on('tipos_de_negocio'); // CAMBIO AQUÍ
-        });
-    }
+                // Relación con tipo_negocio
+                $table->foreign('tipo_negocio_id')->references('id')->on('tipos_de_negocio');
+            });
+        }
+
+
 
     /**
      * Reverse the migrations.

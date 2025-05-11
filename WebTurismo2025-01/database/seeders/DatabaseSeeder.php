@@ -18,18 +18,22 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-       //Primero permisos y roles
-       $this->call(PermissionSeeder::class);
-       $this->call(RoleSeeder::class);
-       //Usuario administrador
-       $this->call(UserSeeder::class);
+        // Primero permisos y roles
+        $this->call(PermissionSeeder::class);
+        $this->call(RoleSeeder::class);
 
-       CategoriaServicio::factory()->count(10)->create();
-       TipoDeNegocio::factory()->count(10)->create();
-       $this->call(PerfilEmprendedorSeeder::class); // Llamar al seeder de PerfilEmprendedor
+        // Usuario administrador
+        $this->call(UserSeeder::class);
 
+        // Datos para las secciones
+        CategoriaServicio::factory()->count(10)->create();
+        TipoDeNegocio::factory()->count(10)->create();
 
+        // Perfil de emprendedor
+        $this->call(PerfilEmprendedorSeeder::class);
 
+        // Municipalidad (solo un registro)
+        $this->call(MunicipalidadDescripcionSeeder::class);
     }
 
 }

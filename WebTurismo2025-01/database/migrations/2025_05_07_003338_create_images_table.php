@@ -12,13 +12,19 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('images_id');
-            $table->string('file_name', 255);
-            $table->string('file_path', 255);
-            $table->string('mime_type', 255);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->id();
 
+            // Ruta o nombre del archivo
+            $table->string('url');
+
+            // Relación polimórfica
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
+
+            // Nuevo campo: tipo de imagen (logo, portada, perfil, galeria)
+            $table->string('tipo')->nullable(); // <--- Este campo es necesario
+
+            $table->timestamps();
         });
     }
 

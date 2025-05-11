@@ -1,6 +1,9 @@
 <?php
 
 namespace App\Providers;
+use App\Models\MunicipalidadDescripcion;
+use Illuminate\Support\Facades\View;
+
 
 use Illuminate\Support\ServiceProvider;
 
@@ -19,6 +22,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+         View::composer('*', function ($view) {
+        $municipalidad = MunicipalidadDescripcion::with('images')->first();
+        $view->with('municipalidad', $municipalidad);
+    });
     }
 }

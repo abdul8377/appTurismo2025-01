@@ -11,7 +11,10 @@ class MunicipalidadDescripcion extends Model
     public $timestamps = true;
 
     protected $fillable = [
-        'logo_url',
+        'nombre',
+        'color_primario',
+        'color_secundario',
+        'mantenimiento',
         'direccion',
         'descripcion',
         'ruc',
@@ -20,6 +23,13 @@ class MunicipalidadDescripcion extends Model
         'nombre_alcalde',
         'facebook_url',
         'anio_gestion',
-        'imagen_url'
     ];
+
+    /**
+     * Relación polimórfica con imágenes.
+     */
+    public function images()
+    {
+        return $this->morphMany(Image::class, 'imageable');
+    }
 }

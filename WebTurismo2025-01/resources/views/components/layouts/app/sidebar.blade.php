@@ -1,5 +1,17 @@
 @php
     $groups = [
+
+       'APP' => [
+            [
+                'name' => 'Municipalidad',
+                'icon' => 'tag', // Puedes cambiarlo por 'office-building' o 'home' si usas Heroicons
+                'url' => route('municipalidad.index'), // Asegúrate que esta ruta existe
+                'current' => request()->routeIs('municipalidad.*'), // Detecta si estás dentro de este módulo
+                'can' => auth()->user()->hasRole('Administrador'),            ],
+        ],
+
+
+
         'Platform' => [
             [
                 'name' => 'Dashboard',
@@ -14,18 +26,25 @@
             'icon' => 'briefcase', // icono según tu sistema de íconos
             'url' => route('tipos-de-negocio.index'),
             'current' => request()->routeIs('tipos-de-negocio.*'),
+             'can' => auth()->user()->hasRole('Administrador'),
+            //  'can' => auth()->user()->can('ver tipos de negocio'),
             ],
+
             [
                 'name' => 'Emprendedores',
                 'icon' => 'user-group', // Usando un icono apropiado para un emprendedor
                 'url' => route('emprendedores.index'),
                 'current' => request()->routeIs('emprendedores.*'),
+                 'can' => auth()->user()->hasRole('Administrador'),
+            //  'can' => auth()->user()->can('ver tipos de negocio'),
             ],
             [
                 'name' => 'Turistas',
                 'icon' => 'users', // Usando el icono de Heroicons adecuado para turistas
                 'url' => route('turistas.index'),
                 'current' => request()->routeIs('turistas.*'),
+                 'can' => auth()->user()->hasRole('Administrador'),
+            //  'can' => auth()->user()->can('ver tipos de negocio'),
             ],
 
 
@@ -37,6 +56,8 @@
                 'icon' => 'tag', // Usando el icono 'collection' de Heroicons (para representar categorías)
                 'url' => route('categorias-servicios.index'),
                 'current' => request()->routeIs('categorias-servicios.*'),
+                 'can' => auth()->user()->hasRole('Administrador'),
+            //  'can' => auth()->user()->can('ver tipos de negocio'),
             ],
 
 
@@ -45,6 +66,8 @@
             'icon' => 'briefcase', // icono según tu sistema de íconos
             'url' => route('tipos-de-negocio.index'),
             'current' => request()->routeIs('tipos-de-negocio.*'),
+            'can' => auth()->user()->hasRole('Administrador'),
+            //  'can' => auth()->user()->can('ver tipos de negocio'),
             ],
 
 
@@ -66,24 +89,38 @@
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-                <x-app-logo />
+                <x-municipalidad.header :municipalidad="$municipalidad" />
             </a>
+            @php
+                $rol = auth()->user()->getRoleNames()->first() ?? 'Sin Rol';
+            @endphp
+
+            @if($rol !== 'Usuario')
+                <div class="text-xl font-semibold text-gray-800 dark:text-white">
+                    Panel de <span class="text-primary-600">{{ ucfirst($rol) }}</span>
+                </div>
+            @endif
+
+
 
             <flux:navlist variant="outline">
                 @foreach ($groups as $group => $links)
                     <flux:navlist.group :heading="$group" class="grid">
                         @foreach ($links as $link)
-                            <flux:navlist.item
-                                :icon="$link['icon']"
-                                :href="$link['url']"
-                                :current="$link['current']"
-                                wire:navigate>
-                                {{ $link['name'] }}
-                            </flux:navlist.item>
+                            @if (!isset($link['can']) || $link['can'])
+                                <flux:navlist.item
+                                    :icon="$link['icon']"
+                                    :href="$link['url']"
+                                    :current="$link['current']"
+                                    wire:navigate>
+                                    {{ $link['name'] }}
+                                </flux:navlist.item>
+                            @endif
                         @endforeach
                     </flux:navlist.group>
                 @endforeach
             </flux:navlist>
+
 
             <flux:spacer />
 

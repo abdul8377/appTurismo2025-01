@@ -12,11 +12,15 @@ class EmprendedorController extends Controller
 {
     // Lógica 1: Mostrar la lista de emprendedores
     public function index()
-    {
-        // Listar todos los emprendedores con el perfil asociado
-        $emprendedores = User::whereHas('perfilEmprendedor')->get();
-        return view('Emprendedor.index', compact('emprendedores'));
-    }
+{
+    // Listar todos los emprendedores con el perfil asociado y verificar si ya tienen un emprendimiento vinculado
+    $emprendedores = User::whereHas('perfilEmprendedor')
+                         ->with(['perfilEmprendedor', 'emprendimientoUsuarios'])  // Cargar relación de emprendimiento_usuarios
+                         ->get();
+
+    return view('Emprendedor.index', compact('emprendedores'));
+}
+
 
     // Lógica 1: Mostrar el formulario para crear un nuevo usuario y perfil
     public function create()
@@ -60,11 +64,14 @@ class EmprendedorController extends Controller
 
     // Lógica 1: Mostrar los detalles completos de un emprendedor
     public function show(User $emprendedor)
-    {
-        // Cargar el perfil de emprendedor relacionado
-        $emprendedor->load('perfilEmprendedor');
-        return view('Emprendedor.show', compact('emprendedor'));
-    }
+        {
+            // Cargar los emprendimientos relacionados con el emprendedor
+            $emprendedor->load('emprendimientos'); // Carga los emprendimientos del usuario
+
+            return view('Emprendedor.show', compact('emprendedor'));
+        }
+
+
 
     // Lógica 1: Mostrar el formulario para editar el perfil de un emprendedor
     public function edit(User $emprendedor)
