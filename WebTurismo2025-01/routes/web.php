@@ -4,6 +4,8 @@ use App\Http\Controllers\CategoriaServicioController;
 use App\Http\Controllers\EmprendedorController;
 use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
 use App\Http\Controllers\Municipalidad\MunicipalidadDescripcionController;
+use App\Http\Controllers\Municipalidad\SliderController;
+use App\Http\Controllers\ProductoServicio\ServicioController;
 use App\Http\Controllers\TipoDeNegocioController;
 use App\Http\Controllers\TuristaController;
 use App\Livewire\Categoria\CategoriaList;
@@ -76,6 +78,31 @@ Route::middleware(['auth', 'role:Administrador'])->group(function () {
     Route::delete('/municipalidad/imagen/{id}', [MunicipalidadDescripcionController::class, 'destroyImagen'])->name('municipalidad.imagen.destroy');
     Route::put('/municipalidad/{id}/toggle-mantenimiento', [MunicipalidadDescripcionController::class, 'toggleMantenimiento'])->name('municipalidad.toggleMantenimiento');
 
+     // Rutas CRUD para Slider de Municipalidad
+    // En tu archivo de rutas web (web.php), dentro del grupo de rutas para Administrador
+Route::prefix('municipalidad/slider')->name('slider.')->group(function () {
+    Route::get('/', [SliderController::class, 'index'])->name('index');
+    Route::get('/create', [SliderController::class, 'create'])->name('create');
+    Route::post('/', [SliderController::class, 'store'])->name('store');
+    Route::get('/{slider}/edit', [SliderController::class, 'edit'])->name('edit');
+    Route::put('/{slider}', [SliderController::class, 'update'])->name('update');
+    Route::delete('/{slider}', [SliderController::class, 'destroy'])->name('destroy');
+
+    // ✅ Ruta para mostrar sliders anteriores por orden
+    Route::get('/editar-orden/{orden}', [SliderController::class, 'editarOrden'])->name('editarOrden');
+
+    // ✅ Ruta para activar un slider existente (pasar a visible)
+    Route::post('/activar-slider/{slider}', [SliderController::class, 'activar'])->name('activar');
+});
+});
+
+Route::middleware(['auth', 'role:Emprendedor'])->prefix('servicios')->group(function () {
+    Route::get('/', [ServicioController::class, 'index'])->name('servicios.index');
+    Route::get('/crear', [ServicioController::class, 'create'])->name('servicios.create');
+    Route::post('/', [ServicioController::class, 'store'])->name('servicios.store');
+    Route::get('/{servicio}/editar', [ServicioController::class, 'edit'])->name('servicios.edit');
+    Route::put('/{servicio}', [ServicioController::class, 'update'])->name('servicios.update');
+    Route::delete('/{servicio}', [ServicioController::class, 'destroy'])->name('servicios.destroy');
 });
 
 // Rutas de autenticación (login, register, forgot password, etc.)

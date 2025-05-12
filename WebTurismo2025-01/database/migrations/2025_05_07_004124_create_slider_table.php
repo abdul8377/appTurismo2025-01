@@ -13,12 +13,18 @@ return new class extends Migration
     {
         Schema::create('slider', function (Blueprint $table) {
             $table->bigIncrements('slider_id');
-            $table->string('url_imagen', 255)->nullable();
+
+            // Contenido del slider
             $table->string('titulo', 150)->nullable();
             $table->text('descripcion')->nullable();
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->string('link', 255)->nullable(); // enlace opcional
 
+            // Gestión y organización
+            $table->unsignedInteger('orden')->default(0);
+            $table->enum('estado', ['activo', 'inactivo'])->default('activo');
+
+            // Timestamps estándar
+            $table->timestamps();
         });
     }
 

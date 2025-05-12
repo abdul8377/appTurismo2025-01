@@ -1,25 +1,8 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<x-layouts.auth.simple :title="'Crear cuenta'">
 
-    <title>Crear una cuenta - {{ config('app.name') }}</title>
-
-    <link rel="icon" href="/favicon.ico" sizes="any">
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-
-    <link rel="preconnect" href="https://fonts.bunny.net">
-    <link href="https://fonts.bunny.net/css?family=instrument-sans:400,500,600" rel="stylesheet" />
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    @livewireStyles
-</head>
-<body class="bg-gray-100 dark:bg-zinc-900 min-h-screen flex items-center justify-center">
-<div class="max-w-md mx-auto mt-10 space-y-6 bg-white dark:bg-zinc-800 p-8 rounded shadow">
-    <h2 class="text-2xl font-bold text-center text-gray-800 dark:text-white">Crear una cuenta</h2>
+    <h2 class="text-center text-3xl font-bold md:text-left md:leading-tight">
+        <i class="fas fa-user-plus text-orange-500 mr-2"></i>Crear una cuenta
+    </h2>
 
     @if ($errors->any())
         <div class="bg-red-100 border border-red-400 text-red-700 p-3 rounded">
@@ -31,76 +14,91 @@
         </div>
     @endif
 
-    <form method="POST" action="{{ route('register') }}" class="space-y-4">
+    <form method="POST" action="{{ route('register') }}" class="space-y-5 pt-6">
         @csrf
 
-        <div>
-            <label for="name" class="block font-medium text-gray-700 dark:text-gray-200">Nombre</label>
-            <input id="name" type="text" name="name" value="{{ old('name') }}" required autofocus
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Nombre -->
+        <div class="relative">
+            <i class="fas fa-user absolute top-3 left-3 text-gray-400"></i>
+            <input id="name" name="name" type="text" placeholder="Nombre" value="{{ old('name') }}" required
+                class="pl-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium" />
         </div>
 
-        <div>
-            <label for="last_name" class="block font-medium text-gray-700 dark:text-gray-200">Apellido</label>
-            <input id="last_name" type="text" name="last_name" value="{{ old('last_name') }}" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Apellido -->
+        <div class="relative">
+            <i class="fas fa-user-tag absolute top-3 left-3 text-gray-400"></i>
+            <input id="last_name" name="last_name" type="text" placeholder="Apellido" value="{{ old('last_name') }}" required
+                class="pl-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium" />
         </div>
 
-        <div>
-            <label for="user" class="block font-medium text-gray-700 dark:text-gray-200">Nombre de usuario</label>
-            <input id="user" type="text" name="user" value="{{ old('user') }}" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Usuario -->
+        <div class="relative">
+            <i class="fas fa-id-badge absolute top-3 left-3 text-gray-400"></i>
+            <input id="user" name="user" type="text" placeholder="Nombre de usuario" value="{{ old('user') }}" required
+                class="pl-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium" />
         </div>
 
-        <div>
-            <label for="email" class="block font-medium text-gray-700 dark:text-gray-200">Correo electrónico</label>
-            <input id="email" type="email" name="email" value="{{ old('email') }}" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Email -->
+        <div class="relative">
+            <i class="fas fa-envelope absolute top-3 left-3 text-gray-400"></i>
+            <input id="email" name="email" type="email" placeholder="Correo electrónico" value="{{ old('email') }}" required
+                class="pl-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium" />
         </div>
 
-        <div>
-            <label for="zip_code" class="block font-medium text-gray-700 dark:text-gray-200">Código Postal</label>
-            <input id="zip_code" type="text" name="zip_code" value="{{ old('zip_code') }}"
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Código postal -->
+        <div class="relative">
+            <i class="fas fa-map-pin absolute top-3 left-3 text-gray-400"></i>
+            <input id="zip_code" name="zip_code" type="text" placeholder="Código Postal" value="{{ old('zip_code') }}"
+                class="pl-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium" />
         </div>
 
-        <div>
-            <label for="country" class="block font-medium text-gray-700 dark:text-gray-200">País</label>
-            <select name="country" id="country" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- País -->
+        <div class="relative">
+            <i class="fas fa-globe-americas absolute top-3 left-3 text-gray-400"></i>
+            <select id="country" name="country" required
+                class="pl-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium">
                 <option value="">Seleccione un país</option>
                 @foreach ($countries as $code => $name)
-                    <option value="{{ $code }}" {{ old('country') == $code ? 'selected' : '' }}>
-                        {{ $name }}
-                    </option>
+                    <option value="{{ $code }}" data-flag="https://flagcdn.com/24x18/{{ strtolower($code) }}.png"
+                        {{ old('country') == $code ? 'selected' : '' }}>{{ $name }}</option>
                 @endforeach
             </select>
+            <img id="flag-preview" class="mt-2 h-5" src="" alt="Bandera seleccionada" style="display: none;">
         </div>
 
-        <div>
-            <label for="password" class="block font-medium text-gray-700 dark:text-gray-200">Contraseña</label>
-            <input id="password" type="password" name="password" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Contraseña -->
+        <div class="relative">
+            <i class="fas fa-lock absolute top-3 left-3 text-gray-400"></i>
+            <input id="password" name="password" type="password" placeholder="Contraseña" required
+                class="pl-10 pr-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium"
+                oninput="checkPasswordStrength(this.value)" />
+            <i class="fas fa-eye absolute top-3 right-3 text-gray-400 cursor-pointer"
+                onclick="togglePassword('password', this)"></i>
+            <div id="strength-bar" class="password-strength mt-2"></div>
+            <small id="strength-text" class="text-sm font-medium"></small>
         </div>
 
-        <div>
-            <label for="password_confirmation" class="block font-medium text-gray-700 dark:text-gray-200">Confirmar contraseña</label>
-            <input id="password_confirmation" type="password" name="password_confirmation" required
-                class="w-full px-4 py-2 border rounded focus:outline-none focus:ring focus:ring-blue-300">
+        <!-- Confirmar contraseña -->
+        <div class="relative">
+            <i class="fas fa-lock-open absolute top-3 left-3 text-gray-400"></i>
+            <input id="password_confirmation" name="password_confirmation" type="password" placeholder="Confirmar contraseña" required
+                class="pl-10 pr-10 w-full px-4 py-2 border-2 rounded focus:outline-none focus:border-orange-500 font-medium" />
+            <i class="fas fa-eye absolute top-3 right-3 text-gray-400 cursor-pointer"
+                onclick="togglePassword('password_confirmation', this)"></i>
         </div>
 
+        <!-- Botón -->
         <button type="submit"
-            class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded transition duration-200">
-            Crear cuenta
+            class="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-2 px-4 rounded transition flex items-center justify-center text-base">
+            <i class="fas fa-user-plus mr-2"></i>Crear cuenta
         </button>
     </form>
 
-    <div class="text-center text-sm text-gray-600 dark:text-gray-400">
+    <p class="mt-6 text-center text-sm text-gray-600 dark:text-gray-400 font-medium">
         ¿Ya tienes una cuenta?
-        <a href="{{ route('login') }}" class="text-blue-600 hover:underline">Iniciar sesión</a>
-    </div>
-</div>
+        <a href="{{ route('login') }}" class="text-orange-500 hover:underline font-semibold">
+            <i class="fas fa-sign-in-alt mr-1"></i>Inicia sesión
+        </a>
+    </p>
 
-@livewireScripts
-</body>
-</html>
+</x-layouts.auth.simple>

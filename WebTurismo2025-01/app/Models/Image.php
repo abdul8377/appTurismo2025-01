@@ -8,9 +8,14 @@ use Illuminate\Database\Eloquent\Model;
 class Image extends Model
 {
     use HasFactory;
-    protected $guarded=['id'];
 
-    public function imageable(){
-        $this->morphTo();
+    protected $guarded = ['id'];
+
+    /**
+     * Relación polimórfica.
+     */
+    public function imageable()
+    {
+        return $this->morphTo();
     }
 }

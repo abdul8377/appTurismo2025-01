@@ -11,21 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
+       Schema::create('images', function (Blueprint $table) {
             $table->id();
-
-            // Ruta o nombre del archivo
             $table->string('url');
-
-            // Relación polimórfica
             $table->unsignedBigInteger('imageable_id');
             $table->string('imageable_type');
-
-            // Nuevo campo: tipo de imagen (logo, portada, perfil, galeria)
-            $table->string('tipo')->nullable(); // <--- Este campo es necesario
-
+            $table->string('tipo')->nullable(); // ejemplo: 'portada', 'galeria', etc.
             $table->timestamps();
+
+            $table->index(['imageable_id', 'imageable_type']); // Mejora las consultas
         });
+
     }
 
     /**
