@@ -102,8 +102,10 @@ fun WelcomeScreen(navController: NavController, viewModel: CategoryViewModel = h
                 selectedIndex = selectedIndex,
                 onItemSelected = { index ->
                     selectedIndex = index
-                    when (navItems[index].label) {
-                        "Perfil" -> navController.navigate(Destinations.Login.route)
+                    when (index) {
+                        0 -> navController.navigate(Destinations.Welcome.route)
+                        1 -> navController.navigate(Destinations.Search.route)
+                        4 -> navController.navigate(Destinations.PerfilWelcome.route)
                     }
                 }
             )
