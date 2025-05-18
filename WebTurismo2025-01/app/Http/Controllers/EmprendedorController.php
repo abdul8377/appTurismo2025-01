@@ -4,98 +4,115 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Emprendimiento;
-use App\Models\TipoDeNegocio;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
 class EmprendedorController extends Controller
 {
-    // Lógica 1: Mostrar la lista de emprendedores
+    // Mostrar lista de emprendedores
     public function index()
     {
-        // Listar todos los emprendedores con el perfil asociado
-        $emprendedores = User::whereHas('perfilEmprendedor')->get();
+        $emprendedores = User::whereHas('perfilEmprendedor')
+            ->with(['perfilEmprendedor', 'emprendimientoUsuarios'])
+            ->get();
+
         return view('Emprendedor.index', compact('emprendedores'));
     }
 
-    // Lógica 1: Mostrar el formulario para crear un nuevo usuario y perfil
+    // Mostrar formulario de creación
     public function create()
     {
-        return view('Emprendedor.create');
+        $countries = DB::table('lc_countries')
+            ->join('lc_countries_translations', 'lc_countries.id', '=', 'lc_countries_translations.lc_country_id')
+            ->where('lc_countries_translations.locale', 'es')
+            ->whereNotNull('lc_countries.iso_alpha_2')
+            ->where('lc_countries.is_visible', true)
+            ->orderBy('lc_countries_translations.name')
+            ->pluck('lc_countries_translations.name', 'lc_countries.iso_alpha_2')
+            ->toArray();
+
+        return view('Emprendedor.create', compact('countries'));
     }
 
-    // Lógica 1: Guardar el usuario y su perfil
+    // Guardar usuario y perfil
     public function store(Request $request)
     {
-        // Validar datos del usuario
         $validatedUser = $request->validate([
             'name' => 'required|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'user' => 'required|string|max:100|unique:users,user',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|string|min:8|confirmed',
+            'country' => 'required|string|max:2',
+            'zip_code' => 'nullable|string|max:20',
         ]);
 
-        // Crear el usuario
         $user = User::create([
             'name' => $validatedUser['name'],
+            'last_name' => $validatedUser['last_name'],
+            'user' => $validatedUser['user'],
             'email' => $validatedUser['email'],
             'password' => Hash::make($validatedUser['password']),
+            'country' => $validatedUser['country'],
+            'zip_code' => $validatedUser['zip_code'],
         ]);
 
-        // Asignar el rol de 'Emprendedor' automáticamente
         $user->assignRole('Emprendedor');
 
-        // Validar y guardar el perfil de emprendedor
         $validatedProfile = $request->validate([
             'dni' => 'required|string|max:20',
             'telefono_contacto' => 'nullable|string|max:20',
-            'gmail_contacto' => 'nullable|string|max:255',
+            'gmail_contacto' => 'nullable|string|email|max:255',
             'experiencia' => 'nullable|string',
         ]);
 
-        // Crear el perfil de emprendedor
         $user->perfilEmprendedor()->create($validatedProfile);
 
         return redirect()->route('emprendedores.index')->with('success', 'Emprendedor creado correctamente');
     }
 
-    // Lógica 1: Mostrar los detalles completos de un emprendedor
+    // Mostrar detalles de un emprendedor
     public function show(User $emprendedor)
     {
-        // Cargar el perfil de emprendedor relacionado
-        $emprendedor->load('perfilEmprendedor');
+        $emprendedor->load('emprendimientos');
         return view('Emprendedor.show', compact('emprendedor'));
     }
 
-    // Lógica 1: Mostrar el formulario para editar el perfil de un emprendedor
+    // Mostrar formulario de edición
     public function edit(User $emprendedor)
     {
-        // Cargar el perfil de emprendedor
         $emprendedor->load('perfilEmprendedor');
-        return view('Emprendedor.edit', compact('emprendedor'));
+
+        $countries = DB::table('lc_countries')
+            ->join('lc_countries_translations', 'lc_countries.id', '=', 'lc_countries_translations.lc_country_id')
+            ->where('lc_countries_translations.locale', 'es')
+            ->whereNotNull('lc_countries.iso_alpha_2')
+            ->where('lc_countries.is_visible', true)
+            ->orderBy('lc_countries_translations.name')
+            ->pluck('lc_countries_translations.name', 'lc_countries.iso_alpha_2')
+            ->toArray();
+
+        return view('Emprendedor.edit', compact('emprendedor', 'countries'));
     }
 
-    // Lógica 1: Actualizar el perfil de un emprendedor
+    // Actualizar perfil del emprendedor
     public function update(Request $request, User $emprendedor)
     {
-        // Validar los datos del perfil del emprendedor
         $validatedProfile = $request->validate([
             'dni' => 'required|string|max:20',
             'telefono_contacto' => 'nullable|string|max:20',
-            'gmail_contacto' => 'nullable|string|max:255',
+            'gmail_contacto' => 'nullable|string|email|max:255',
             'experiencia' => 'nullable|string',
         ]);
 
-        // Actualizar el perfil del emprendedor
         $emprendedor->perfilEmprendedor->update($validatedProfile);
 
-        // Verificar si se proporcionó una nueva contraseña
         if ($request->filled('password')) {
-            // Validar la nueva contraseña
             $request->validate([
                 'password' => 'required|string|min:8|confirmed',
             ]);
 
-            // Actualizar la contraseña del usuario
             $emprendedor->update([
                 'password' => Hash::make($request->password),
             ]);
@@ -104,15 +121,13 @@ class EmprendedorController extends Controller
         return redirect()->route('emprendedores.index')->with('success', 'Perfil actualizado correctamente');
     }
 
-
+    // Actualizar estado de validación
     public function updateStatus(Request $request, User $emprendedor)
     {
-        // Validar el estado de validación
         $validated = $request->validate([
             'estado_validacion' => 'required|in:pendiente,aprobado,rechazado',
         ]);
 
-        // Actualizar el estado de validación
         $emprendedor->perfilEmprendedor->update([
             'estado_validacion' => $validated['estado_validacion'],
         ]);
@@ -120,6 +135,4 @@ class EmprendedorController extends Controller
         return redirect()->route('emprendedores.show', $emprendedor)
                          ->with('success', 'Estado de validación actualizado correctamente.');
     }
-
-
-    }
+}

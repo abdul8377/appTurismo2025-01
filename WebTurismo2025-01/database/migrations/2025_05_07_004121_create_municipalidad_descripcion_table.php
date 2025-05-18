@@ -13,7 +13,14 @@ return new class extends Migration
     {
         Schema::create('municipalidad_descripcion', function (Blueprint $table) {
             $table->bigIncrements('municipalidad_descripcion_id');
-            $table->string('logo_url', 255)->nullable();
+
+            // Nuevos campos de configuración general
+            $table->string('nombre')->nullable();
+            $table->string('color_primario')->nullable();
+            $table->string('color_secundario')->nullable();
+            $table->boolean('mantenimiento')->default(false);
+
+            // Información de la municipalidad
             $table->string('direccion', 255)->nullable();
             $table->text('descripcion')->nullable();
             $table->string('ruc', 20)->nullable();
@@ -22,10 +29,10 @@ return new class extends Migration
             $table->string('nombre_alcalde', 100)->nullable();
             $table->string('facebook_url', 255)->nullable();
             $table->string('anio_gestion', 10)->nullable();
-            $table->string('imagen_url', 255)->nullable();
+
+            // Timestamps
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
-
         });
     }
 

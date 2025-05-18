@@ -1,61 +1,93 @@
 @php
     $groups = [
-        'Platform' => [
+        'APP' => array_filter([
+            auth()->user()->hasRole('Administrador') ? [
+                'name' => 'Municipalidad',
+                'icon' => 'tag',
+                'url' => route('municipalidad.index'),
+                'current' => request()->routeIs('municipalidad.*'),
+                'can' => true
+            ] : null,
+             auth()->user()->hasRole('Administrador') ? [
+                'name' => 'Slider',
+                'icon' => 'photo',
+                'url' => route('slider.index'),
+                'current' => request()->routeIs('slider.*'),
+                'can' => true
+            ] : null,
+        ]),
+
+        'Platform' => array_filter([
             [
                 'name' => 'Dashboard',
                 'icon' => 'home',
                 'url' => route('dashboard'),
                 'current' => request()->routeIs('dashboard')
-
             ],
 
-            [
-            'name' => 'Tipos de Negocio',
-            'icon' => 'briefcase', // icono según tu sistema de íconos
-            'url' => route('tipos-de-negocio.index'),
-            'current' => request()->routeIs('tipos-de-negocio.*'),
-            ],
-            [
+            auth()->user()->hasRole('Administrador') ? [
+                'name' => 'Tipos de Negocio',
+                'icon' => 'briefcase',
+                'url' => route('tipos-de-negocio.index'),
+                'current' => request()->routeIs('tipos-de-negocio.*'),
+                'can' => true
+            ] : null,
+
+            auth()->user()->hasRole('Administrador') ? [
                 'name' => 'Emprendedores',
-                'icon' => 'user-group', // Usando un icono apropiado para un emprendedor
+                'icon' => 'user-group',
                 'url' => route('emprendedores.index'),
                 'current' => request()->routeIs('emprendedores.*'),
-            ],
-            [
+                'can' => true
+            ] : null,
+
+            auth()->user()->hasRole('Administrador') ? [
                 'name' => 'Turistas',
-                'icon' => 'users', // Usando el icono de Heroicons adecuado para turistas
+                'icon' => 'users',
                 'url' => route('turistas.index'),
                 'current' => request()->routeIs('turistas.*'),
-            ],
+                'can' => true
+            ] : null,
+        ]),
 
-
-        ],
-
-        'Categorias' => [
-            [
+        'Categorias' => array_filter([
+            auth()->user()->hasRole('Administrador') ? [
                 'name' => 'Categorías de Servicio',
-                'icon' => 'tag', // Usando el icono 'collection' de Heroicons (para representar categorías)
+                'icon' => 'tag',
                 'url' => route('categorias-servicios.index'),
                 'current' => request()->routeIs('categorias-servicios.*'),
-            ],
+                'can' => true
+            ] : null,
 
+            auth()->user()->hasRole('Administrador') ? [
+                'name' => 'Categorías de Producto', // Aquí se cambió de 'Categorías de Servicio' a 'Categorías de Producto'
+                'icon' => 'archive-box', // Cambié el icono por uno de Flux Heroic Icons
+                'url' => route('categorias-productos.index'), // Ruta actualizada para Categorías de Producto
+                'current' => request()->routeIs('categorias-productos.*'), // Actualización de la ruta para Categorías de Producto
+                'can' => true
+            ] : null,
 
-            [
-            'name' => 'Tipos de Negocio',
-            'icon' => 'briefcase', // icono según tu sistema de íconos
-            'url' => route('tipos-de-negocio.index'),
-            'current' => request()->routeIs('tipos-de-negocio.*'),
-            ],
+            auth()->user()->hasRole('Administrador') ? [
+                'name' => 'Tipos de Negocio',
+                'icon' => 'briefcase',
+                'url' => route('tipos-de-negocio.index'),
+                'current' => request()->routeIs('tipos-de-negocio.*'),
+                'can' => true
+            ] : null,
+        ]),
 
-
-
-        ],
-
-
-    ]
-
-
+        'Productos Servicios' => array_filter([
+            auth()->check() && auth()->user()->hasRole('Emprendedor') ? [
+                'name' => 'servicios',
+                'icon' => 'tag',
+                'url' => route('servicios.index'),
+                'current' => request()->routeIs('servicios.*'),
+                'can' => true
+            ] : null,
+        ]),
+    ];
 @endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="dark">
     <head>
@@ -66,24 +98,45 @@
             <flux:sidebar.toggle class="lg:hidden" icon="x-mark" />
 
             <a href="{{ route('dashboard') }}" class="me-5 flex items-center space-x-2 rtl:space-x-reverse" wire:navigate>
-                <x-app-logo />
+                <x-municipalidad.header :municipalidad="$municipalidad" />
             </a>
+            @php
+                $rol = auth()->user()->getRoleNames()->first() ?? 'Sin Rol';
+            @endphp
+
+            @if($rol !== 'Usuario')
+                <div class="text-xl font-semibold text-gray-800 dark:text-white">
+                    Panel de <span class="text-primary-600">{{ ucfirst($rol) }}</span>
+                </div>
+            @endif
+
+
 
             <flux:navlist variant="outline">
                 @foreach ($groups as $group => $links)
-                    <flux:navlist.group :heading="$group" class="grid">
-                        @foreach ($links as $link)
-                            <flux:navlist.item
-                                :icon="$link['icon']"
-                                :href="$link['url']"
-                                :current="$link['current']"
-                                wire:navigate>
-                                {{ $link['name'] }}
-                            </flux:navlist.item>
-                        @endforeach
-                    </flux:navlist.group>
+                    @php
+                        $visibleLinks = collect($links)->filter(function ($link) {
+                            return !isset($link['can']) || $link['can'];
+                        });
+                    @endphp
+
+                    @if ($visibleLinks->isNotEmpty())
+                        <flux:navlist.group :heading="$group" class="grid">
+                            @foreach ($visibleLinks as $link)
+                                <flux:navlist.item
+                                    :icon="$link['icon']"
+                                    :href="$link['url']"
+                                    :current="$link['current']"
+                                    wire:navigate>
+                                    {{ $link['name'] }}
+                                </flux:navlist.item>
+                            @endforeach
+                        </flux:navlist.group>
+                    @endif
                 @endforeach
+
             </flux:navlist>
+
 
             <flux:spacer />
 

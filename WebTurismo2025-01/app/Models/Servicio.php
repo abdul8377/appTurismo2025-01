@@ -21,6 +21,7 @@ class Servicio extends Model
         'duracion_servicio',
         'imagen_destacada',
         'categorias_servicios_id', // Relación con categoría de servicio
+
     ];
 
     /**
@@ -38,6 +39,12 @@ class Servicio extends Model
     {
         return $this->belongsTo(CategoriaServicio::class, 'categorias_servicios_id', 'categorias_servicios_id');
     }
+
+    public function categoria()
+{
+    return $this->belongsTo(CategoriaServicio::class, 'categorias_servicios_id');
+}
+
 
 
 }

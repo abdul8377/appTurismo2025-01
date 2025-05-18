@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('images_id');
-            $table->string('file_name', 255);
-            $table->string('file_path', 255);
-            $table->string('mime_type', 255);
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+       Schema::create('images', function (Blueprint $table) {
+            $table->id();
+            $table->string('url');
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
+            $table->string('tipo')->nullable(); // ejemplo: 'portada', 'galeria', etc.
+            $table->timestamps();
 
+            $table->index(['imageable_id', 'imageable_type']); // Mejora las consultas
         });
+
     }
 
     /**

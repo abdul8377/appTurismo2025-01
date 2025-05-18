@@ -8,11 +8,11 @@ use Illuminate\Support\Facades\Hash;
 
 class TuristaController extends Controller
 {
-    // Mostrar la lista de turistas
+    // Mostrar la lista de turistas con rol 'Usuario'
     public function index()
     {
-        // Obtener todos los usuarios con perfil de turista
-        $turistas = User::whereHas('perfilTurista')->get();
+        // Obtener todos los usuarios que tienen el rol 'Usuario' usando Spatie
+        $turistas = User::role('Usuario')->get();
 
         return view('Turista.index', compact('turistas'));
     }
@@ -20,8 +20,6 @@ class TuristaController extends Controller
     // Mostrar los detalles completos de un turista
     public function show(User $turista)
     {
-        // Cargar el perfil del turista
-        $turista->load('perfilTurista');
         return view('Turista.show', compact('turista'));
     }
 
@@ -34,12 +32,10 @@ class TuristaController extends Controller
     // Actualizar la contraseña de un turista
     public function update(Request $request, User $turista)
     {
-        // Validar la nueva contraseña
         $validated = $request->validate([
             'password' => 'required|string|min:8|confirmed',
         ]);
 
-        // Actualizar la contraseña
         $turista->update([
             'password' => Hash::make($validated['password']),
         ]);

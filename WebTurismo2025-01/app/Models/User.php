@@ -27,8 +27,12 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'last_name',
+        'user',
         'email',
         'password',
+        'country',
+        'zip_code',
     ];
 
     /**
@@ -89,6 +93,13 @@ class User extends Authenticatable
         return $this->belongsToMany(Emprendimiento::class, 'emprendimiento_usuarios', 'users_id', 'emprendimientos_id')
                     ->withPivot('rol_emprendimiento', 'fecha_asignacion')
                     ->withTimestamps(); // Esta línea es importante si estás utilizando created_at y updated_at
+    }
+
+    // En app/Models/User.php
+
+    public function emprendimientoUsuarios()
+    {
+        return $this->hasMany(EmprendimientoUsuario::class, 'users_id');
     }
 
 
