@@ -16,8 +16,7 @@ class Producto extends Model
         'descripcion',
         'precio',
         'unidad',
-        'categorias_id',
-        'imagen_destacada',
+        'categorias_productos_id', // Cambié de 'categorias_id' a 'categorias_productos_id'
         'stock',
         'capacidad_total'
     ];
@@ -30,6 +29,7 @@ class Producto extends Model
 
     public function categoria()
     {
-        return $this->belongsTo(Categoria::class, 'categorias_id', 'categorias_id');
+        // Asegúrate de que los campos de clave foránea y primaria estén correctamente asignados
+        return $this->belongsTo(CategoriaProducto::class, 'categorias_productos_id', 'categorias_productos_id');
     }
 }

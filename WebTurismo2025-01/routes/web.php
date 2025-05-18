@@ -5,6 +5,7 @@ use App\Http\Controllers\EmprendedorController;
 use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
 use App\Http\Controllers\Municipalidad\MunicipalidadDescripcionController;
 use App\Http\Controllers\Municipalidad\SliderController;
+use App\Http\Controllers\ProductoServicio\CategoriaProductoController;
 use App\Http\Controllers\ProductoServicio\ServicioController;
 use App\Http\Controllers\TipoDeNegocioController;
 use App\Http\Controllers\TuristaController;
@@ -94,6 +95,10 @@ Route::prefix('municipalidad/slider')->name('slider.')->group(function () {
     // ✅ Ruta para activar un slider existente (pasar a visible)
     Route::post('/activar-slider/{slider}', [SliderController::class, 'activar'])->name('activar');
 });
+
+    Route::resource('categorias-productos', CategoriaProductoController::class)->parameters([
+    'categorias-productos' => 'categoriaProducto'
+]);
 });
 
 Route::middleware(['auth', 'role:Emprendedor'])->prefix('servicios')->group(function () {

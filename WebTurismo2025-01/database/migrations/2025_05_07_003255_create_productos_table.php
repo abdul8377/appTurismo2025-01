@@ -19,7 +19,6 @@ return new class extends Migration
             $table->decimal('precio', 10, 2);
             $table->string('unidad', 50)->nullable();
             $table->unsignedBigInteger('categorias_productos_id');
-            $table->string('imagen_destacada', 255)->nullable();
             $table->integer('stock')->default(0);
             $table->integer('capacidad_total')->nullable();
             $table->timestamp('created_at')->useCurrent();

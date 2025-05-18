@@ -60,6 +60,14 @@
             ] : null,
 
             auth()->user()->hasRole('Administrador') ? [
+                'name' => 'Categorías de Producto', // Aquí se cambió de 'Categorías de Servicio' a 'Categorías de Producto'
+                'icon' => 'archive-box', // Cambié el icono por uno de Flux Heroic Icons
+                'url' => route('categorias-productos.index'), // Ruta actualizada para Categorías de Producto
+                'current' => request()->routeIs('categorias-productos.*'), // Actualización de la ruta para Categorías de Producto
+                'can' => true
+            ] : null,
+
+            auth()->user()->hasRole('Administrador') ? [
                 'name' => 'Tipos de Negocio',
                 'icon' => 'briefcase',
                 'url' => route('tipos-de-negocio.index'),
