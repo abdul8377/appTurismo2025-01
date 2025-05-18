@@ -24,7 +24,9 @@ class DatabaseSeeder extends Seeder
        //Usuario administrador
        $this->call(UserSeeder::class);
 
-       CategoriaServicio::factory()->count(10)->create();
+       //categoria servicio
+       $this->call(CategoriaServicioSeeder::class);
+
        TipoDeNegocio::factory()->count(10)->create();
        $this->call(PerfilEmprendedorSeeder::class); // Llamar al seeder de PerfilEmprendedor
 

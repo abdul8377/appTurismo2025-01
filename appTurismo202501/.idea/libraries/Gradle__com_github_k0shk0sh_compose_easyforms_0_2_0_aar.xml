@@ -1,0 +1,14 @@
+<component name="libraryTable">
+  <library name="Gradle: com.github.k0shk0sh:compose-easyforms:0.2.0@aar" external-system-id="GRADLE">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/8.11.1/transforms/21dfc72f89e4b2016bf3714fac1decf3/transformed/compose-easyforms-0.2.0/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/8.11.1/transforms/21dfc72f89e4b2016bf3714fac1decf3/transformed/compose-easyforms-0.2.0/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.k0shk0sh/compose-easyforms/0.2.0/ea3757b019e746d58e89d29f9d6610e7d1dee4b6/compose-easyforms-0.2.0-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.k0shk0sh/compose-easyforms/0.2.0/4929172cffe2552e80955ea2ee36804e66602dbe/compose-easyforms-0.2.0-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -6,8 +6,10 @@ use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
 use App\Http\Controllers\TipoDeNegocioController;
 use App\Http\Controllers\TuristaController;
 use App\Livewire\Categoria\CategoriaList;
+use App\Providers\VoltServiceProvider;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
+
 
 Route::get('/', function () {
     return view('welcome');
