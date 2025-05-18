@@ -16,6 +16,7 @@ import androidx.navigation.navArgument
 import pe.edu.upeu.appturismo202501.ui.presentation.Pantalla1
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterScreen
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.PerfilScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.SearchScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.WelcomeScreen
 import pe.edu.upeu.appturismo202501.ui.theme.AppTurismo202501Theme
@@ -49,6 +50,15 @@ fun NavigationHost(
                     "Isla Taquile", "Isla Amantaní",
                     "Lago Titicaca", "Puno", "Cusco"
                 )
+            )
+        }
+        composable(Destinations.PerfilWelcome.route) {
+            PerfilScreen(
+                onNavigateToLogin = {
+                    navController.navigate(Destinations.Login.route) {
+                        popUpTo(Destinations.PerfilWelcome.route) { inclusive = true }
+                    }
+                }
             )
         }
 
