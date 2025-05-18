@@ -13,7 +13,9 @@
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/ui/navigation/NavigationHost.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/ui/navigation/NavigationHost.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/di/DataSourceModule.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/di/DataSourceModule.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/modelo/Category.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/modelo/Category.kt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/ui/presentation/componentsA/Tabs.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/ui/presentation/componentsA/Tabs.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/ui/presentation/screens/welcome/WelcomeScreen.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/ui/presentation/screens/welcome/WelcomeScreen.kt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -180,12 +182,12 @@
       <map>
         <entry key="pe.edu.upeu.appturismo202501">
           <value>
-            <CheckInfo lastCheckTimestamp="1747105708528" />
+            <CheckInfo lastCheckTimestamp="1747543022559" />
           </value>
         </entry>
         <entry key="pe.edu.upeu.appturismo202501.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1747105708529" />
+            <CheckInfo lastCheckTimestamp="1747543022560" />
           </value>
         </entry>
       </map>

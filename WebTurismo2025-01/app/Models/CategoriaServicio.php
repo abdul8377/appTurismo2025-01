@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\URL;
 
 class CategoriaServicio extends Model
 {
@@ -24,6 +25,28 @@ class CategoriaServicio extends Model
         'icono'
     ];
 
+
+
+    // Genera URL completa al recurso en public/storage
+    public function getImagenUrlAttribute(): ?string
+    {
+        if (! $this->imagen) {
+            return null;
+        }
+        // Asegúrate de que 'imagen' sea algo como "images/cultura.jpg"
+        return URL::to("storage/{$this->imagen}");
+    }
+
+    public function getIconoUrlAttribute(): ?string
+    {
+        if (! $this->icono) {
+            return null;
+        }
+        return URL::to("storage/{$this->icono}");
+    }
+
+    protected $appends = ['imagen_url', 'icono_url'];
+    protected $hidden  = ['imagen', 'icono'];
 
     public function servicios()
     {

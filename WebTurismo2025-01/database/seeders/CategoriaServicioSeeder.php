@@ -22,26 +22,26 @@ class CategoriaServicioSeeder extends Seeder
         $categoryService=CategoriaServicio::create([
             'nombre'=>'Gastronomia',
             'descripcion'=>'Experiencias culinarias',
-            'imagen'=>'images/gastronomia',
-            'icono'=>'iconos/gastronomia'
+            'imagen'=>'images/gastronomia.webp',
+            'icono'=>'iconos/gastronomia.png'
         ]);
         $categoryService=CategoriaServicio::create([
             'nombre'=>'experiencias',
             'descripcion'=>'Experiencias inolvidables',
-            'imagen'=>'images/experiencias',
-            'icono'=>'iconos/experiencias'
+            'imagen'=>'images/experiencias.jpg',
+            'icono'=>'iconos/experiencias.png'
         ]);
         $categoryService=CategoriaServicio::create([
             'nombre'=>'Alojamiento',
             'descripcion'=>'Alojamientos para todos los gustos',
-            'imagen'=>'images/alojamiento',
-            'icono'=>'iconos/alojamiento'
+            'imagen'=>'images/alojamiento.jpeg',
+            'icono'=>'iconos/alojamiento.png'
         ]);
         $categoryService=CategoriaServicio::create([
             'nombre'=>'Guias',
             'descripcion'=>'Los mejores guias turisticos',
-            'imagen'=>'images/guia',
-            'icono'=>'iconos/guia'
+            'imagen'=>'images/guia.jpg',
+            'icono'=>'iconos/guia.png'
         ]);
     }
 }
