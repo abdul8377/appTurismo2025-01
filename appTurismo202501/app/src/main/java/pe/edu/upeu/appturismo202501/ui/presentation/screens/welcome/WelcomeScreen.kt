@@ -97,8 +97,30 @@ fun WelcomeScreen(
     val selectedCategory: CategoryResp? = categories.getOrNull(selectedIndex)
 
     Scaffold(
-        bottomBar = { /* …tu bottom bar… */ }
-    ) { padding ->
+        bottomBar = {
+            var selectedIndex by remember { mutableStateOf(0) }
+            val navItems = listOf(
+                NavItem("Explorar", Icons.Filled.Place, Icons.Outlined.Place),
+                NavItem("Favoritos",   Icons.Filled.Favorite, Icons.Outlined.Favorite),
+                NavItem("Carrito",   Icons.Filled.ShoppingCart, Icons.Outlined.ShoppingCart),
+                NavItem("Reservas", Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder),
+                NavItem("Perfil",   Icons.Filled.AccountCircle, Icons.Outlined.AccountCircle)
+            )
+            var sel by remember { mutableStateOf(0) }
+            TurismoNavigationBar(
+                items = navItems,
+                selectedIndex = selectedIndex,
+                onItemSelected = { index ->
+                    selectedIndex = index
+                    when (index) {
+                        0 -> navController.navigate(Destinations.Welcome.route)
+                        1 -> navController.navigate(Destinations.Search.route)
+                        4 -> navController.navigate(Destinations.PerfilWelcome.route)
+                    }
+                }
+            )
+
+        }) { padding ->
         Box(
             Modifier
                 .fillMaxSize()
