@@ -1,5 +1,6 @@
 package pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,14 +42,17 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
@@ -62,7 +66,10 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import coil3.compose.AsyncImage
+import coil3.compose.rememberAsyncImagePainter
 import pe.edu.upeu.appturismo202501.R
+import pe.edu.upeu.appturismo202501.modelo.CategoryResp
 import pe.edu.upeu.appturismo202501.ui.navigation.Destinations
 import pe.edu.upeu.appturismo202501.ui.presentation.componentsA.ActivitiesSection
 import pe.edu.upeu.appturismo202501.ui.presentation.componentsA.ActivityBanner
@@ -81,94 +88,90 @@ import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.Ca
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun WelcomeScreen(navController: NavController, viewModel: CategoryViewModel = hiltViewModel()) {
-
+fun WelcomeScreen(
+    navController: NavController,
+    viewModel: CategoryViewModel = hiltViewModel()
+) {
     val categories by viewModel.categories.collectAsState()
-    val bg = painterResource(id = R.drawable.bg)
+    var selectedIndex by rememberSaveable { mutableStateOf(0) }
+    val selectedCategory: CategoryResp? = categories.getOrNull(selectedIndex)
 
     Scaffold(
-        bottomBar = {
-            var selectedIndex by remember { mutableStateOf(0) }
-            val navItems = listOf(
-                NavItem("Explorar", Icons.Filled.Place, Icons.Outlined.Place),
-                NavItem("Favoritos",   Icons.Filled.Favorite, Icons.Outlined.Favorite),
-                NavItem("Carrito",   Icons.Filled.ShoppingCart, Icons.Outlined.ShoppingCart),
-                NavItem("Reservas", Icons.Filled.Favorite, Icons.Outlined.FavoriteBorder),
-                NavItem("Perfil",   Icons.Filled.AccountCircle, Icons.Outlined.AccountCircle)
-            )
-            var sel by remember { mutableStateOf(0) }
-            TurismoNavigationBar(
-                items = navItems,
-                selectedIndex = selectedIndex,
-                onItemSelected = { index ->
-                    selectedIndex = index
-                    when (index) {
-                        0 -> navController.navigate(Destinations.Welcome.route)
-                        1 -> navController.navigate(Destinations.Search.route)
-                        4 -> navController.navigate(Destinations.PerfilWelcome.route)
-                    }
-                }
-            )
-        }) { padding ->
-
-        /* ---------- CONTENEDOR PRINCIPAL ---------- */
+        bottomBar = { /* …tu bottom bar… */ }
+    ) { padding ->
         Box(
             Modifier
                 .fillMaxSize()
-                .padding(bottom = padding.calculateBottomPadding())) {
-
-            /* ---- Bloque columna con imagen + textos ---- */
+                .padding(bottom = padding.calculateBottomPadding())
+        ) {
             LazyColumn {
-                // imagen de cabecera
                 item {
+                    // ===== HEADER DINÁMICO =====
                     Box(
                         Modifier
                             .fillMaxWidth()
                             .height((LocalConfiguration.current.screenHeightDp * 0.65f).dp)
                     ) {
-                        Image(
-                            painter = bg,
-                            contentDescription = null,
-                            modifier = Modifier.fillMaxSize(),
-                            contentScale = ContentScale.Crop
+                        // Log para depurar la URL
+                        LaunchedEffect (selectedCategory?.imagenUrl) {
+                            Log.d("WelcomeScreen", "Imagen URL = ${selectedCategory?.imagenUrl}")
+                        }
+
+                        // AsyncImage carga fondo
+                        AsyncImage(
+                            model = selectedCategory?.imagenUrl,
+                            contentDescription = selectedCategory?.nombre,
+                            placeholder        = painterResource(R.drawable.bg),
+                            error              = painterResource(R.drawable.bg),
+                            modifier           = Modifier.fillMaxSize(),
+                            contentScale       = ContentScale.Crop
                         )
-                        /* textos sobre la imagen */
+                        // 2) Degradado superpuesto
+                        Box(
+                            modifier = Modifier
+                                .matchParentSize()
+                                .background(
+                                    Brush.verticalGradient(
+                                        colors = listOf(
+                                            Color.Transparent,
+                                            Color.Black.copy(alpha = 0.6f)
+                                        ),
+                                        startY = 0f,
+                                        endY = Float.POSITIVE_INFINITY
+                                    )
+                                )
+                        )
+
+                        // Nombre y descripción sobre la imagen
                         Column(
                             Modifier
                                 .align(Alignment.BottomStart)
                                 .padding(16.dp)
                         ) {
                             Text(
-                                "Recuerdos de viaje que\nnunca olvidarás",
-                                color = Color.White,
-                                fontSize = 28.sp,
+                                text       = selectedCategory?.nombre ?: "Cargando...",
+                                color      = Color.White,
+                                fontSize   = 28.sp,
                                 fontWeight = FontWeight.Bold
                             )
                             Spacer(Modifier.height(8.dp))
-                            Text("Originals by GetYourGuide", color = Color.White.copy(alpha = .8f))
                             Text(
-                                "Paseo en globo al amanecer en Göreme",
+                                text  = selectedCategory?.descripcion ?: "Descripción no disponible",
                                 color = Color.White.copy(alpha = .8f)
                             )
-                            Text(
-                                "Más información >",
-                                color = Color.White,
-                                fontWeight = FontWeight.SemiBold
-                            )
                             Spacer(Modifier.height(66.dp))
-
                         }
-                        //  pestañas sobre la parte baja de la imagen
 
+                        // ===== TABS =====
                         CategoryTabs(
-                            categories = categories,
-                            modifier = Modifier
+                            categories    = categories,
+                            selectedIndex = selectedIndex,
+                            onSelected    = { idx -> selectedIndex = idx },
+                            modifier      = Modifier
                                 .align(Alignment.BottomStart)
-                                .fillMaxWidth(),
-                            onSelected = { idx ->
-                                println("Categoría seleccionada: ${categories[idx].nombre}")
-                            }
+                                .fillMaxWidth()
                         )
+
                     }
                 }
 

@@ -423,20 +423,20 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
+
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel";
 
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
 
-      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
+      @KeepFieldType
+      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
 
       @KeepFieldType
       LoginViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel2;
 
       @KeepFieldType
       CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
-
-      @KeepFieldType
-      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
     }
   }
 
@@ -483,20 +483,20 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
-
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel";
 
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
 
-      @KeepFieldType
-      CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
 
       @KeepFieldType
       LoginViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel2;
 
       @KeepFieldType
       RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
+
+      @KeepFieldType
+      CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
