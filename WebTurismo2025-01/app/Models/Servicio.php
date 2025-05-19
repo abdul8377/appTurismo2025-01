@@ -20,7 +20,7 @@ class Servicio extends Model
         'capacidad_maxima',
         'duracion_servicio',
         'imagen_destacada',
-        'categorias_servicios_id', // Relación con categoría de servicio
+        'categorias_servicios_id',
     ];
 
     /**

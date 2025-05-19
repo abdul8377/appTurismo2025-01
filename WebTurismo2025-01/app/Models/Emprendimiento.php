@@ -13,7 +13,7 @@ class Emprendimiento extends Model
     protected $fillable = [
         'nombre',
         'descripcion',
-        'categorias_id',
+        'categorias_servicios_id',
         'direccion',
         'telefono',
         'estado',
@@ -21,11 +21,11 @@ class Emprendimiento extends Model
         'imagen_destacada'
     ];
 
-    // Relaciones
-    public function emprendimientos()
-{
-    return $this->hasMany(Emprendimiento::class, 'tipo_negocio_id');
-}
+    // Relación con categorías de servicios
+    public function categoriaServicio()
+    {
+        return $this->belongsTo(CategoriaServicio::class, 'categorias_servicios_id', 'categorias_servicios_id');
+    }
 
     public function blogs()
     {
