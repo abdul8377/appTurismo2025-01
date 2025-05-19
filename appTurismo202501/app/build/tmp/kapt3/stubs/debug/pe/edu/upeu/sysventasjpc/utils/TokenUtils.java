@@ -5,7 +5,7 @@ public final class TokenUtils {
     @org.jetbrains.annotations.NotNull()
     private static java.lang.String TOKEN_CONTENT = "Aqui va el Token";
     @org.jetbrains.annotations.NotNull()
-    private static java.lang.String API_URL = "http://192.168.1.3:8000/api/";
+    private static java.lang.String API_URL = "http://192.168.0.198:8000/api/";
     public static android.content.Context CONTEXTO_APPX;
     @org.jetbrains.annotations.NotNull()
     private static java.lang.String USER_LOGIN = "";
