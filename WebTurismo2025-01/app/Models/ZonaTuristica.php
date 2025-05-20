@@ -16,6 +16,5 @@ class ZonaTuristica extends Model
         'ubicacion',
         'imagen_url',
         'estado',
-        'created_at'
     ];
 }

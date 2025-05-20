@@ -4,7 +4,9 @@ use App\Http\Controllers\Administrador\AuthController;
 use App\Http\Controllers\Api\CategoriaServicioApiController;
 use App\Http\Controllers\Api\EmprendimientoApiController;
 use App\Http\Controllers\Api\ServicioApiController;
+use App\Http\Controllers\Api\ZonaTuristicaApiController;
 use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
+use App\Http\Controllers\ImageableController;
 use App\Http\Controllers\TipoDeNegocioController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -64,3 +66,17 @@ Route::post('/servicios', [ServicioApiController::class, 'store']);
 Route::get('/servicios/{id}', [ServicioApiController::class, 'show']);
 Route::put('/servicios/{id}', [ServicioApiController::class, 'update']);
 Route::delete('/servicios/{id}', [ServicioApiController::class, 'destroy']);
+
+//ZoNAs turisiticas
+
+Route::get('/zonas-turisticas', [ZonaTuristicaApiController::class, 'index']);
+Route::post('/zonas-turisticas', [ZonaTuristicaApiController::class, 'store']);
+Route::get('/zonas-turisticas/{id}', [ZonaTuristicaApiController::class, 'show']);
+Route::put('/zonas-turisticas/{id}', [ZonaTuristicaApiController::class, 'update']);
+Route::delete('/zonas-turisticas/{id}', [ZonaTuristicaApiController::class, 'destroy']);
+
+
+//imagenenes
+
+Route::post('/imagenes', [ImageableController::class, 'store']);
+Route::get('/imagenes/{type}/{id}', [ImageableController::class, 'index']);

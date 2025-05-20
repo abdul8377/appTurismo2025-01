@@ -12,10 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('images', function (Blueprint $table) {
-            $table->bigIncrements('images_id');
-            $table->string('file_name', 255);
-            $table->string('file_path', 255);
-            $table->string('mime_type', 255);
+            $table->bigIncrements('id');
+            $table->string('url', 255);
+            $table->string('titulo', 255)->nullable();
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 

@@ -11,16 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('imageable', function (Blueprint $table) {
-            $table->bigIncrements('imageable_registro_id');
+        Schema::create('imageables', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('images_id');
-            $table->string('imageable_type');
             $table->unsignedBigInteger('imageable_id');
-            $table->timestamp('created_at')->useCurrent();
-            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+            $table->string('imageable_type');
+            $table->timestamps();
 
-            $table->foreign('images_id')->references('images_id')->on('images');
-
+            $table->foreign('images_id')->references('id')->on('images')->onDelete('cascade');
         });
     }
 
@@ -29,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('imageable');
+        Schema::dropIfExists('imageables');
     }
 };
