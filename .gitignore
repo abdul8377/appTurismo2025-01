@@ -4,19 +4,21 @@
 # Ada Library Information
 *.ali
 
-# Android/Gradle build & artefactos
-.gradle/
-build/
-appTurismo202501/.gradle/
-appTurismo202501/app/build/
+# Android Studio local config (no versionar)
+**/.idea/workspace.xml
+**/.idea/tasks.xml
+**/.idea/dictionaries/
+**/*.iml          # si prefieres generarlos con Gradle en cada máquina
+
+# Pero MANTÉN versionados:
+#   .idea/modules.xml
+#   .idea/misc.xml
+#   .idea/runConfigurations/
+#   .idea/codeStyles/
 
 # Archivos generados (APK, intermediarios, etc.)
 appTurismo202501/app/build/intermediates/
 
-# IDE config (no versionar workspace)
-.idea/
-!/.idea/*.xml   # opcional: si quieres versionar prefs
-!.idea/codeStyles
 
 # Variables de entorno y secretos
 .env
