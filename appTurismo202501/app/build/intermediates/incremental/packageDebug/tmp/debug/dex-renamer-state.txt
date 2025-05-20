@@ -1,19 +1,19 @@
-#Mon May 19 18:26:31 PET 2025
-base.0=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
-base.1=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
-base.10=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
-base.11=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
-base.12=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
-base.13=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
-base.14=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
-base.2=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
-base.3=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
-base.4=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
-base.5=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
-base.6=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
-base.7=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
-base.8=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
-base.9=D\:\\11\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
+#Tue May 20 07:33:49 PET 2025
+base.0=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes.dex
+base.1=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\0\\classes.dex
+base.10=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\6\\classes.dex
+base.11=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\7\\classes.dex
+base.12=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\8\\classes.dex
+base.13=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes2.dex
+base.14=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeExtDexDebug\\classes3.dex
+base.2=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\10\\classes.dex
+base.3=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\11\\classes.dex
+base.4=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\12\\classes.dex
+base.5=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\13\\classes.dex
+base.6=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\14\\classes.dex
+base.7=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\15\\classes.dex
+base.8=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\1\\classes.dex
+base.9=D\:\\1\\appTurismo2025-01\\appTurismo202501\\app\\build\\intermediates\\dex\\debug\\mergeProjectDexDebug\\4\\classes.dex
 path.0=classes.dex
 path.1=0/classes.dex
 path.10=6/classes.dex

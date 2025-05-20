@@ -64,10 +64,10 @@ pe.edu.upeu.appturismo202501.app-lifecycle-viewmodel-compose-release-62 C:\Users
 pe.edu.upeu.appturismo202501.app-lifecycle-viewmodel-savedstate-2.8.7-63 C:\Users\FRANCK\.gradle\caches\8.11.1\transforms\fe247c35fbbc6573edf764a7e8c6fc07\transformed\lifecycle-viewmodel-savedstate-2.8.7\res
 pe.edu.upeu.appturismo202501.app-savedstate-1.2.1-64 C:\Users\FRANCK\.gradle\caches\8.11.1\transforms\fe9177a193d9a1862910ccc9c920be95\transformed\savedstate-1.2.1\res
 pe.edu.upeu.appturismo202501.app-navigation-runtime-ktx-2.8.9-65 C:\Users\FRANCK\.gradle\caches\8.11.1\transforms\ffac6031384801f865fc84de10946dd1\transformed\navigation-runtime-ktx-2.8.9\res
-pe.edu.upeu.appturismo202501.app-pngs-66 D:\11\appTurismo2025-01\appTurismo202501\app\build\generated\res\pngs\debug
-pe.edu.upeu.appturismo202501.app-resValues-67 D:\11\appTurismo2025-01\appTurismo202501\app\build\generated\res\resValues\debug
-pe.edu.upeu.appturismo202501.app-packageDebugResources-68 D:\11\appTurismo2025-01\appTurismo202501\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
-pe.edu.upeu.appturismo202501.app-packageDebugResources-69 D:\11\appTurismo2025-01\appTurismo202501\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
-pe.edu.upeu.appturismo202501.app-debug-70 D:\11\appTurismo2025-01\appTurismo202501\app\build\intermediates\merged_res\debug\mergeDebugResources
-pe.edu.upeu.appturismo202501.app-debug-71 D:\11\appTurismo2025-01\appTurismo202501\app\src\debug\res
-pe.edu.upeu.appturismo202501.app-main-72 D:\11\appTurismo2025-01\appTurismo202501\app\src\main\res
+pe.edu.upeu.appturismo202501.app-pngs-66 D:\1\appTurismo2025-01\appTurismo202501\app\build\generated\res\pngs\debug
+pe.edu.upeu.appturismo202501.app-resValues-67 D:\1\appTurismo2025-01\appTurismo202501\app\build\generated\res\resValues\debug
+pe.edu.upeu.appturismo202501.app-packageDebugResources-68 D:\1\appTurismo2025-01\appTurismo202501\app\build\intermediates\incremental\debug\packageDebugResources\merged.dir
+pe.edu.upeu.appturismo202501.app-packageDebugResources-69 D:\1\appTurismo2025-01\appTurismo202501\app\build\intermediates\incremental\debug\packageDebugResources\stripped.dir
+pe.edu.upeu.appturismo202501.app-debug-70 D:\1\appTurismo2025-01\appTurismo202501\app\build\intermediates\merged_res\debug\mergeDebugResources
+pe.edu.upeu.appturismo202501.app-debug-71 D:\1\appTurismo2025-01\appTurismo202501\app\src\debug\res
+pe.edu.upeu.appturismo202501.app-main-72 D:\1\appTurismo2025-01\appTurismo202501\app\src\main\res

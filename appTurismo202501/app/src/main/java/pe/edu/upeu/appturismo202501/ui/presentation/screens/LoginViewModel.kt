@@ -7,7 +7,7 @@ import pe.edu.upeu.appturismo202501.modelo.CheckEmailDto
 import pe.edu.upeu.appturismo202501.modelo.LoginDto
 import pe.edu.upeu.appturismo202501.modelo.LoginResp
 import pe.edu.upeu.appturismo202501.repository.LoginUserRepository
-import pe.edu.upeu.sysventasjpc.utils.TokenUtils
+import pe.edu.upeu.appturismo202501.utils.TokenUtils
 import javax.inject.Inject
 
 @HiltViewModel

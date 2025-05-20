@@ -129,6 +129,23 @@
                     }
                 },
                 {
+                    "source": "D:\\1\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\dimens.xml",
+                    "from": {
+                        "startLines": "6,7,3,5,4",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "203,253,59,157,109",
+                        "endColumns": "48,45,48,44,46",
+                        "endOffsets": "247,294,103,197,151"
+                    },
+                    "to": {
+                        "startLines": "173,174,182,198,207",
+                        "startColumns": "4,4,4,4,4",
+                        "startOffsets": "11585,11634,12291,13318,13816",
+                        "endColumns": "48,45,48,44,46",
+                        "endOffsets": "11629,11675,12335,13358,13858"
+                    }
+                },
+                {
                     "source": "C:\\Users\\FRANCK\\.gradle\\caches\\8.11.1\\transforms\\d17ffd67b958da8a789f4a2836ac705a\\transformed\\navigation-runtime-2.8.9\\res\\values\\values.xml",
                     "from": {
                         "startLines": "2,3,10,13",
@@ -162,23 +179,6 @@
                         "startOffsets": "17032,18276",
                         "endColumns": "41,59",
                         "endOffsets": "17069,18331"
-                    }
-                },
-                {
-                    "source": "D:\\11\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\colors.xml",
-                    "from": {
-                        "startLines": "7,2,3,4,5,6,8",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "293,57,105,153,201,247,336",
-                        "endColumns": "41,46,46,46,44,44,41",
-                        "endOffsets": "330,99,147,195,241,287,373"
-                    },
-                    "to": {
-                        "startLines": "22,65,66,67,78,79,82",
-                        "startColumns": "4,4,4,4,4,4,4",
-                        "startOffsets": "1497,4384,4431,4478,5222,5267,5433",
-                        "endColumns": "41,46,46,46,44,44,41",
-                        "endOffsets": "1534,4426,4473,4520,5262,5307,5470"
                     }
                 },
                 {
@@ -218,7 +218,24 @@
                     }
                 },
                 {
-                    "source": "D:\\11\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\themes.xml",
+                    "source": "D:\\1\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\colors.xml",
+                    "from": {
+                        "startLines": "7,2,3,4,5,6,8",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "293,57,105,153,201,247,336",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "330,99,147,195,241,287,373"
+                    },
+                    "to": {
+                        "startLines": "22,65,66,67,78,79,82",
+                        "startColumns": "4,4,4,4,4,4,4",
+                        "startOffsets": "1497,4384,4431,4478,5222,5267,5433",
+                        "endColumns": "41,46,46,46,44,44,41",
+                        "endOffsets": "1534,4426,4473,4520,5262,5307,5470"
+                    }
+                },
+                {
+                    "source": "D:\\1\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\themes.xml",
                     "from": {
                         "startLines": "3",
                         "startColumns": "4",
@@ -324,24 +341,7 @@
                     }
                 },
                 {
-                    "source": "D:\\11\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\dimens.xml",
-                    "from": {
-                        "startLines": "6,7,3,5,4",
-                        "startColumns": "4,4,4,4,4",
-                        "startOffsets": "203,253,59,157,109",
-                        "endColumns": "48,45,48,44,46",
-                        "endOffsets": "247,294,103,197,151"
-                    },
-                    "to": {
-                        "startLines": "173,174,182,198,207",
-                        "startColumns": "4,4,4,4,4",
-                        "startOffsets": "11585,11634,12291,13318,13816",
-                        "endColumns": "48,45,48,44,46",
-                        "endOffsets": "11629,11675,12335,13358,13858"
-                    }
-                },
-                {
-                    "source": "D:\\11\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\strings.xml",
+                    "source": "D:\\1\\appTurismo2025-01\\appTurismo202501\\app\\src\\main\\res\\values\\strings.xml",
                     "from": {
                         "startLines": "1",
                         "startColumns": "4",
