@@ -12,14 +12,12 @@ return new class extends Migration
     public function up(): void
     {
        Schema::create('images', function (Blueprint $table) {
-            $table->id();
-            $table->string('url');
-            $table->unsignedBigInteger('imageable_id');
-            $table->string('imageable_type');
-            $table->string('tipo')->nullable(); // ejemplo: 'portada', 'galeria', etc.
-            $table->timestamps();
+            $table->bigIncrements('id');
+            $table->string('url', 255);
+            $table->string('titulo', 255)->nullable();
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
 
-            $table->index(['imageable_id', 'imageable_type']); // Mejora las consultas
         });
 
     }
