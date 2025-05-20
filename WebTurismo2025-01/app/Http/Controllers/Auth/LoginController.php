@@ -11,6 +11,11 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Hash;
+
 
 class LoginController extends Controller
 {
@@ -112,5 +117,48 @@ class LoginController extends Controller
     protected function throttleKey(Request $request): string
     {
         return Str::lower($request->input('user')) . '|' . $request->ip();
+    }
+
+    public function showResetForm(Request $request)
+    {
+        $token = $request->query('token');
+        $email = $request->query('email'); // puedes pasar también email
+
+        return view('auth.passwords.reset', compact('token', 'email'));
+    }
+
+    public function resetPassword(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email|exists:users,email',
+            'token' => 'required|string',
+            'password' => 'required|string|min:6|confirmed',
+        ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        $record = DB::table('password_reset_tokens')->where('email', $request->email)->first();
+
+        if (!$record) {
+            return back()->withErrors(['token' => 'Token no encontrado o inválido'])->withInput();
+        }
+
+        if (!Hash::check($request->token, $record->token)) {
+            return back()->withErrors(['token' => 'Token inválido'])->withInput();
+        }
+
+        if (Carbon::parse($record->created_at)->addMinutes(60)->isPast()) {
+            return back()->withErrors(['token' => 'Token expirado'])->withInput();
+        }
+
+        $user = User::where('email', $request->email)->first();
+        $user->password = Hash::make($request->password);
+        $user->save();
+
+        DB::table('password_reset_tokens')->where('email', $request->email)->delete();
+
+        return redirect()->route('login')->with('status', 'Contraseña actualizada con éxito');
     }
 }

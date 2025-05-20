@@ -14,6 +14,8 @@ dimen spacer_padding
 dimen vertical_margin
 drawable bg
 drawable ic_error_imagen
+drawable ic_facebook
+drawable ic_google
 drawable ic_launcher_background
 drawable ic_launcher_foreground
 drawable ic_login_image

@@ -1,197 +1,241 @@
 package pe.edu.upeu.appturismo202501.ui.presentation.screens
 
-import android.os.Build
-import android.util.Log
 import android.widget.Toast
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.isSystemInDarkTheme
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.material3.SnackbarHost
-import androidx.compose.material3.SnackbarHostState
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.getValue
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
-import com.github.k0shk0sh.compose.easyforms.BuildEasyForms
-import com.github.k0shk0sh.compose.easyforms.EasyFormsResult
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
-import pe.edu.upeu.appturismo202501.modelo.LoginDto
-import pe.edu.upeu.appturismo202501.ui.theme.AppTurismo202501Theme
-import pe.edu.upeu.appturismo202501.ui.theme.LightRedColors
-import pe.edu.upeu.sysventasjpc.ui.presentation.components.ErrorImageAuth
-import pe.edu.upeu.sysventasjpc.ui.presentation.components.ImageLogin
-import pe.edu.upeu.sysventasjpc.ui.presentation.components.ProgressBarLoading
-import pe.edu.upeu.sysventasjpc.ui.presentation.components.form.EmailTextField
-import pe.edu.upeu.sysventasjpc.ui.presentation.components.form.LoginButton
-import pe.edu.upeu.sysventasjpc.ui.presentation.components.form.PasswordTextField
-import pe.edu.upeu.sysventasjpc.utils.ComposeReal
-import pe.edu.upeu.sysventasjpc.utils.TokenUtils
-
-
-
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
-
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.rememberVectorPainter
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
-import androidx.compose.ui.text.input.VisualTransformation
-import pe.edu.upeu.appturismo202501.ui.navigation.Destinations
-import pe.edu.upeu.appturismo202501.ui.theme.LightColorScheme
-import pe.edu.upeu.appturismo202501.ui.theme.LightGreenColors
+import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
+import pe.edu.upeu.appturismo202501.modelo.LoginDto
 
-
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(
     navigateToHome: () -> Unit,
-    onGoogleLoginClick: () -> Unit,
+    navigateToEmprendedorScreen: () -> Unit,
+    navigateToUsuarioScreen: () -> Unit,
+    navigateToAdministradorScreen: () -> Unit,
     onRegisterClick: () -> Unit,
-    viewModel: LoginViewModel = hiltViewModel(),
-
-
+    navigateToForgotPasswordScreen: () -> Unit,
+    modifier: Modifier = Modifier,
+    viewModel: LoginViewModel = hiltViewModel()
 ) {
-
+    val emailExists by viewModel.emailExists.observeAsState()
     val isLoading by viewModel.isLoading.observeAsState(false)
-    val isLogin by viewModel.islogin.observeAsState(false)
-    val isError by viewModel.isError.observeAsState(false)
-    val loginResul by viewModel.listUser.observeAsState()
     val errorMessage by viewModel.errorMessage.observeAsState()
-    val snackbarHostState = remember { SnackbarHostState() }
-    val scope = rememberCoroutineScope()
-    val context = LocalContext.current
-    Column(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(24.dp),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    val userName by viewModel.userName.observeAsState("")
+    val userRoles by viewModel.userRoles.observeAsState(emptyList())
+    val userRole by viewModel.userRole.observeAsState()
+    val isLogin by viewModel.islogin.observeAsState(false)
 
+    var email by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    val snackbarHostState = remember { SnackbarHostState() }
+    val coroutineScope = rememberCoroutineScope()
+    val context = LocalContext.current
+
+    // Mostrar snackbar de errores
+    LaunchedEffect(errorMessage) {
+        errorMessage?.let { message ->
+            coroutineScope.launch {
+                snackbarHostState.showSnackbar(message)
+                viewModel.clearErrorMessage()
+            }
+        }
+    }
+
+    // Navegar según rol cuando el login sea exitoso
+    LaunchedEffect(isLogin) {
+        if (isLogin) {
+            when (userRole) {
+                "Emprendedor" -> navigateToEmprendedorScreen()
+                "Usuario" -> navigateToUsuarioScreen()
+                "Administrador" -> navigateToAdministradorScreen()
+                else -> navigateToHome()
+            }
+        }
+    }
+
+    // Navegar automáticamente a RegisterScreen si el email no existe
+    LaunchedEffect(emailExists) {
+        if (emailExists == false) {
+            onRegisterClick()
+        }
+    }
+
+    Surface(
+        modifier = modifier.fillMaxSize(),
+        color = MaterialTheme.colorScheme.background
     ) {
-        // Título
-        Text(
-            text = "Iniciar sesión",
-            style = MaterialTheme.typography.headlineMedium,
-            modifier = Modifier.padding(bottom = 32.dp)
-        )
-        BuildEasyForms { easyForm ->
-            //email
-            EmailTextField(
-                easyForms = easyForm,
-                text = "",
-                label = "E-Mail:",
+        Box(
+            modifier = Modifier.fillMaxSize()
+        ) {
+            // Indicador tipo barra para modal deslizable
+            Box(
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .padding(top = 8.dp)
+                    .size(width = 40.dp, height = 4.dp)
+                    .background(
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.3f),
+                        shape = RoundedCornerShape(2.dp)
+                    )
             )
-            Spacer(modifier = Modifier.height(16.dp))
-            //password
-            PasswordTextField(
-                easyForms = easyForm,
-                text = "",
-                label = "password: ",
-            )
-            Spacer(modifier = Modifier.height(24.dp))
-            LoginButton(easyForms=easyForm, onClick = {
-                val dataForm=easyForm.formData()
-                val login=LoginDto(
-                    (dataForm.get(0) as EasyFormsResult.StringResult).value,
-                    (dataForm.get(1) as EasyFormsResult.StringResult).value)
-                viewModel.loginSys(login)
-                scope.launch {
-                    delay(3600)
-                    if(isLogin && loginResul!=null){
-                        Log.i("TOKENV", TokenUtils.TOKEN_CONTENT)
-                        Log.i("DATA", loginResul!!.name)
-                        navigateToHome.invoke()
-                    }else{
-                        Log.v("ERRORX", "Error logeo")
-                        Toast.makeText(context,"Error al conectar",Toast.LENGTH_LONG)
+
+            Surface(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .heightIn(max = 480.dp) // Altura máxima para que no ocupe toda la pantalla
+                    .align(Alignment.BottomCenter), // Alineado abajo dentro del Box
+                shape = RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp),
+                tonalElevation = 8.dp,
+                shadowElevation = 8.dp,
+                color = MaterialTheme.colorScheme.surface
+            ) {
+                Column(
+                    modifier = Modifier
+                        .padding(horizontal = 24.dp, vertical = 32.dp)
+                        .fillMaxWidth(),
+                    verticalArrangement = Arrangement.Center
+                ) {
+                    Text(
+                        text = "Bienvenido",
+                        style = MaterialTheme.typography.headlineMedium,
+                        modifier = Modifier.padding(bottom = 24.dp)
+                    )
+
+                    OutlinedTextField(
+                        value = email,
+                        onValueChange = {
+                            email = it
+                            if (errorMessage != null) viewModel.clearErrorMessage()
+                        },
+                        label = { Text("Correo electrónico") },
+                        modifier = Modifier.fillMaxWidth(),
+                        enabled = emailExists != true,
+                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                        singleLine = true,
+                        shape = MaterialTheme.shapes.medium
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    when (emailExists) {
+                        null -> {
+                            Button(
+                                onClick = {
+                                    if (email.isNotBlank()) {
+                                        viewModel.checkEmail(email.trim())
+                                    } else {
+                                        Toast.makeText(context, "Ingrese un correo válido", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = MaterialTheme.shapes.medium
+                            ) {
+                                Text("Continuar")
+                            }
+                        }
+                        true -> {
+                            Text(
+                                "Usuario encontrado. Ingresa tu contraseña.",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.primary,
+                                modifier = Modifier.padding(bottom = 8.dp)
+                            )
+
+                            if (userName.isNotBlank()) {
+                                Text(
+                                    "Nombre: $userName",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(bottom = 4.dp)
+                                )
+                            }
+
+                            if (userRoles.isNotEmpty()) {
+                                Text(
+                                    "Roles: ${userRoles.joinToString(", ")}",
+                                    style = MaterialTheme.typography.bodyMedium,
+                                    modifier = Modifier.padding(bottom = 12.dp)
+                                )
+                            }
+
+                            OutlinedTextField(
+                                value = password,
+                                onValueChange = {
+                                    password = it
+                                    if (errorMessage != null) viewModel.clearErrorMessage()
+                                },
+                                label = { Text("Contraseña") },
+                                modifier = Modifier.fillMaxWidth(),
+                                visualTransformation = PasswordVisualTransformation(),
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                                singleLine = true,
+                                shape = MaterialTheme.shapes.medium
+                            )
+
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            TextButton(
+                                onClick = {
+                                    navigateToForgotPasswordScreen()
+                                },
+                                modifier = Modifier.align(Alignment.End)
+                            ) {
+                                Text(
+                                    text = "¿Olvidaste tu contraseña?",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.primary
+                                )
+                            }
+
+                            Spacer(modifier = Modifier.height(16.dp))
+
+                            Button(
+                                onClick = {
+                                    if (password.isNotBlank()) {
+                                        viewModel.loginSys(LoginDto(email.trim(), password))
+                                    } else {
+                                        Toast.makeText(context, "Ingrese su contraseña", Toast.LENGTH_SHORT).show()
+                                    }
+                                },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = MaterialTheme.shapes.medium
+                            ) {
+                                Text("Ingresar")
+                            }
+                        }
+                        false -> {
+                            Text(
+                                "Usuario no encontrado. Redirigiendo a registro...",
+                                style = MaterialTheme.typography.bodyMedium,
+                                color = MaterialTheme.colorScheme.error,
+                                modifier = Modifier.padding(bottom = 12.dp)
+                            )
+                        }
+                    }
+
+                    if (isLoading) {
+                        Spacer(modifier = Modifier.height(24.dp))
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            CircularProgressIndicator()
+                        }
                     }
                 }
-            },
-                label = "Iniciar sesion"
-            )
-            /*Button(onClick = {
-                navigateToHome.invoke()
-            }) {
-                Text("Ir a Detalle")
-            }*/
-            ComposeReal.COMPOSE_TOP.invoke()
+            }
         }
-        ProgressBarLoading(isLoading = isLoading)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-
-        // Botón Google
-        OutlinedButton(
-            onClick = onGoogleLoginClick,
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Icon(
-                imageVector = Icons.Default.AccountCircle,
-                contentDescription = "Google",
-                modifier = Modifier.size(20.dp)
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("Iniciar sesión con Google")
-        }
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-        // Texto: ¿Aún no tienes una cuenta?
-        Row {
-            Text("¿Aún no tienes una cuenta? ")
-            Text(
-                text = "Registrarte",
-                color = MaterialTheme.colorScheme.primary,
-                modifier = Modifier.clickable (onClick = onRegisterClick)
-            )
-        }
-    }
-    // Mostrar Snackbar manualmente
-    SnackbarHost(
-        hostState = snackbarHostState,
-        modifier = Modifier.wrapContentHeight(Alignment.Bottom).padding(16.dp),
-
-        )
-    // Mostrar el snackbar cuando haya mensaje de error
-    LaunchedEffect(errorMessage) {
-        errorMessage?.let {
-            snackbarHostState.showSnackbar(it)
-            viewModel.clearErrorMessage()
-        }
-    }
-}
-
-@Preview(showBackground = true, showSystemUi = true)
-@Composable
-fun LoginScreenPreview() {
-    val colors = LightGreenColors
-    // Puedes usar el tema de tu app si lo tienes
-    AppTurismo202501Theme(colorScheme = colors) {
-        LoginScreen(
-            navigateToHome={},
-            onGoogleLoginClick = {},
-            onRegisterClick = {},
-
-        )
     }
 }

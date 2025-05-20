@@ -6,6 +6,7 @@ import dagger.internal.QualifierMetadata;
 import dagger.internal.ScopeMetadata;
 import javax.annotation.processing.Generated;
 import javax.inject.Provider;
+import pe.edu.upeu.appturismo202501.repository.LoginUserRepository;
 import pe.edu.upeu.appturismo202501.repository.RegisterRepository;
 
 @ScopeMetadata
@@ -24,22 +25,28 @@ import pe.edu.upeu.appturismo202501.repository.RegisterRepository;
     "deprecation"
 })
 public final class RegisterViewModel_Factory implements Factory<RegisterViewModel> {
-  private final Provider<RegisterRepository> repositoryProvider;
+  private final Provider<RegisterRepository> registerRepoProvider;
 
-  public RegisterViewModel_Factory(Provider<RegisterRepository> repositoryProvider) {
-    this.repositoryProvider = repositoryProvider;
+  private final Provider<LoginUserRepository> loginRepoProvider;
+
+  public RegisterViewModel_Factory(Provider<RegisterRepository> registerRepoProvider,
+      Provider<LoginUserRepository> loginRepoProvider) {
+    this.registerRepoProvider = registerRepoProvider;
+    this.loginRepoProvider = loginRepoProvider;
   }
 
   @Override
   public RegisterViewModel get() {
-    return newInstance(repositoryProvider.get());
+    return newInstance(registerRepoProvider.get(), loginRepoProvider.get());
   }
 
-  public static RegisterViewModel_Factory create(Provider<RegisterRepository> repositoryProvider) {
-    return new RegisterViewModel_Factory(repositoryProvider);
+  public static RegisterViewModel_Factory create(Provider<RegisterRepository> registerRepoProvider,
+      Provider<LoginUserRepository> loginRepoProvider) {
+    return new RegisterViewModel_Factory(registerRepoProvider, loginRepoProvider);
   }
 
-  public static RegisterViewModel newInstance(RegisterRepository repository) {
-    return new RegisterViewModel(repository);
+  public static RegisterViewModel newInstance(RegisterRepository registerRepo,
+      LoginUserRepository loginRepo) {
+    return new RegisterViewModel(registerRepo, loginRepo);
   }
 }

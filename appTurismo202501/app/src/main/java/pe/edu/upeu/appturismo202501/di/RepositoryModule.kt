@@ -10,23 +10,27 @@ import pe.edu.upeu.appturismo202501.repository.LoginUserRepository
 import pe.edu.upeu.appturismo202501.repository.LoginUserRespositoryImp
 import pe.edu.upeu.appturismo202501.repository.RegisterRepository
 import pe.edu.upeu.appturismo202501.repository.RegisterRepositoryImpl
-
 import javax.inject.Singleton
-
 
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class RepositoryModule {
+
     @Binds
     @Singleton
-    abstract fun
-            loginUserRepository(loginRepos:LoginUserRespositoryImp):LoginUserRepository
+    abstract fun bindLoginUserRepository(
+        loginRepositoryImpl: LoginUserRespositoryImp
+    ): LoginUserRepository
+
     @Binds
     @Singleton
-    abstract fun
-            registerRepository(registerRepos:RegisterRepositoryImpl):RegisterRepository
+    abstract fun bindRegisterRepository(
+        registerRepositoryImpl: RegisterRepositoryImpl
+    ): RegisterRepository
+
     @Binds
     @Singleton
-    abstract fun
-            categoryRepository(categoryRepos:CategoryRepositoryImp):CategoryRespository
+    abstract fun bindCategoryRepository(
+        categoryRepositoryImp: CategoryRepositoryImp
+    ): CategoryRespository
 }

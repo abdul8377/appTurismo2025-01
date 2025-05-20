@@ -11,6 +11,7 @@ use App\Http\Controllers\TipoDeNegocioController;
 use App\Http\Controllers\TuristaController;
 use App\Livewire\Categoria\CategoriaList;
 use App\Providers\VoltServiceProvider;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Livewire\Volt\Volt;
 
@@ -19,6 +20,11 @@ use Livewire\Volt\Volt;
 Route::get('/', function () {
     return view('welcome');
 })->name('home');
+
+Route::get('/password/reset', function (Request $request) {
+    $token = $request->token;
+    return view('auth.passwords.reset', compact('token'));
+})->name('password.reset');
 
 // Ruta al dashboard (requiere autenticación y verificación)
 Route::view('dashboard', 'dashboard')

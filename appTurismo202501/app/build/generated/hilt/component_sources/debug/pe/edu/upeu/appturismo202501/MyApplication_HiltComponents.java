@@ -49,6 +49,7 @@ import javax.inject.Singleton;
 import pe.edu.upeu.appturismo202501.di.DataSourceModule;
 import pe.edu.upeu.appturismo202501.di.RepositoryModule;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel_HiltModules;
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel_HiltModules;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel_HiltModules;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel_HiltModules;
 
@@ -158,6 +159,7 @@ public final class MyApplication_HiltComponents {
   @Subcomponent(
       modules = {
           CategoryViewModel_HiltModules.KeyModule.class,
+          ForgotPasswordViewModel_HiltModules.KeyModule.class,
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           HiltWrapper_SavedStateHandleModule.class,
           LoginViewModel_HiltModules.KeyModule.class,
@@ -200,6 +202,7 @@ public final class MyApplication_HiltComponents {
   @Subcomponent(
       modules = {
           CategoryViewModel_HiltModules.BindsModule.class,
+          ForgotPasswordViewModel_HiltModules.BindsModule.class,
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           LoginViewModel_HiltModules.BindsModule.class,
           RegisterViewModel_HiltModules.BindsModule.class

@@ -49,6 +49,8 @@ import pe.edu.upeu.appturismo202501.repository.RegisterRepository;
 import pe.edu.upeu.appturismo202501.repository.RegisterRepositoryImpl;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel_HiltModules;
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel;
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel_HiltModules;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel_HiltModules;
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel;
@@ -399,7 +401,7 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @Override
     public Map<Class<?>, Boolean> getViewModelKeys() {
-      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(3).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel, CategoryViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel, LoginViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel, RegisterViewModel_HiltModules.KeyModule.provide()).build());
+      return LazyClassKeyMap.<Boolean>of(MapBuilder.<String, Boolean>newMapBuilder(4).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel, CategoryViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel, ForgotPasswordViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel, LoginViewModel_HiltModules.KeyModule.provide()).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel, RegisterViewModel_HiltModules.KeyModule.provide()).build());
     }
 
     @Override
@@ -423,20 +425,25 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel";
+
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
+
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
 
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel";
 
-      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
+      @KeepFieldType
+      ForgotPasswordViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel2;
 
       @KeepFieldType
       CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
 
       @KeepFieldType
-      LoginViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel2;
+      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
 
       @KeepFieldType
-      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
+      LoginViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel2;
     }
   }
 
@@ -448,6 +455,8 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     private final ViewModelCImpl viewModelCImpl = this;
 
     private Provider<CategoryViewModel> categoryViewModelProvider;
+
+    private Provider<ForgotPasswordViewModel> forgotPasswordViewModelProvider;
 
     private Provider<LoginViewModel> loginViewModelProvider;
 
@@ -467,13 +476,14 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
     private void initialize(final SavedStateHandle savedStateHandleParam,
         final ViewModelLifecycle viewModelLifecycleParam) {
       this.categoryViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 0);
-      this.loginViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
-      this.registerViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.forgotPasswordViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 1);
+      this.loginViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
+      this.registerViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
     }
 
     @Override
     public Map<Class<?>, javax.inject.Provider<ViewModel>> getHiltViewModelMap() {
-      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(3).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel, ((Provider) categoryViewModelProvider)).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel, ((Provider) loginViewModelProvider)).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel, ((Provider) registerViewModelProvider)).build());
+      return LazyClassKeyMap.<javax.inject.Provider<ViewModel>>of(MapBuilder.<String, javax.inject.Provider<ViewModel>>newMapBuilder(4).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel, ((Provider) categoryViewModelProvider)).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel, ((Provider) forgotPasswordViewModelProvider)).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel, ((Provider) loginViewModelProvider)).put(LazyClassKeyProvider.pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel, ((Provider) registerViewModelProvider)).build());
     }
 
     @Override
@@ -483,20 +493,25 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
-      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
-
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
+
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel";
 
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel";
 
-      @KeepFieldType
-      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
 
       @KeepFieldType
       CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
 
       @KeepFieldType
+      ForgotPasswordViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel2;
+
+      @KeepFieldType
       LoginViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel2;
+
+      @KeepFieldType
+      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -521,13 +536,16 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
       public T get() {
         switch (id) {
           case 0: // pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel 
-          return (T) new CategoryViewModel(singletonCImpl.categoryRepositoryProvider.get());
+          return (T) new CategoryViewModel(singletonCImpl.bindCategoryRepositoryProvider.get());
 
-          case 1: // pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel 
-          return (T) new LoginViewModel(singletonCImpl.loginUserRepositoryProvider.get());
+          case 1: // pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel 
+          return (T) new ForgotPasswordViewModel(singletonCImpl.bindLoginUserRepositoryProvider.get());
 
-          case 2: // pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel 
-          return (T) new RegisterViewModel(singletonCImpl.registerRepositoryProvider.get());
+          case 2: // pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel 
+          return (T) new LoginViewModel(singletonCImpl.bindLoginUserRepositoryProvider.get());
+
+          case 3: // pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel 
+          return (T) new RegisterViewModel(singletonCImpl.bindRegisterRepositoryProvider.get(), singletonCImpl.bindLoginUserRepositoryProvider.get());
 
           default: throw new AssertionError(id);
         }
@@ -617,19 +635,19 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     private Provider<CategoryRepositoryImp> categoryRepositoryImpProvider;
 
-    private Provider<CategoryRespository> categoryRepositoryProvider;
+    private Provider<CategoryRespository> bindCategoryRepositoryProvider;
 
     private Provider<RestLoginUsuario> restLoginUserProvider;
 
     private Provider<LoginUserRespositoryImp> loginUserRespositoryImpProvider;
 
-    private Provider<LoginUserRepository> loginUserRepositoryProvider;
+    private Provider<LoginUserRepository> bindLoginUserRepositoryProvider;
 
     private Provider<RestRegister> restRegisterProvider;
 
     private Provider<RegisterRepositoryImpl> registerRepositoryImplProvider;
 
-    private Provider<RegisterRepository> registerRepositoryProvider;
+    private Provider<RegisterRepository> bindRegisterRepositoryProvider;
 
     private SingletonCImpl(DataSourceModule dataSourceModuleParam) {
       this.dataSourceModule = dataSourceModuleParam;
@@ -643,13 +661,13 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
       this.provideRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 2));
       this.restCategoryProvider = DoubleCheck.provider(new SwitchingProvider<RestCategory>(singletonCImpl, 1));
       this.categoryRepositoryImpProvider = new SwitchingProvider<>(singletonCImpl, 0);
-      this.categoryRepositoryProvider = DoubleCheck.provider((Provider) categoryRepositoryImpProvider);
+      this.bindCategoryRepositoryProvider = DoubleCheck.provider((Provider) categoryRepositoryImpProvider);
       this.restLoginUserProvider = DoubleCheck.provider(new SwitchingProvider<RestLoginUsuario>(singletonCImpl, 5));
       this.loginUserRespositoryImpProvider = new SwitchingProvider<>(singletonCImpl, 4);
-      this.loginUserRepositoryProvider = DoubleCheck.provider((Provider) loginUserRespositoryImpProvider);
+      this.bindLoginUserRepositoryProvider = DoubleCheck.provider((Provider) loginUserRespositoryImpProvider);
       this.restRegisterProvider = DoubleCheck.provider(new SwitchingProvider<RestRegister>(singletonCImpl, 7));
       this.registerRepositoryImplProvider = new SwitchingProvider<>(singletonCImpl, 6);
-      this.registerRepositoryProvider = DoubleCheck.provider((Provider) registerRepositoryImplProvider);
+      this.bindRegisterRepositoryProvider = DoubleCheck.provider((Provider) registerRepositoryImplProvider);
     }
 
     @Override

@@ -15,6 +15,9 @@ Route::middleware('guest')->group(function () {
     Route::get('login/{user}', [LoginController::class, 'showPasswordForm'])->name('login.password');
     Route::post('login/{user}', [LoginController::class, 'authenticate'])->name('login.authenticate');
 
+    Route::get('/password/reset', [LoginController::class, 'showResetForm'])->name('password.reset');
+    Route::post('/password/reset', [LoginController::class, 'resetPassword'])->name('password.update');
+
     // Registro
     Route::get('register', [RegisterController::class, 'show'])->name('register');
     Route::post('register', [RegisterController::class, 'register']);

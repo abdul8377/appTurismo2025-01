@@ -1,76 +1,104 @@
 package pe.edu.upeu.appturismo202501.ui.presentation.screens
 
-import android.util.Log
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import okio.IOException
+import pe.edu.upeu.appturismo202501.modelo.CheckEmailDto
 import pe.edu.upeu.appturismo202501.modelo.LoginDto
 import pe.edu.upeu.appturismo202501.modelo.LoginResp
 import pe.edu.upeu.appturismo202501.repository.LoginUserRepository
 import pe.edu.upeu.sysventasjpc.utils.TokenUtils
-import java.net.SocketTimeoutException
 import javax.inject.Inject
-
 
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginRepo: LoginUserRepository
-) : ViewModel(){
-    private val _isLoading: MutableLiveData<Boolean> by lazy { MutableLiveData<Boolean>(false) }
+) : ViewModel() {
+
+    private val _isLoading = MutableLiveData(false)
     val isLoading: LiveData<Boolean> get() = _isLoading
 
-    private val _islogin: MutableLiveData<Boolean> by lazy {MutableLiveData<Boolean>(false)}
+    private val _islogin = MutableLiveData(false)
     val islogin: LiveData<Boolean> get() = _islogin
 
-    val isError=MutableLiveData<Boolean>(false)
-    private val _errorMessage = MutableLiveData<String?>()
+    private val _errorMessage = MutableLiveData<String?>(null)
     val errorMessage: LiveData<String?> = _errorMessage
 
+    private val _emailExists = MutableLiveData<Boolean?>(null)
+    val emailExists: LiveData<Boolean?> get() = _emailExists
 
-    val listUser = MutableLiveData<LoginResp>()
+    private val _userName = MutableLiveData("")
+    val userName: LiveData<String> = _userName
 
-    fun loginSys(toData: LoginDto) {
-        Log.i("LOGIN", toData.email_or_gmail)
-        viewModelScope.launch(Dispatchers.IO){
-            _isLoading.postValue(true)
-        try {
-            _isLoading.postValue(false)
-            val totek = loginRepo.loginUsuario(toData).body()
-            delay(1500L)
-            TokenUtils.TOKEN_CONTENT = "Bearer" + totek?.token
-            Log.i("DATAXLOGIN", "Pruebalogin")
-            listUser.postValue(totek!!)
-            Log.i("DATAXLOGIN", TokenUtils.TOKEN_CONTENT)
-            if (TokenUtils.TOKEN_CONTENT != "Bearer null") {
-                TokenUtils.USER_LOGIN = toData.email_or_gmail
-                _islogin.postValue(true)
-            } else {
-                isError.postValue(true)
-                _errorMessage.postValue("Error de login: verifique sus credenciales")
+    private val _userRoles = MutableLiveData<List<String>>(emptyList())
+    val userRoles: LiveData<List<String>> = _userRoles
+
+    private val _userRole = MutableLiveData<String?>(null)  // rol principal para navegación
+    val userRole: LiveData<String?> = _userRole
+
+    val listUser = MutableLiveData<LoginResp?>()
+
+    fun checkEmail(email: String) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val response = loginRepo.checkEmail(CheckEmailDto(email))
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    _emailExists.value = body?.exists
+                    _userName.value = body?.name ?: ""
+                    _userRoles.value = body?.roles ?: emptyList()
+                } else {
+                    _errorMessage.value = "Error al consultar el email"
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = "Error: ${e.localizedMessage ?: e.message}"
+            } finally {
+                _isLoading.value = false
             }
-            _isLoading.postValue(false)
-
-        } catch (e:SocketTimeoutException){
-            isError.postValue(true)
-            _errorMessage.postValue("no se pudo conectar al servidor.")
-        }catch (e:IOException) {
-            isError.postValue(true)
-            _errorMessage.postValue("Error de red: ${e.localizedMessage}")
-        } catch (e:Exception) {
-            isError.postValue(true)
-            _errorMessage.postValue("ocurrio un error inesperado")
-        }
         }
     }
+
+    fun resetEmailCheck() {
+        _emailExists.value = null
+        _userName.value = ""
+        _userRoles.value = emptyList()
+    }
+
+    fun loginSys(loginDto: LoginDto) {
+        viewModelScope.launch {
+            _isLoading.value = true
+            try {
+                val response = loginRepo.loginUsuario(loginDto)
+                if (response.isSuccessful) {
+                    val body = response.body()
+                    val token = body?.token
+                    val tokenType = "Bearer"
+                    if (!token.isNullOrEmpty()) {
+                        TokenUtils.TOKEN_CONTENT = "$tokenType $token"
+                        TokenUtils.USER_LOGIN = loginDto.email
+                        listUser.value = body
+                        _userRole.value = body?.roles?.firstOrNull()
+                        _islogin.value = true
+                    } else {
+                        _errorMessage.value = "Credenciales incorrectas"
+                        _islogin.value = false
+                    }
+                } else {
+                    val errorBody = response.errorBody()?.string()
+                    _errorMessage.value = errorBody ?: "Error de autenticación"
+                    _islogin.value = false
+                }
+            } catch (e: Exception) {
+                _errorMessage.value = "Error: ${e.localizedMessage ?: e.message}"
+                _islogin.value = false
+            } finally {
+                _isLoading.value = false
+            }
+        }
+    }
+
     fun clearErrorMessage() {
-        _errorMessage.postValue(null)
-        isError.postValue(false)
-        _isLoading.postValue(false)
+        _errorMessage.value = null
     }
 }

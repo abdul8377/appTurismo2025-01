@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\Administrador\AuthController;
+use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoriaServicioApiController;
 use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
 use App\Http\Controllers\TipoDeNegocioController;
@@ -8,20 +8,20 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 // Rutas de autenticación
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+//auth
 
+Route::post('auth/check-email', [AuthController::class, 'checkEmail']);
+Route::post('auth/login', [AuthController::class, 'login']);
+Route::post('auth/register', [AuthController::class, 'register']);
+Route::post('/password/email', [AuthController::class, 'sendResetPasswordEmail']);
+Route::post('/password/reset', [AuthController::class, 'resetPassword']);
 
 Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
 
-// Rutas de autenticación
-Route::post('register', [AuthController::class, 'register']);
-Route::post('login', [AuthController::class, 'login']);
-Route::post('logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
+
 
 // Rutas de administración (requiere autenticación y permiso de 'Ver Rutas')
 
@@ -47,3 +47,5 @@ Route::delete('/tipos-negocio/{id}', [TipoDeNegocioController::class, 'destroy']
 
 //categoria servicios
 Route::apiResource('categorias-servicios', CategoriaServicioApiController::class);
+
+

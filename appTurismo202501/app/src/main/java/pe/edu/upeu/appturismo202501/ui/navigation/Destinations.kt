@@ -23,5 +23,11 @@ sealed class Destinations(
     object Search : Destinations("search", "Search", Icons.Filled.Search)
     object PerfilWelcome: Destinations("perfilWelcome", "PerfilWelcome", Icons.Filled.Person)
 
+    // Aquí añades los nuevos destinos que usas para los roles:
+    object Emprendedor : Destinations("emprendedor", "Emprendedor", Icons.Filled.Person)
+    object Usuario : Destinations("usuario", "Usuario", Icons.Filled.Person)
+    object Administrador : Destinations("administrador", "Administrador", Icons.Filled.Person)
+    // Nueva ruta ForgotPassword
+    object ForgotPassword : Destinations("forgot_password", "Forgot Password", Icons.Filled.Settings)
 }
 

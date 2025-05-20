@@ -14,23 +14,24 @@ return new class extends Migration
         // Tabla de usuarios
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');                      // Nombre
-            $table->string('last_name');                 // Apellido
-            $table->string('user')->unique();            // Nombre de usuario único
-            $table->string('email')->unique();           // Correo electrónico único
+            $table->string('name');
+            $table->string('last_name');
+            $table->string('user')->unique();             // Código cifrado (hash)
+            $table->string('user_code_plain')->nullable()->unique(); // Código original texto plano único
+            $table->string('email')->unique();
             $table->timestamp('email_verified_at')->nullable();
-            $table->string('password');                  // Contraseña hasheada
-            $table->string('country')->nullable();       // País (opcional)
-            $table->string('zip_code')->nullable();      // Código postal (opcional)
-            $table->rememberToken();                     // Token de sesión
-            $table->timestamps();                        // created_at y updated_at
+            $table->string('password');
+            $table->string('country')->nullable();
+            $table->string('zip_code')->nullable();
+            $table->rememberToken();
+            $table->timestamps();
         });
 
         // Tabla de recuperación de contraseñas
         Schema::create('password_reset_tokens', function (Blueprint $table) {
-            $table->string('email')->primary();          // Email único (clave primaria)
-            $table->string('token');                     // Token de recuperación
-            $table->timestamp('created_at')->nullable(); // Fecha de creación
+        $table->string('email')->index();     // Índice para búsqueda rápida
+        $table->string('token');
+        $table->timestamp('created_at')->nullable();
         });
 
         // Tabla de sesiones (Laravel > 10)

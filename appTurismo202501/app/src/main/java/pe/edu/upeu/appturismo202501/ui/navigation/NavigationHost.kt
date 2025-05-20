@@ -2,25 +2,24 @@ package pe.edu.upeu.appturismo202501.ui.navigation
 
 import android.os.Build
 import androidx.annotation.RequiresExtension
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import androidx.navigation.navArgument
 import pe.edu.upeu.appturismo202501.ui.presentation.Pantalla1
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginScreen
-import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterScreen
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.PerfilScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.SearchScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.WelcomeScreen
-import pe.edu.upeu.appturismo202501.ui.theme.AppTurismo202501Theme
-import pe.edu.upeu.appturismo202501.ui.theme.LightRedColors
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.administrador.AdministradorScreen
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.emprendedor.EmprendedorScreen
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterScreen
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.usuario.UsuarioScreen
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
@@ -28,16 +27,12 @@ fun NavigationHost(
     navController: NavHostController,
     darkMode: MutableState<Boolean>,
     innerPadding: PaddingValues,
-
-
 ) {
     NavHost(
         navController = navController,
-        startDestination = Destinations.Welcome.route,   // usa tu enum/objeto
+        startDestination = Destinations.Welcome.route,
         modifier = Modifier.padding(innerPadding)
-
     ) {
-
         // ---------- PANTALLAS PRINCIPALES ----------
         composable(Destinations.Welcome.route) {
             WelcomeScreen(navController)
@@ -52,17 +47,11 @@ fun NavigationHost(
                 )
             )
         }
+
         composable(Destinations.PerfilWelcome.route) {
-            PerfilScreen(
-                onNavigateToLogin = {
-                    navController.navigate(Destinations.Login.route) {
-                        popUpTo(Destinations.PerfilWelcome.route) { inclusive = true }
-                    }
-                }
-            )
+            PerfilScreen(navController = navController)
         }
 
-        // ---------- AUTENTICACIÓN ----------
         composable(Destinations.Login.route) {
             LoginScreen(
                 navigateToHome = {
@@ -70,24 +59,69 @@ fun NavigationHost(
                         popUpTo(Destinations.Login.route) { inclusive = true }
                     }
                 },
-                onGoogleLoginClick = { /* TODO */ },
+                navigateToEmprendedorScreen = {
+                    navController.navigate(Destinations.Emprendedor.route) {
+                        popUpTo(Destinations.Login.route) { inclusive = true }
+                    }
+                },
+                navigateToUsuarioScreen = {
+                    navController.navigate(Destinations.Usuario.route) {
+                        popUpTo(Destinations.Login.route) { inclusive = true }
+                    }
+                },
+                navigateToAdministradorScreen = {
+                    navController.navigate(Destinations.Administrador.route) {
+                        popUpTo(Destinations.Login.route) { inclusive = true }
+                    }
+                },
                 onRegisterClick = {
                     navController.navigate(Destinations.Register.route)
+                },
+                navigateToForgotPasswordScreen = {
+                    navController.navigate(Destinations.ForgotPassword.route)
                 }
             )
         }
 
-        composable(Destinations.Register.route) {
-            RegisterScreen(
-                onNavigateToLogin = { navController.popBackStack() }
+        // Ruta Forgot Password
+        composable(Destinations.ForgotPassword.route) {
+            ForgotPasswordScreen(
+                onBack = { navController.popBackStack() }
             )
         }
 
+        // ---------- RUTAS POR ROL ----------
+        composable(Destinations.Emprendedor.route) {
+            EmprendedorScreen(navController)
+        }
 
+        composable(Destinations.Usuario.route) {
+            UsuarioScreen(navController)
+        }
+
+        composable(Destinations.Administrador.route) {
+            AdministradorScreen(navController)
+        }
+
+        composable(Destinations.Register.route) {
+            RegisterScreen(
+                onNavigateByRole = { role ->
+                    when (role) {
+                        "Emprendedor" -> navController.navigate(Destinations.Emprendedor.route) {
+                            popUpTo(Destinations.Register.route) { inclusive = true }
+                        }
+                        "Usuario" -> navController.navigate(Destinations.Usuario.route) {
+                            popUpTo(Destinations.Register.route) { inclusive = true }
+                        }
+                        "Administrador" -> navController.navigate(Destinations.Administrador.route) {
+                            popUpTo(Destinations.Register.route) { inclusive = true }
+                        }
+                        else -> navController.navigate(Destinations.Pantalla1.route) {
+                            popUpTo(Destinations.Register.route) { inclusive = true }
+                        }
+                    }
+                }
+            )
+        }
     }
 }
-
-
-
-
-
