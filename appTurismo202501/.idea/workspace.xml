@@ -9,6 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="299e3d7a-305f-4add-b4a4-a2186d7ee1dc" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.bin" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/8.11.1/executionHistory/executionHistory.lock" afterDir="false" />
@@ -532,6 +533,9 @@
       <change beforePath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/utils/TokenUtils.kt" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/pe/edu/upeu/appturismo202501/utils/TokenUtils.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/build/reports/problems/problems-report.html" beforeDir="false" afterPath="$PROJECT_DIR$/build/reports/problems/problems-report.html" afterDir="false" />
     </list>
+=======
+    <list default="true" id="299e3d7a-305f-4add-b4a4-a2186d7ee1dc" name="Changes" comment="" />
+>>>>>>> a8d95cdf95ac07f291f28fbdc09b52390bee54a9
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -540,7 +544,7 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=LocalEmulator, isTemplate=false, identifier=path=C:\Users\FRANCK\.android\avd\Medium_Phone.avd)]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[DeviceId(pluginId=PhysicalDevice, isTemplate=false, identifier=serial=8b6d5c52)]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -569,8 +573,8 @@
         <option value="Kotlin Interface" />
         <option value="Kotlin Data Class" />
         <option value="Interface" />
-        <option value="Kotlin Class" />
         <option value="Kotlin File" />
+        <option value="Kotlin Class" />
       </list>
     </option>
   </component>
@@ -596,8 +600,14 @@
     "cf.first.check.clang-format": "false",
     "cidr.known.project.marker": "true",
     "git-widget-placeholder": "main",
+<<<<<<< HEAD
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/1/appTurismo2025-01/appTurismo202501",
+=======
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "D:/ProyectoAppTurismo/appTurismo202501",
+>>>>>>> a8d95cdf95ac07f291f28fbdc09b52390bee54a9
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.17",
     "project.structure.side.proportion": "0.2"
@@ -848,12 +858,12 @@
       <map>
         <entry key="pe.edu.upeu.appturismo202501">
           <value>
-            <CheckInfo lastCheckTimestamp="1747543022559" />
+            <CheckInfo lastCheckTimestamp="1747709200152" />
           </value>
         </entry>
         <entry key="pe.edu.upeu.appturismo202501.test">
           <value>
-            <CheckInfo lastCheckTimestamp="1747543022560" />
+            <CheckInfo lastCheckTimestamp="1747709200153" />
           </value>
         </entry>
       </map>

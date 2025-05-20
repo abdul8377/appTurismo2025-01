@@ -425,15 +425,25 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
     @IdentifierNameString
     private static final class LazyClassKeyProvider {
+<<<<<<< HEAD
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
+=======
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel";
+
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel";
+>>>>>>> a8d95cdf95ac07f291f28fbdc09b52390bee54a9
 
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_forgotpassword_ForgotPasswordViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.forgotpassword.ForgotPasswordViewModel";
 
-      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.LoginViewModel";
+      static String pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel";
+
+      @KeepFieldType
+      LoginViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_LoginViewModel2;
 
       static String pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel = "pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterViewModel";
 
       @KeepFieldType
+<<<<<<< HEAD
       CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
 
       @KeepFieldType
@@ -444,6 +454,12 @@ public final class DaggerMyApplication_HiltComponents_SingletonC {
 
       @KeepFieldType
       RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
+=======
+      RegisterViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_register_RegisterViewModel2;
+
+      @KeepFieldType
+      CategoryViewModel pe_edu_upeu_appturismo202501_ui_presentation_screens_welcome_viewModel_CategoryViewModel2;
+>>>>>>> a8d95cdf95ac07f291f28fbdc09b52390bee54a9
     }
   }
 
