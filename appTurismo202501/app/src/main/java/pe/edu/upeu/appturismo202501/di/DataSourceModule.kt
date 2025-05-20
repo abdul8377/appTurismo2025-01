@@ -8,6 +8,7 @@ import okhttp3.OkHttpClient
 import pe.edu.upeu.appturismo202501.data.remote.RestCategory
 import pe.edu.upeu.appturismo202501.data.remote.RestLoginUsuario
 import pe.edu.upeu.appturismo202501.data.remote.RestRegister
+import pe.edu.upeu.appturismo202501.data.remote.RestZonaTuristica
 import pe.edu.upeu.appturismo202501.utils.TokenUtils
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -62,6 +63,10 @@ class DataSourceModule {
     fun restCategory(retrofit: Retrofit): RestCategory {
         return retrofit.create(RestCategory::class.java)
     }
+    @Singleton
+    @Provides
+    fun provideRestZonaTuristica(retrofit: Retrofit): RestZonaTuristica =
+        retrofit.create(RestZonaTuristica::class.java)
 
 
 }

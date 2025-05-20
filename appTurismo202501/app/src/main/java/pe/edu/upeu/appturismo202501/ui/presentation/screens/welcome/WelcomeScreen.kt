@@ -85,16 +85,34 @@ import pe.edu.upeu.appturismo202501.ui.theme.AppTurismo202501Theme
 import pe.edu.upeu.appturismo202501.ui.theme.LightGreenColors
 import pe.edu.upeu.appturismo202501.ui.presentation.componentsA.TurismoNavigationBar
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.CategoryViewModel
+import pe.edu.upeu.appturismo202501.ui.presentation.screens.welcome.viewModel.ZonaTuristicaViewModel
+import pe.edu.upeu.appturismo202501.utils.TokenUtils
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun WelcomeScreen(
     navController: NavController,
-    viewModel: CategoryViewModel = hiltViewModel()
+    viewModel: CategoryViewModel = hiltViewModel(),
+    zonaViewModel: ZonaTuristicaViewModel = hiltViewModel()
 ) {
     val categories by viewModel.categories.collectAsState()
+    val zonas by zonaViewModel.zonas.collectAsState()
+    // Suponiendo que tu ImageResp.fullUrl() ya usa BuildConfig.API_BASE_URL internamente
+    val banners: List<ActivityBanner> = zonas.map { zona ->
+        val imageUrl = zona.images.firstOrNull()
+            ?.fullUrl(TokenUtils.API_URL)     // <— aquí ya usas tu API_URL
+            ?: ""                             // o tu placeholder
+
+        ActivityBanner(
+            imageUrl = imageUrl,
+            name     = zona.nombre
+        )
+    }
+
     var selectedIndex by rememberSaveable { mutableStateOf(0) }
     val selectedCategory: CategoryResp? = categories.getOrNull(selectedIndex)
+
+
 
     Scaffold(
         bottomBar = {
@@ -230,16 +248,14 @@ fun WelcomeScreen(
                     )
                 }
 
-                val worldActivities = listOf(
-                    ActivityBanner(R.drawable.ic_launcher_background , "Las Vegas"),
-                    ActivityBanner(R.drawable.ic_launcher_background , "San Francisco"),
-                    ActivityBanner(R.drawable.ic_launcher_background      , "Roma")
-                )
-
                 item {
                     ActivitiesSection(
-                        title = "Actividades culturales impresionantes por todo el mundo",
-                        items = worldActivities
+                        title       = "Zonas Turísticas",
+                        items       = banners,
+                        onItemClick = { banner ->
+                            // navega a detalle
+                            navController.navigate("zonaDetail/${banner.name}")
+                        }
                     )
                 }
 

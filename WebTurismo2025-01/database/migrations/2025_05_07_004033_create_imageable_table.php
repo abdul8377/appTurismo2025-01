@@ -6,29 +6,24 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    // /**
-    //  * Run the migrations.
-    //  */
-    // public function up(): void
-    // {
-    //     Schema::create('imageable', function (Blueprint $table) {
-    //         $table->bigIncrements('imageable_registro_id');
-    //         $table->unsignedBigInteger('images_id');
-    //         $table->string('imageable_type');
-    //         $table->unsignedBigInteger('imageable_id');
-    //         $table->timestamp('created_at')->useCurrent();
-    //         $table->timestamp('updated_at')->useCurrent()->useCurrentOnUpdate();
+    public function up(): void
+    {
+        Schema::create('imageables', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->unsignedBigInteger('images_id');
+            $table->unsignedBigInteger('imageable_id');
+            $table->string('imageable_type');
+            $table->timestamps();
 
-    //         $table->foreign('images_id')->references('images_id')->on('images');
+            $table->foreign('images_id')->references('id')->on('images')->onDelete('cascade');
+        });
+    }
 
-    //     });
-    // }
-
-    // /**
-    //  * Reverse the migrations.
-    //  */
-    // public function down(): void
-    // {
-    //     Schema::dropIfExists('imageable');
-    // }
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
+    {
+        Schema::dropIfExists('imageables');
+    }
 };

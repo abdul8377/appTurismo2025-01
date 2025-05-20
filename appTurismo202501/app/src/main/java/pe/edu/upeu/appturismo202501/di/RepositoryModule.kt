@@ -10,6 +10,8 @@ import pe.edu.upeu.appturismo202501.repository.LoginUserRepository
 import pe.edu.upeu.appturismo202501.repository.LoginUserRespositoryImp
 import pe.edu.upeu.appturismo202501.repository.RegisterRepository
 import pe.edu.upeu.appturismo202501.repository.RegisterRepositoryImpl
+import pe.edu.upeu.appturismo202501.repository.ZonaTuristicaRepository
+import pe.edu.upeu.appturismo202501.repository.ZonaTuristicaRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -33,4 +35,10 @@ abstract class RepositoryModule {
     abstract fun bindCategoryRepository(
         categoryRepositoryImp: CategoryRepositoryImp
     ): CategoryRespository
+
+    @Binds
+    @Singleton
+    abstract fun bindZonaTuristicaRepository(
+        impl: ZonaTuristicaRepositoryImpl
+    ): ZonaTuristicaRepository
 }

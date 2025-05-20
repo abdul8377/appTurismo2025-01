@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\CategoriaServicio;
+use App\Models\Images;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class CategoriaServicioApiController extends Controller
 {
@@ -12,13 +14,18 @@ class CategoriaServicioApiController extends Controller
     public function index()
     {
         try {
-            // Obtener todas las categorías de servicio con el número de servicios asociados
-            $categorias = CategoriaServicio::withCount('servicios')->get();
+            $categorias = CategoriaServicio::with(['images', 'servicios'])
+                ->withCount('servicios')
+                ->get();
             return response()->json($categorias, 200);
         } catch (\Exception $e) {
-            return response()->json(['error' => 'Error al obtener las categorías de servicio', 'message' => $e->getMessage()], 500);
+            return response()->json([
+                'error'   => 'Error al obtener las categorías de servicio',
+                'message' => $e->getMessage()
+            ], 500);
         }
     }
+
 
     // Mostrar los detalles de una categoría de servicio
     public function show($id)
@@ -33,7 +40,6 @@ class CategoriaServicioApiController extends Controller
         }
     }
 
-    // Guardar una nueva categoría de servicio
     public function store(Request $request)
     {
         try {
@@ -41,10 +47,52 @@ class CategoriaServicioApiController extends Controller
                 'nombre' => 'required|string|max:255',
                 'descripcion' => 'nullable|string',
                 'imagen' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-                'icono' => 'nullable|string',
+                'icono' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
 
-            $categoria = CategoriaServicio::create($validated);
+            // Crear la categoría
+            $categoria = CategoriaServicio::create([
+                'nombre' => $validated['nombre'],
+                'descripcion' => $validated['descripcion'] ?? null,
+            ]);
+
+            // Guarda la imagen si está presente
+            if ($request->hasFile('imagen')) {
+                $imagenPath = $request->file('imagen')->store('categorias', 'public');
+
+                $imagen = Images::create([
+                    'url' => $imagenPath,
+                    'titulo' => $categoria->nombre,
+                ]);
+
+                // Asocia la imagen a la categoría en la tabla imageable
+                DB::table('imageables')->insert([
+                    'images_id' => $imagen->id,
+                    'imageable_id' => $categoria->categorias_servicios_id,
+                    'imageable_type' => CategoriaServicio::class,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
+
+            // Guarda el icono si está presente
+            if ($request->hasFile('icono')) {
+                $iconoPath = $request->file('icono')->store('icons', 'public');
+
+                $icono = Images::create([
+                    'url' => $iconoPath,
+                    'titulo' => $categoria->nombre . ' (Icono)',
+                ]);
+
+                // Asocia el icono a la categoría en la tabla imageable
+                DB::table('imageables')->insert([
+                    'images_id' => $icono->id,
+                    'imageable_id' => $categoria->categorias_servicios_id,
+                    'imageable_type' => CategoriaServicio::class,
+                    'created_at' => now(),
+                    'updated_at' => now(),
+                ]);
+            }
 
             return response()->json($categoria, 201);
         } catch (\Illuminate\Validation\ValidationException $e) {

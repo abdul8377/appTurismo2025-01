@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\CategoriaServicioApiController;
+use App\Http\Controllers\Api\ImageableController;
+use App\Http\Controllers\Api\ZonaTuristicaApiController;
 use App\Http\Controllers\EmprendimientoUsuario\EmprendimientoUsuarioController;
 use App\Http\Controllers\TipoDeNegocioController;
 use Illuminate\Http\Request;
@@ -49,3 +51,16 @@ Route::delete('/tipos-negocio/{id}', [TipoDeNegocioController::class, 'destroy']
 Route::apiResource('categorias-servicios', CategoriaServicioApiController::class);
 
 
+
+
+Route::get('/zonas-turisticas', [ZonaTuristicaApiController::class, 'index']);
+Route::post('/zonas-turisticas', [ZonaTuristicaApiController::class, 'store']);
+Route::get('/zonas-turisticas/{id}', [ZonaTuristicaApiController::class, 'show']);
+Route::put('/zonas-turisticas/{id}', [ZonaTuristicaApiController::class, 'update']);
+Route::delete('/zonas-turisticas/{id}', [ZonaTuristicaApiController::class, 'destroy']);
+
+
+//imagenenes
+
+Route::post('/imagenes', [ImageableController::class, 'store']);
+Route::get('/imagenes/{type}/{id}', [ImageableController::class, 'index']);

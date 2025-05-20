@@ -29,15 +29,21 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.text.style.TextOverflow
+import coil3.compose.AsyncImage
+import pe.edu.upeu.appturismo202501.R
+import androidx.compose.foundation.layout.*
 
 data class ActivityBanner(
-    @DrawableRes val image: Int,
-    val city: String
+    val imageUrl: String,
+    val name: String
 )
 
 // --------------------------------------------------
 // 2. ActivityCard con Gradient + Text encima de la imagen
 // --------------------------------------------------
+
+
+
 @Composable
 fun ActivityCard(
     item: ActivityBanner,
@@ -52,26 +58,24 @@ fun ActivityCard(
         shape = RoundedCornerShape(12.dp),
         elevation = CardDefaults.cardElevation(4.dp)
     ) {
-        Box(modifier = Modifier.fillMaxSize()) {             // ← fillMaxSize en lugar de matchParentSize
-
-            // 1️⃣ Imagen de fondo
-            Image(
-                painter = painterResource(item.image),
-                contentDescription = item.city,
+        Box(modifier = Modifier.fillMaxSize()) {
+            // 1️⃣ Imagen remota
+            AsyncImage(
+                model = item.imageUrl,
+                contentDescription = item.name,
+                modifier = Modifier.fillMaxSize(),
                 contentScale = ContentScale.Crop,
-                modifier = Modifier.fillMaxSize()            // ← idem aquí
+                placeholder = painterResource(R.drawable.ic_launcher_background),
+                error = painterResource(R.drawable.ic_launcher_background)
             )
 
             // 2️⃣ Degradado
             Box(
                 modifier = Modifier
-                    .fillMaxSize()                           // ← idem aquí
+                    .fillMaxSize()
                     .background(
                         Brush.verticalGradient(
-                            colors = listOf(
-                                Color.Transparent,
-                                Color(0xCC000000)
-                            ),
+                            colors = listOf(Color.Transparent, Color(0xCC000000)),
                             startY = 0f
                         )
                     )
@@ -79,7 +83,7 @@ fun ActivityCard(
 
             // 3️⃣ Texto
             Text(
-                text = item.city,
+                text = item.name,
                 color = Color.White,
                 maxLines = 1,
                 overflow = TextOverflow.Ellipsis,
@@ -91,7 +95,6 @@ fun ActivityCard(
         }
     }
 }
-
 
 // --------------------------------------------------
 // 3. ActivitiesSection (igual que antes)
@@ -106,10 +109,8 @@ fun ActivitiesSection(
     Column(modifier) {
         Text(
             text = title,
-            style = MaterialTheme.typography.titleLarge,
-            fontWeight = FontWeight.Bold,
-            modifier = Modifier
-                .padding(horizontal = 16.dp, vertical = 12.dp)
+            style = MaterialTheme.typography.titleLarge.copy(fontWeight = FontWeight.Bold),
+            modifier = Modifier.padding(horizontal = 16.dp, vertical = 12.dp)
         )
 
         LazyRow(

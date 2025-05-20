@@ -4,77 +4,117 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Models\ZonaTuristica;
+use App\Models\Images;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Response;
 
 class ZonaTuristicaApiController extends Controller
 {
-    // Obtener todas las zonas turísticas
+    // 1. Listar con imágenes
     public function index()
     {
-        return response()->json(ZonaTuristica::all(), Response::HTTP_OK);
+        $zonas = ZonaTuristica::with('images')->get();
+        return response()->json($zonas, Response::HTTP_OK);
     }
 
-    // Crear una nueva zona turística
+    // 2. Crear con imagen
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:150',
+            'nombre'      => 'required|string|max:150',
             'descripcion' => 'nullable|string',
-            'ubicacion' => 'nullable|string|max:255',
-            'imagen_url' => 'nullable|string|max:255',
-            'estado' => 'in:activo,inactivo'
+            'ubicacion'   => 'nullable|string|max:255',
+            'imagen'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'estado'      => 'in:activo,inactivo',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error'=>$validator->errors()], 422);
         }
 
-        $zona = ZonaTuristica::create($request->all());
+        // Crea la zona sin la imagen
+        $zona = ZonaTuristica::create($request->only('nombre','descripcion','ubicacion','estado'));
+
+        // Si viene archivo, lo guarda y relaciona
+        if ($request->hasFile('imagen')) {
+            $path = $request->file('imagen')->store('zonas', 'public');
+
+            $imagen = Images::create([
+                'url'    => $path,
+                'titulo' => $zona->nombre,
+            ]);
+
+            DB::table('imageables')->insert([
+                'images_id'      => $imagen->id,
+                'imageable_id'   => $zona->zonas_turisticas_id,
+                'imageable_type' => ZonaTuristica::class,
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Zona turística creada correctamente',
-            'zona' => $zona
+            'zona'    => $zona->load('images')
         ], Response::HTTP_CREATED);
     }
 
-    // Mostrar una zona turística específica
+    // 3. Mostrar una
     public function show($id)
     {
-        $zona = ZonaTuristica::findOrFail($id);
+        $zona = ZonaTuristica::with('images')->findOrFail($id);
         return response()->json($zona, Response::HTTP_OK);
     }
 
-    // Actualizar una zona turística
+    // 4. Actualizar (y opcionalmente cambiar imagen)
     public function update(Request $request, $id)
     {
         $zona = ZonaTuristica::findOrFail($id);
 
         $validator = Validator::make($request->all(), [
-            'nombre' => 'required|string|max:150',
+            'nombre'      => 'required|string|max:150',
             'descripcion' => 'nullable|string',
-            'ubicacion' => 'nullable|string|max:255',
-            'imagen_url' => 'nullable|string|max:255',
-            'estado' => 'in:activo,inactivo'
+            'ubicacion'   => 'nullable|string|max:255',
+            'imagen'      => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'estado'      => 'in:activo,inactivo',
         ]);
 
         if ($validator->fails()) {
-            return response()->json(['error' => $validator->errors()], 422);
+            return response()->json(['error'=>$validator->errors()], 422);
         }
 
-        $zona->update($request->all());
+        $zona->update($request->only('nombre','descripcion','ubicacion','estado'));
+
+        if ($request->hasFile('imagen')) {
+            // (Opcional) borrar imágenes previas si lo deseas…
+
+            $path = $request->file('imagen')->store('zonas', 'public');
+            $imagen = Images::create([
+                'url'    => $path,
+                'titulo' => $zona->nombre,
+            ]);
+            DB::table('imageables')->insert([
+                'images_id'      => $imagen->id,
+                'imageable_id'   => $zona->zonas_turisticas_id,
+                'imageable_type' => ZonaTuristica::class,
+                'created_at'     => now(),
+                'updated_at'     => now(),
+            ]);
+        }
 
         return response()->json([
             'message' => 'Zona turística actualizada correctamente',
-            'zona' => $zona
+            'zona'    => $zona->load('images')
         ], Response::HTTP_OK);
     }
 
-    // Eliminar una zona turística
+    // 5. Eliminar
     public function destroy($id)
     {
-        ZonaTuristica::findOrFail($id)->delete();
-        return response()->json(['message' => 'Zona turística eliminada correctamente'], Response::HTTP_OK);
+        $zona = ZonaTuristica::findOrFail($id);
+        $zona->delete();
+        return response()->json(['message'=>'Zona turística eliminada correctamente'], Response::HTTP_OK);
     }
 }
