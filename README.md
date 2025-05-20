@@ -199,5 +199,4 @@ Es recomendable ingresar como **Administrador** ya que algunas funciones están 
 - **Franck A. Coaquira Justo** (G2)
 - **Pretel Ramos Arisapana** (G2)
 - **Glenen W. Choquechambi Luque** (G2)
-- **Roy Huaricallo Turpo** (G2)
 - **Yamil Zúñiga** (G1)
