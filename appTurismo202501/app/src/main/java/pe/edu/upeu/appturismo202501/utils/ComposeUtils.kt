@@ -1,4 +1,4 @@
-package pe.edu.upeu.sysventasjpc.utils
+package pe.edu.upeu.appturismo202501.utils
 
 import androidx.compose.runtime.Composable
 

@@ -7,6 +7,7 @@ $baseDir = dirname($vendorDir);
 
 return array(
     'App\\Http\\Controllers\\Administrador\\AuthController' => $baseDir . '/app/Http/Controllers/Administrador/AuthController.php',
+    'App\\Http\\Controllers\\Api\\AuthController' => $baseDir . '/app/Http/Controllers/Api/AuthController.php',
     'App\\Http\\Controllers\\Api\\CategoriaServicioApiController' => $baseDir . '/app/Http/Controllers/Api/CategoriaServicioApiController.php',
     'App\\Http\\Controllers\\Auth\\LoginController' => $baseDir . '/app/Http/Controllers/Auth/LoginController.php',
     'App\\Http\\Controllers\\Auth\\RegisterController' => $baseDir . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -26,6 +27,8 @@ return array(
     'App\\Livewire\\Categoria\\Categoria' => $baseDir . '/app/Livewire/Categoria/Categoria.php',
     'App\\Livewire\\Categoria\\CategoriaList' => $baseDir . '/app/Livewire/Categoria/CategoriaList.php',
     'App\\Livewire\\Usuarios\\Emprendedor' => $baseDir . '/app/Livewire/Usuarios/Emprendedor.php',
+    'App\\Mail\\ResetPasswordMail' => $baseDir . '/app/Mail/ResetPasswordMail.php',
+    'App\\Mail\\TestMail' => $baseDir . '/app/Mail/TestMail.php',
     'App\\Models\\Apelacion' => $baseDir . '/app/Models/Apelacion.php',
     'App\\Models\\Blog' => $baseDir . '/app/Models/Blog.php',
     'App\\Models\\CategoriaProducto' => $baseDir . '/app/Models/CategoriaProducto.php',

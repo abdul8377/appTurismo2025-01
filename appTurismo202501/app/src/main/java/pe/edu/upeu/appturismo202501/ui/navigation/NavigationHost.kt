@@ -20,6 +20,7 @@ import pe.edu.upeu.appturismo202501.ui.presentation.screens.administrador.Admini
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.emprendedor.EmprendedorScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.register.RegisterScreen
 import pe.edu.upeu.appturismo202501.ui.presentation.screens.usuario.UsuarioScreen
+import pe.edu.upeu.appturismo202501.utils.TokenUtils
 
 @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
 @Composable
@@ -100,7 +101,15 @@ fun NavigationHost(
         }
 
         composable(Destinations.Administrador.route) {
-            AdministradorScreen(navController)
+            AdministradorScreen(
+                navController = navController,
+                onLogoutClicked = {
+                    TokenUtils.clearToken()
+                    navController.navigate(Destinations.Login.route) {
+                        popUpTo(Destinations.Login.route) { inclusive = true }
+                    }
+                }
+            )
         }
 
         composable(Destinations.Register.route) {
@@ -123,5 +132,8 @@ fun NavigationHost(
                 }
             )
         }
+
+
+
     }
 }

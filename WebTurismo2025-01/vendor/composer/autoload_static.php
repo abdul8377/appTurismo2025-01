@@ -222,9 +222,9 @@ class ComposerStaticInit2fc74da477078445535517e6366a5f5f
         ),
         'phpDocumentor\\Reflection\\' => 
         array (
-            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
         ),
         'Whoops\\' => 
         array (
@@ -653,6 +653,7 @@ class ComposerStaticInit2fc74da477078445535517e6366a5f5f
 
     public static $classMap = array (
         'App\\Http\\Controllers\\Administrador\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Administrador/AuthController.php',
+        'App\\Http\\Controllers\\Api\\AuthController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/AuthController.php',
         'App\\Http\\Controllers\\Api\\CategoriaServicioApiController' => __DIR__ . '/../..' . '/app/Http/Controllers/Api/CategoriaServicioApiController.php',
         'App\\Http\\Controllers\\Auth\\LoginController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/LoginController.php',
         'App\\Http\\Controllers\\Auth\\RegisterController' => __DIR__ . '/../..' . '/app/Http/Controllers/Auth/RegisterController.php',
@@ -672,6 +673,8 @@ class ComposerStaticInit2fc74da477078445535517e6366a5f5f
         'App\\Livewire\\Categoria\\Categoria' => __DIR__ . '/../..' . '/app/Livewire/Categoria/Categoria.php',
         'App\\Livewire\\Categoria\\CategoriaList' => __DIR__ . '/../..' . '/app/Livewire/Categoria/CategoriaList.php',
         'App\\Livewire\\Usuarios\\Emprendedor' => __DIR__ . '/../..' . '/app/Livewire/Usuarios/Emprendedor.php',
+        'App\\Mail\\ResetPasswordMail' => __DIR__ . '/../..' . '/app/Mail/ResetPasswordMail.php',
+        'App\\Mail\\TestMail' => __DIR__ . '/../..' . '/app/Mail/TestMail.php',
         'App\\Models\\Apelacion' => __DIR__ . '/../..' . '/app/Models/Apelacion.php',
         'App\\Models\\Blog' => __DIR__ . '/../..' . '/app/Models/Blog.php',
         'App\\Models\\CategoriaProducto' => __DIR__ . '/../..' . '/app/Models/CategoriaProducto.php',

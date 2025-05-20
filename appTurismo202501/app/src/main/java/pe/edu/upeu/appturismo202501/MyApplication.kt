@@ -4,7 +4,7 @@ import android.app.Application
 import androidx.appcompat.app.AppCompatDelegate
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.ExperimentalCoroutinesApi
-import pe.edu.upeu.sysventasjpc.utils.isNight
+import pe.edu.upeu.appturismo202501.utils.isNight
 
 @ExperimentalCoroutinesApi
 @HiltAndroidApp
