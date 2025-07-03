@@ -199,18 +199,6 @@ Dirección IPv4: 192.168.0.198
    var API_URL="http://pegar ip aqui/api/"
    ```
 
-2. **Actualizar la configuración de seguridad**: Abre el archivo de configuración de seguridad y reemplaza la IP:
-
-   ```
-   D:\DAD-unidad 3\appTurismo202501\app\src\main\res\xml\network_security_config
-   ```
-
-   En el archivo XML, cambia la IP:
-
-   ```
-   <domain includeSubdomains="true">192.168.0.198</domain>
-   ```
-
 ## PASO 12: Eliminar la Carpeta `storage` en el Backend
 
 1. **Eliminar la carpeta `storage`**: Navega hasta el directorio `public` del backend y elimina la carpeta `storage` para evitar problemas con las imágenes de la app móvil.
