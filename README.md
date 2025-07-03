@@ -1,23 +1,34 @@
-# Sistema de Turismo
+# Manual para Levantar la App de Turismo - Proyecto Capachica
 
 ## PASO 1: Clonar el Repositorio
-Abre la terminal y clona el repositorio en tu máquina local:
 
-```bash
-git clone https://github.com/abdul8377/appTurismo2025-01.git
+Clona tanto la app móvil como el backend a tu máquina local utilizando los siguientes enlaces:
+
+**App**:
+
+```
+git clone https://github.com/abdul8377/appTurismo202501.git
 ```
 
-## PASO 2: Ubicarse en la Ruta Clonada
-Navega a la carpeta del proyecto clonado:
+**Backend**:
 
-```bash
-D:\appTurismo2025-01\WebTurismo
+```
+git clone https://github.com/abdul8377/backendappTurismo.git
+```
+
+## PASO 2: Ubicarse en la Ruta Clonada (Backend)
+
+Una vez clonado el repositorio del backend, navega hasta la carpeta del proyecto en tu terminal:
+
+```
+cd D:\AppCapachica\backendappTurismo
 ```
 
 ## PASO 3: Verificar el Archivo `.env`
-Verifica si el archivo `.env` está presente en la raíz del proyecto. Si no lo está, crea el archivo `.env` y copia el siguiente contenido dentro de él:
 
-```dotenv
+Verifica si el archivo `.env` existe en la raíz del proyecto. Si no está presente, crea el archivo `.env` y pega el siguiente contenido dentro de él:
+
+```
 APP_NAME=Laravel
 APP_ENV=local
 APP_KEY=base64:/XvTBoeUnb0zM4NAZue+UA7uU0BrEruJAOJ2zuhQchk=
@@ -41,7 +52,7 @@ LOG_LEVEL=debug
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=turismo
+DB_DATABASE=bdappturismov2
 DB_USERNAME=root
 DB_PASSWORD=
 
@@ -51,8 +62,8 @@ SESSION_ENCRYPT=false
 SESSION_PATH=/
 SESSION_DOMAIN=null
 
-BROADCAST_CONNECTION=log
-FILESYSTEM_DISK=local
+BROADCAST_CONNECTION=reverb
+FILESYSTEM_DISK=public
 QUEUE_CONNECTION=database
 
 CACHE_STORE=database
@@ -64,14 +75,14 @@ REDIS_HOST=127.0.0.1
 REDIS_PASSWORD=null
 REDIS_PORT=6379
 
-MAIL_MAILER=log
-MAIL_SCHEME=null
-MAIL_HOST=127.0.0.1
-MAIL_PORT=2525
-MAIL_USERNAME=null
-MAIL_PASSWORD=null
-MAIL_FROM_ADDRESS="hello@example.com"
-MAIL_FROM_NAME="${APP_NAME}"
+MAIL_MAILER=smtp
+MAIL_HOST=smtp.sendgrid.net
+MAIL_PORT=465
+MAIL_USERNAME=apikey
+MAIL_PASSWORD=
+MAIL_ENCRYPTION=tls
+MAIL_FROM_ADDRESS=capachicaruraq@gmail.com
+MAIL_FROM_NAME="Capachica Ruraq"
 
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
@@ -81,69 +92,90 @@ AWS_USE_PATH_STYLE_ENDPOINT=false
 
 VITE_APP_NAME="${APP_NAME}"
 
-GOOGLE_CLIENT_ID=1067324627109-2i6lo4fcjvvljiued1f3nq61s7el70hr.apps.googleusercontent.com
-GOOGLE_CLIENT_SECRET=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
-GOOGLE_REDIRECT_URI=http://localhost:8000/auth/google/callback
+# Reverb WebSockets
+BROADCAST_DRIVER=reverb
+REVERB_APP_ID=realtime
+REVERB_APP_KEY=local
+REVERB_APP_SECRET=local
+REVERB_HOST=127.0.0.1
+REVERB_PORT=8080
 
-FACEBOOK_CLIENT_ID=528537510309364
-FACEBOOK_CLIENT_SECRET=3a5eecccf21c97f09fac2af5c6894a12
-FACEBOOK_REDIRECT_URI=http://localhost:8000/auth/facebook/callback
+APP_PLATAFORMA_ID=999
 ```
 
-## PASO 4: Instalar las dependencias:
+## PASO 4: Instalar las Dependencias
 
-1. **Composer**:
-   ```bash
+1. **Instalar dependencias con Composer**:
+   Ejecuta el siguiente comando para instalar todas las dependencias necesarias para el proyecto:
+
+   ```
    composer install
    ```
 
-3. **Laravel**: Si aún no tienes Laravel instalado globalmente, instálalo con:
-   ```bash
+2. **Instalar Laravel (si no tienes Laravel instalado globalmente)**:
+   Si aún no tienes Laravel instalado globalmente, puedes hacerlo ejecutando:
+
+   ```
    composer global require laravel/installer
    ```
 
 ## PASO 5: Iniciar el Servidor de Base de Datos
-Asegúrate de que el servidor de base de datos esté funcionando. Puedes usar **Laragon**, **XAMPP**, o cualquier otro servidor de bases de datos que prefieras.
 
-## PASO 6: Navegar al Proyecto
-Navega nuevamente a la ruta donde clonaste el proyecto:
+Asegúrate de que el servidor de base de datos esté en funcionamiento. Puedes usar **Laragon**, **XAMPP**, o cualquier otro servidor de bases de datos que prefieras.
 
-```bash
-cd D:\appTurismo2025-01\WebTurismo
+## PASO 6: Navegar al Proyecto (Backend)
+
+Navega a la ruta donde clonaste el proyecto (backend):
+
+```
+cd D:\AppCapachica\backendappTurismo
 ```
 
 ## PASO 7: Ejecutar las Migraciones de Base de Datos
+
 Ejecuta los siguientes comandos para migrar y poblar la base de datos:
 
-```bash
+```
 php artisan migrate
 php artisan migrate:fresh --seed
 ```
 
-Esto generará los datos de usuario, con el siguiente acceso de administrador:
-- **Usuario**: Franck Coaquira
-- **Contraseña**: 12345678
+Esto generará los datos de usuario de ejemplo, con las siguientes credenciales de administrador:
+
+* **Administrador**:
+
+  * **Usuario**: `franck@gmail.com`
+  * **Contraseña**: `12345678`
+* **Turista**:
+
+  * **Usuario**: `Usuario@gmail.com`
+  * **Contraseña**: `12345678`
+* **Emprendedor**:
+
+  * **Usuario**: `Carlos@gmail.com`
+  * **Contraseña**: `12345678`
 
 ## PASO 8: Iniciar el Backend de Laravel
-Inicia el servidor de Laravel para que el backend esté disponible:
 
-```bash
+Inicia el servidor de Laravel para que el backend esté disponible en la URL `http://localhost:8000`:
+
+```
 php artisan serve --host=0.0.0.0 --port=8000
 ```
 
-Esto levantará el backend en la URL: `http://localhost:8000`.
-
 ## PASO 9: Abrir el Proyecto en Android Studio
-Abre el proyecto de la aplicación móvil con Android Studio:
 
-```bash
-D:\appTurismo2025-01\CTProyecto
+Abre el proyecto de la aplicación móvil en **Android Studio**:
+
+```
+cd D:\AppCapachica\appTurismo202501
 ```
 
 ## PASO 10: Obtener la Dirección IP de la Máquina
-Ejecuta el siguiente comando en la terminal de tu computadora para obtener tu dirección IPv4:
 
-```bash
+Ejecuta el siguiente comando en la terminal de tu computadora para obtener tu dirección **IPv4**:
+
+```
 ipconfig
 ```
 
@@ -155,48 +187,55 @@ Dirección IPv4: 192.168.0.198
 
 ## PASO 11: Actualizar la IP en el Proyecto de Android
 
-1. **Editar RetrofitClient**: Copia tu IP y reemplázala en la siguiente ruta:
+1. **Editar la IP en `TokenUtils.kt`**: Reemplaza la IP en la siguiente ruta del proyecto Android:
 
-   ```bash
-   D:\appTurismo2025-01\CTProyecto\app\src\main\java\pe\edu\upeu\ctproyecto\data\remote\Retrofitclient
    ```
-   Reemplaza la IP en la constante `BASE_URL`:
-   ```kotlin
-   private const val BASE_URL = "http://192.168.0.198:8000/api/"
+   D:\DAD-unidad 3\appTurismo202501\app\src\main\java\pe\edu\upeu\appturismo202501\utils\TokenUtils.kt
    ```
 
-2. **Editar Configuración de Seguridad de Red**: También debes actualizar la IP en el archivo de configuración de seguridad:
-   ```bash
-   D:\appTurismo2025-01\CTProyecto\app\src\main\res\xml\network_security_config
+   Cambia la siguiente línea de código con la IP obtenida:
+
    ```
-   Reemplaza la IP en el archivo XML:
-   ```xml
+   var API_URL="http://pegar ip aqui/api/"
+   ```
+
+2. **Actualizar la configuración de seguridad**: Abre el archivo de configuración de seguridad y reemplaza la IP:
+
+   ```
+   D:\DAD-unidad 3\appTurismo202501\app\src\main\res\xml\network_security_config
+   ```
+
+   En el archivo XML, cambia la IP:
+
+   ```
    <domain includeSubdomains="true">192.168.0.198</domain>
    ```
 
-## PASO 12: Ejecutar la App Móvil
+## PASO 12: Eliminar la Carpeta `storage` en el Backend
 
-Ahora puedes ejecutar la app en Android Studio.
+1. **Eliminar la carpeta `storage`**: Navega hasta el directorio `public` del backend y elimina la carpeta `storage` para evitar problemas con las imágenes de la app móvil.
 
-- Si deseas, puedes registrarte o iniciar sesión como **Administrador** con las siguientes credenciales:
-  - **Usuario**: Franck Coaquira
-  - **Contraseña**: 12345678
+   ```
+   D:\AppCapachica\backendappTurismo\public
+   ```
 
-Es recomendable ingresar como **Administrador** ya que algunas funciones están restringidas en otros roles.
+2. **Crear el enlace simbólico**: Ahora, en la terminal, ejecuta el siguiente comando para crear el enlace simbólico a la carpeta `storage`:
 
----
+   ```
+   php artisan storage:link
+   ```
 
-### **OBSERVACIONES:**
+## PASO 13: Ejecutar la App Móvil
 
-- Si al iniciar la app ves un mensaje de "No hay conexión", asegúrate de que el **Backend** de Laravel esté corriendo.
-- Si el problema persiste, verifica que la **IP** esté correctamente configurada tanto en el backend como en la app móvil.
+Ahora puedes ejecutar la app en Android Studio. Recuerda que es recomendable ingresar con las credenciales de **Administrador** para acceder a todas las funciones del sistema.
 
 ---
 
 ### **INTEGRANTES:**
-- **Julmer Quispe Apaza** (G2)
-- **Abdul Quispe Condori** (G1)
-- **Franck A. Coaquira Justo** (G2)
-- **Pretel Ramos Arisapana** (G2)
-- **Glenen W. Choquechambi Luque** (G2)
-- **Yamil Zúñiga** (G1)
+
+* **Julmer Quispe Apaza**
+* **Abdul Quispe Condori**
+* **Franck A. Coaquira Justo**
+* **Pretel Ramos Arisapana**
+
+---
